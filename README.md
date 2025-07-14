@@ -1,4 +1,3 @@
-````markdown
 # 📚 Sumilandia
 
 Sumilandia es una aplicación web educativa desarrollada con **Laravel** e **Inertia.js + Vue.js**, orientada a niños y niñas de primaria y secundaria, con el objetivo de facilitar el aprendizaje de **matemáticas** de manera interactiva y amigable.
@@ -23,5 +22,3 @@ Julio, 2025
 - Interfaz amigable para estudiantes
 
 > *"La educación es el arma más poderosa que puedes usar para cambiar el mundo."* — Nelson Mandela
-
-```
