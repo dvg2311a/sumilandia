@@ -1,0 +1,29 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Profile>
+ */
+class ProfileFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'avatar' => fake()->imageUrl(640, 480, 'people', true),
+            'nickname' => fake()->unique()->userName(),
+            'birthdate' => fake()->date(),
+            'academic_level' => fake()->numberBetween(1, 11),
+            'gender' => fake()->randomElement(['male', 'female']),
+            'user_id' => null,
+        ];
+    }
+}
