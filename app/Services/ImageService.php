@@ -24,7 +24,7 @@ class ImageService
     {
         $modelName = class_basename($model);
 
-        $userPath = Str::slug(auth()->user()->slug, '-');
+        $userPath = Str::slug(auth()->user()->first_name, '-');
         $imagePath = strtolower($modelName) . '_images/' . $userPath;
         $fileName = Str::slug($file_name, '-') . '.' . $file->extension();
         $imageUrl = Storage::disk('public')->putFileAs($imagePath, $file, $fileName);

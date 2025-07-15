@@ -42,6 +42,7 @@ class HandleInertiaRequests extends Middleware
                         ]),
                         [
                             'full_name' => $request->user()->full_name,
+                            'profile' => $request->user()->profile,
                         ]
                     )
                     : null,

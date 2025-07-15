@@ -1,8 +1,10 @@
 <script setup>
+
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import ImageInput from '@/Components/ImageInput.vue';
 import { Link, useForm, usePage } from '@inertiajs/vue3';
 
 defineProps({
@@ -15,11 +17,29 @@ defineProps({
 });
 
 const user = usePage().props.auth.user;
+const profile = user.profile || {};
 
-const form = useForm({
-    name: user.name,
-    email: user.email,
+const profileForm = useForm({
+    avatar: profile.avatar || '',
+    nickname: user.profile.nickname || '',
+    birthdate: profile.birthdate || '',
+    academic_level: profile.academic_level || '',
+    gender: profile.gender || '',
 });
+
+const submitProfile = () => {
+    profileForm.nickname = String(profileForm.nickname || '');
+    profileForm.birthdate = String(profileForm.birthdate || '');
+    profileForm.academic_level = String(profileForm.academic_level || '');
+    profileForm.gender = String(profileForm.gender || '');
+    profileForm.post(route('profile.profile.update'), {
+        forceFormData: true,
+        onSuccess: () => {
+            // Si quieres limpiar el avatar después de guardar, descomenta:
+            // profileForm.reset('avatar');
+        },
+    });
+};
 </script>
 
 <template>
@@ -34,77 +54,74 @@ const form = useForm({
             </p>
         </header>
 
-        <form
-            @submit.prevent="form.patch(route('profile.update'))"
-            class="mt-6 space-y-6"
-        >
-            <div>
-                <InputLabel for="name" value="Name" />
-
-                <TextInput
-                    id="name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    v-model="form.name"
-                    required
-                    autofocus
-                    autocomplete="name"
-                />
-
-                <InputError class="mt-2" :message="form.errors.name" />
-            </div>
-
-            <div>
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
-            <div v-if="mustVerifyEmail && user.email_verified_at === null">
-                <p class="mt-2 text-sm text-gray-800">
-                    Your email address is unverified.
-                    <Link
-                        :href="route('verification.send')"
-                        method="post"
-                        as="button"
-                        class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    >
-                        Click here to re-send the verification email.
-                    </Link>
-                </p>
-
-                <div
-                    v-show="status === 'verification-link-sent'"
-                    class="mt-2 text-sm font-medium text-green-600"
-                >
-                    A new verification link has been sent to your email address.
+        <!-- Formulario de datos del perfil -->
+        <form @submit.prevent="submitProfile" enctype="multipart/form-data" class="mt-6 space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <InputLabel for="avatar" value="Avatar" />
+                    <ImageInput
+                        id="avatar"
+                        v-model="profileForm.avatar"
+                        class="mt-1 block w-full"
+                        autocomplete="photo"
+                    />
+                    <InputError class="mt-2" :message="profileForm.errors.avatar" />
                 </div>
             </div>
-
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <InputLabel for="nickname" value="Nickname" />
+                    <TextInput
+                        id="nickname"
+                        type="text"
+                        class="mt-1 block w-full"
+                        v-model="profileForm.nickname"
+                        autocomplete="nickname"
+                    />
+                    <InputError class="mt-2" :message="profileForm.errors.nickname" />
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <InputLabel for="birthdate" value="Birthdate" />
+                    <TextInput
+                        id="birthdate"
+                        type="date"
+                        class="mt-1 block w-full"
+                        v-model="profileForm.birthdate"
+                        autocomplete="bday"
+                    />
+                    <InputError class="mt-2" :message="profileForm.errors.birthdate" />
+                </div>
+                <div>
+                    <InputLabel for="academic_level" value="Academic Level" />
+                    <TextInput
+                        id="academic_level"
+                        type="text"
+                        class="mt-1 block w-full"
+                        v-model="profileForm.academic_level"
+                    />
+                    <InputError class="mt-2" :message="profileForm.errors.academic_level" />
+                </div>
+            </div>
+            <div>
+                <InputLabel for="gender" value="Gender" />
+                <select id="gender" v-model="profileForm.gender" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                    <option value="">Select gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+                <InputError class="mt-2" :message="profileForm.errors.gender" />
+            </div>
             <div class="flex items-center gap-4">
-                <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
-
+                <PrimaryButton :disabled="profileForm.processing">Guardar Perfil</PrimaryButton>
                 <Transition
                     enter-active-class="transition ease-in-out"
                     enter-from-class="opacity-0"
                     leave-active-class="transition ease-in-out"
                     leave-to-class="opacity-0"
                 >
-                    <p
-                        v-if="form.recentlySuccessful"
-                        class="text-sm text-gray-600"
-                    >
-                        Saved.
-                    </p>
+                    <p v-if="profileForm.recentlySuccessful" class="text-sm text-gray-600">Guardado.</p>
                 </Transition>
             </div>
         </form>
