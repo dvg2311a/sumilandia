@@ -12,39 +12,34 @@ class ImageService
     protected UploadedFile $file;
 
     /**
-     * Store a file locally and update the model's file attribute.
+     * Store a file locally and update the model's file attribute using Laravel's store method.
      *
      * @param Model $model
      * @param string $file_attribute
-     * @param string $file_name
      * @param UploadedFile $file
+     * @param string $folder
      * @return bool
      */
-    public function storeLocal(Model $model, string $file_attribute, string $file_name, UploadedFile $file)
+    public function storeLocal(Model $model, string $file_attribute, UploadedFile $file, string $folder = 'profile_images')
     {
-        $modelName = class_basename($model);
-
-        $userPath = Str::slug(auth()->user()->first_name, '-');
-        $imagePath = strtolower($modelName) . '_images/' . $userPath;
-        $fileName = Str::slug($file_name, '-') . '.' . $file->extension();
-        $imageUrl = Storage::disk('public')->putFileAs($imagePath, $file, $fileName);
-
-        return $model->update([$file_attribute => $imageUrl]);
+        $imageUrl = $file->store($folder, 'public');
+        $model->$file_attribute = $imageUrl;
+        return $model->save();
     }
 
     /**
-     * Update a file locally and update the model's file attribute.
+     * Update a file locally and update the model's file attribute using Laravel's store method.
      *
      * @param Model $model
      * @param string $file_attribute
-     * @param string $file_name
      * @param UploadedFile $file
+     * @param string $folder
      * @return bool
      */
-    public function updateLocal(Model $model, string $file_attribute, string $file_name, UploadedFile $file)
+    public function updateLocal(Model $model, string $file_attribute, UploadedFile $file, string $folder = 'profile_images')
     {
         Storage::disk('public')->delete($model->$file_attribute);
-        return $this->storeLocal($model, $file_attribute, $file_name, $file);
+        return $this->storeLocal($model, $file_attribute, $file, $folder);
     }
 
     public function deleteLocal(Model $model, $file_attribute)

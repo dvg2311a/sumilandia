@@ -20,11 +20,11 @@ const user = usePage().props.auth.user;
 const profile = user.profile || {};
 
 const profileForm = useForm({
-    avatar: profile.avatar || '',
-    nickname: user.profile.nickname || '',
-    birthdate: profile.birthdate || '',
-    academic_level: profile.academic_level || '',
-    gender: profile.gender || '',
+    avatar: profile?.avatar || '',
+    nickname: profile?.nickname || '',
+    birthdate: profile?.birthdate || '',
+    academic_level: profile?.academic_level || '',
+    gender: profile?.gender || '',
 });
 
 const submitProfile = () => {
@@ -35,7 +35,6 @@ const submitProfile = () => {
     profileForm.post(route('profile.profile.update'), {
         forceFormData: true,
         onSuccess: () => {
-            // Si quieres limpiar el avatar después de guardar, descomenta:
             // profileForm.reset('avatar');
         },
     });
@@ -59,68 +58,47 @@ const submitProfile = () => {
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <InputLabel for="avatar" value="Avatar" />
-                    <ImageInput
-                        id="avatar"
-                        v-model="profileForm.avatar"
-                        class="mt-1 block w-full"
-                        autocomplete="photo"
-                    />
+                    <ImageInput id="avatar" v-model="profileForm.avatar" class="mt-1 block w-full"
+                        autocomplete="photo" />
                     <InputError class="mt-2" :message="profileForm.errors.avatar" />
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <InputLabel for="nickname" value="Nickname" />
-                    <TextInput
-                        id="nickname"
-                        type="text"
-                        class="mt-1 block w-full"
-                        v-model="profileForm.nickname"
-                        autocomplete="nickname"
-                    />
+                    <TextInput id="nickname" type="text" class="mt-1 block w-full" v-model="profileForm.nickname"
+                        autocomplete="nickname" />
                     <InputError class="mt-2" :message="profileForm.errors.nickname" />
+                </div>
+                <div>
+                    <InputLabel for="gender" value="Gender" />
+                    <select id="gender" v-model="profileForm.gender"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                        <option value="">Select gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                    <InputError class="mt-2" :message="profileForm.errors.gender" />
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <InputLabel for="birthdate" value="Birthdate" />
-                    <TextInput
-                        id="birthdate"
-                        type="date"
-                        class="mt-1 block w-full"
-                        v-model="profileForm.birthdate"
-                        autocomplete="bday"
-                    />
+                    <TextInput id="birthdate" type="date" class="mt-1 block w-full" v-model="profileForm.birthdate"
+                        autocomplete="bday" />
                     <InputError class="mt-2" :message="profileForm.errors.birthdate" />
                 </div>
                 <div>
                     <InputLabel for="academic_level" value="Academic Level" />
-                    <TextInput
-                        id="academic_level"
-                        type="text"
-                        class="mt-1 block w-full"
-                        v-model="profileForm.academic_level"
-                    />
+                    <TextInput id="academic_level" type="text" class="mt-1 block w-full"
+                        v-model="profileForm.academic_level" />
                     <InputError class="mt-2" :message="profileForm.errors.academic_level" />
                 </div>
             </div>
-            <div>
-                <InputLabel for="gender" value="Gender" />
-                <select id="gender" v-model="profileForm.gender" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                    <option value="">Select gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                </select>
-                <InputError class="mt-2" :message="profileForm.errors.gender" />
-            </div>
             <div class="flex items-center gap-4">
                 <PrimaryButton :disabled="profileForm.processing">Guardar Perfil</PrimaryButton>
-                <Transition
-                    enter-active-class="transition ease-in-out"
-                    enter-from-class="opacity-0"
-                    leave-active-class="transition ease-in-out"
-                    leave-to-class="opacity-0"
-                >
+                <Transition enter-active-class="transition ease-in-out" enter-from-class="opacity-0"
+                    leave-active-class="transition ease-in-out" leave-to-class="opacity-0">
                     <p v-if="profileForm.recentlySuccessful" class="text-sm text-gray-600">Guardado.</p>
                 </Transition>
             </div>
