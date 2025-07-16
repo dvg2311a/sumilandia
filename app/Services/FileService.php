@@ -39,12 +39,17 @@ class FileService
      */
     public function updateLocal(Model $model, string $file_attribute, UploadedFile $file, string $folder = null)
     {
-        Storage::disk('public')->delete($model->$file_attribute);
+        if (!empty($model->$file_attribute)) {
+            Storage::disk('public')->delete($model->$file_attribute);
+        }
         return $this->storeLocal($model, $file_attribute, $file, $folder);
     }
 
     public function deleteLocal(Model $model, $file_attribute)
     {
-        return Storage::disk('public')->delete($model->$file_attribute);
+        if (!empty($model->$file_attribute)) {
+            return Storage::disk('public')->delete($model->$file_attribute);
+        }
+        return false;
     }
 }
