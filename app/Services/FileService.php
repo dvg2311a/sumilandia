@@ -5,9 +5,8 @@ namespace App\Services;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
-class ImageService
+class FileService
 {
     protected UploadedFile $file;
 
@@ -20,9 +19,11 @@ class ImageService
      * @param string $folder
      * @return bool
      */
-    public function storeLocal(Model $model, string $file_attribute, UploadedFile $file, string $folder = 'profile_images')
+    public function storeLocal(Model $model, string $file_attribute, UploadedFile $file, string $folder = null)
     {
-        $imageUrl = $file->store($folder, 'public');
+        $modelName = strtolower(class_basename($model));
+        $folderName = $modelName . '_' . $file_attribute;
+        $imageUrl = $file->store($folder ?? $folderName, 'public');
         $model->$file_attribute = $imageUrl;
         return $model->save();
     }
@@ -36,7 +37,7 @@ class ImageService
      * @param string $folder
      * @return bool
      */
-    public function updateLocal(Model $model, string $file_attribute, UploadedFile $file, string $folder = 'profile_images')
+    public function updateLocal(Model $model, string $file_attribute, UploadedFile $file, string $folder = null)
     {
         Storage::disk('public')->delete($model->$file_attribute);
         return $this->storeLocal($model, $file_attribute, $file, $folder);

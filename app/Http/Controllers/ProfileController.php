@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Services\FileService;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -11,7 +12,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
-use App\Services\ImageService;
 
 class ProfileController extends Controller
 {
@@ -50,7 +50,7 @@ class ProfileController extends Controller
     /**
      * Update only the user's profile data (nickname, birthdate, academic_level, gender).
      */
-    public function updateProfile(ProfileUpdateRequest $request, ImageService $imageService): RedirectResponse
+    public function updateProfile(ProfileUpdateRequest $request, FileService $fileService): RedirectResponse
     {
         $user = $request->user();
         if ($user) {
@@ -63,7 +63,7 @@ class ProfileController extends Controller
             ]));
 
             if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
-                $imageService->updateLocal($profile, 'avatar', $request->file('avatar'), 'profile_images');
+                $fileService->updateLocal($profile, 'avatar', $request->file('avatar'));
             }
 
             $profile->user()->associate($user);

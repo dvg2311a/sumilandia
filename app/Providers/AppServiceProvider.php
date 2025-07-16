@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Models\Level;
+use App\Models\Resource;
 use App\Models\Unit;
 use App\Policies\LevelPolicy;
+use App\Policies\ResourcePolicy;
 use App\Policies\UnitPolicy;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
@@ -30,5 +32,6 @@ class AppServiceProvider extends ServiceProvider
         Vite::prefetch(concurrency: 3);
         Gate::policy(Level::class, LevelPolicy::class);
         Gate::policy(Unit::class, UnitPolicy::class);
+        Gate::policy(Resource::class, ResourcePolicy::class);
     }
 }

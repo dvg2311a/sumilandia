@@ -17,7 +17,7 @@ class ExerciseTypeFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->randomElement(['Quiz', 'Assignment', 'Project', 'Exam', 'Discussion']),
+            'name' => fake()->unique()->word(),
             'description' => fake()->sentence(),
         ];
     }
