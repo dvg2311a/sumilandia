@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UnitController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,6 +30,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::resource('levels', LevelController::class);
+    Route::resource('units', UnitController::class);
 });
 
 require __DIR__ . '/auth.php';

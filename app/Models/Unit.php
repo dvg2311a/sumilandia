@@ -3,17 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Level extends Model
+class Unit extends Model
 {
     protected $fillable = [
         'name',
-        'description'
+        'description',
+        'level_id',
     ];
 
     /**
-     * Get the name of the level.
+     * Get the name of the unit.
      *
      * @return string
      */
@@ -23,7 +24,7 @@ class Level extends Model
     }
 
     /**
-     * Get the description of the level.
+     * Get the description of the unit.
      *
      * @return string|null
      */
@@ -32,9 +33,8 @@ class Level extends Model
         return $value ?: 'No description available';
     }
 
-    public function units(): HasMany
+    public function level(): BelongsTo
     {
-        return $this->hasMany(Unit::class);
+        return $this->belongsTo(Level::class);
     }
 }
-
