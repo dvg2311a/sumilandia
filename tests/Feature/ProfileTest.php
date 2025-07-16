@@ -21,13 +21,13 @@ class ProfileTest extends TestCase
         $response->assertOk();
     }
 
-    public function test_profile_information_can_be_updated(): void
+    public function test_user_main_data_can_be_updated(): void
     {
         $user = User::factory()->create();
 
         $response = $this
             ->actingAs($user)
-            ->patch('/profile', [
+            ->patch('/profile/user', [
                 'first_name' => 'Test',
                 'last_name' => 'User',
                 'email' => 'test@example.com',
@@ -35,7 +35,7 @@ class ProfileTest extends TestCase
 
         $response
             ->assertSessionHasNoErrors()
-            ->assertRedirect('/profile');
+            ->assertRedirect(route('profile.edit'));
 
         $user->refresh();
 
@@ -51,7 +51,7 @@ class ProfileTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->patch('/profile', [
+            ->patch('/profile/user', [
                 'first_name' => 'Test',
                 'last_name' => 'User',
                 'email' => $user->email,
@@ -59,9 +59,33 @@ class ProfileTest extends TestCase
 
         $response
             ->assertSessionHasNoErrors()
-            ->assertRedirect('/profile');
+            ->assertRedirect(route('profile.edit'));
 
         $this->assertNotNull($user->refresh()->email_verified_at);
+    }
+    public function test_profile_data_can_be_updated(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this
+            ->actingAs($user)
+            ->post('/profile/profile', [
+                'nickname' => 'Tester',
+                'birthdate' => '2000-01-01',
+                'academic_level' => 11,
+                'gender' => 'male',
+            ]);
+
+        $response
+            ->assertSessionHasNoErrors()
+            ->assertRedirect(route('profile.edit'));
+
+        $user->refresh();
+        $profile = $user->profile;
+        $this->assertSame('Tester', $profile->nickname);
+        $this->assertSame('2000-01-01', $profile->birthdate);
+        $this->assertSame(11, $profile->academic_level);
+        $this->assertSame('male', $profile->gender);
     }
 
     public function test_user_can_delete_their_account(): void

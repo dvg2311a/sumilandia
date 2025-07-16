@@ -33,11 +33,15 @@ class ProfileController extends Controller
     {
         $user = $request->user();
         if ($user) {
+            $originalEmail = $user->email;
             $user->fill($request->only([
                 'first_name',
                 'last_name',
                 'email',
             ]));
+            if ($user->isDirty('email') && $user->email !== $originalEmail) {
+                $user->email_verified_at = $user->email_verified_at instanceof \Carbon\Carbon ? null : $user->email_verified_at;
+            }
             $user->save();
         }
         return Redirect::route('profile.edit');
