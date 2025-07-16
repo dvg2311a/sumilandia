@@ -35,4 +35,9 @@ class ResourcePolicy
     {
         return $this->checkPermission($user, 'destroy resources');
     }
+
+    public function download(User $user, Resource $resource): bool
+    {
+        return $this->checkPermission($user, 'download resources');
+    }
 }

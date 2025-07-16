@@ -59,4 +59,10 @@ class ResourceController extends Controller
         $resource->delete();
         return redirect()->route('resources.index')->with('success', 'Recurso eliminado correctamente');
     }
+
+    public function download(Resource $resource)
+    {
+        $this->authorize('download', $resource);
+        return response()->download(storage_path('app/public/' . $resource->file_path));
+    }
 }
