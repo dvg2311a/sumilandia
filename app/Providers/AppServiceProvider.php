@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Lesson;
 use App\Models\Level;
 use App\Models\Resource;
 use App\Models\Unit;
+use App\Policies\LessonPolicy;
 use App\Policies\LevelPolicy;
 use App\Policies\ResourcePolicy;
 use App\Policies\UnitPolicy;
@@ -33,5 +35,6 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Level::class, LevelPolicy::class);
         Gate::policy(Unit::class, UnitPolicy::class);
         Gate::policy(Resource::class, ResourcePolicy::class);
+        Gate::policy(Lesson::class, LessonPolicy::class);
     }
 }

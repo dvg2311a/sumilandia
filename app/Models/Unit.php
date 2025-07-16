@@ -46,4 +46,9 @@ class Unit extends Model
     {
         return $this->hasMany(Resource::class);
     }
+
+    public function lessons(): HasMany
+    {
+        return $this->hasMany(Lesson::class);
+    }
 }
