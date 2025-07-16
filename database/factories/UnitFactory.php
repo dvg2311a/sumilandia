@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Level;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,8 +18,8 @@ class UnitFactory extends Factory
     {
         return [
             'name' => fake()->unique()->word(),
-            'description' => fake()->sentence(),
             'expected_time' => fake()->randomElement([5, 10, 15, 20, 25, 30, 45, 60, 120]),
+            'description' => fake()->sentence(),
             'level_id' => null,
         ];
     }

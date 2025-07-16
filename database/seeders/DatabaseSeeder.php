@@ -27,10 +27,10 @@ class DatabaseSeeder extends Seeder
             'user_id' => $adminUser->id
         ]);
 
-        $level = Level::factory()->count(3)->create();
+        Level::factory()->count(3)->create();
 
         Unit::factory()->count(4)->create([
-            'level_id' => $level->random()->id,
+            'level_id' => Level::inRandomOrder()->first()->id,
         ]);
 
         $adminUser->assignRole('admin');
