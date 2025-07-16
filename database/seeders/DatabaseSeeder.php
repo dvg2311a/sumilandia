@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ExerciseType;
 use App\Models\Level;
 use App\Models\Profile;
 use App\Models\Unit;
@@ -26,6 +27,7 @@ class DatabaseSeeder extends Seeder
         Profile::factory()->create([
             'user_id' => $adminUser->id
         ]);
+        $adminUser->assignRole('admin');
 
         Level::factory()->count(3)->create();
 
@@ -33,6 +35,6 @@ class DatabaseSeeder extends Seeder
             'level_id' => Level::inRandomOrder()->first()->id,
         ]);
 
-        $adminUser->assignRole('admin');
+        ExerciseType::factory()->count(5)->create();
     }
 }
