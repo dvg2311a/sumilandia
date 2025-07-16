@@ -13,7 +13,8 @@ class RolesAndPermissionsSeeder extends Seeder
         'users' => [],
         'profiles' => ['read', 'update'],
         'roles' => ['read'],
-        'permissions' => ['read']
+        'permissions' => ['read'],
+        'levels' => [],
     ];
 
     const SPECIAL_PERMISSIONS = [
@@ -58,13 +59,10 @@ class RolesAndPermissionsSeeder extends Seeder
         $adminRole->givePermissionTo(Permission::all());
 
         $studentPermissions = array_merge(
-            //
+            $this->filterPermissions('profiles')->get(),
+            $this->filterPermissions('levels')->only(['read levels'])->get(),
         );
 
         $studentRole->givePermissionTo($studentPermissions);
-
-        $readerPermissions = array_merge(
-            //
-        );
     }
 }

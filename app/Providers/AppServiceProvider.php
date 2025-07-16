@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
+use App\Policies\LevelPolicy;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Gate;
+use Spatie\Permission\Models\Permission;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,5 +25,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Vite::prefetch(concurrency: 3);
+        Gate::policy(Permission::class, LevelPolicy::class);
     }
 }

@@ -15,14 +15,14 @@ trait HasPermissionCheck
         }
     }
 
-    public function checkPermission(User $user, string $permission, ?Model $model = null): bool
+    public function checkPermission(User $user, string $permission, ?Model $model = null)
     {
         if (!$user->hasPermissionTo($permission)) {
-            throw new UnauthorizedException(403);
+            return $this->handleUnauthorized();
         }
 
         if ($model && $user->id !== $model->user_id) {
-            throw new UnauthorizedException(403);
+            return $this->handleUnauthorized();
         }
 
         if ($user->hasRole('admin')) {
@@ -30,5 +30,14 @@ trait HasPermissionCheck
         }
 
         return true;
+    }
+
+    protected function handleUnauthorized()
+    {
+        if (request()->expectsJson()) {
+            throw new UnauthorizedException(403);
+        }
+        // Para peticiones web (Inertia)
+        return redirect()->back()->withErrors(['permission' => 'No tienes permiso para realizar esta acción.']);
     }
 }

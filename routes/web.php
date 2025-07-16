@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LevelController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -19,10 +20,15 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile/user', [ProfileController::class, 'updateUser'])->name('profile.user.update');
-    Route::post('/profile/profile', [ProfileController::class, 'updateProfile'])->name('profile.profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::prefix('/profile')->name('profile.')->controller(ProfileController::class)->group(function () {
+        Route::get('/', 'edit')->name('edit');
+        Route::patch('/user', 'updateUser')->name('user.update');
+        Route::post('/profile', 'updateProfile')->name('profile.update');
+        Route::delete('/', 'destroy')->name('destroy');
+    });
+
+    Route::resource('levels', LevelController::class);
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
