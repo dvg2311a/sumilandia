@@ -23,12 +23,12 @@ const submit = () => {
 
 <template>
     <GuestLayout>
-        <Head title="Register" />
+        <Head title="Registro" />
 
         <form @submit.prevent="submit">
             <div class="flex gap-4">
                 <div class="w-1/2">
-                    <InputLabel for="first_name" value="First Name" />
+                    <InputLabel for="first_name" value="Nombres" />
                     <TextInput
                         id="first_name"
                         type="text"
@@ -41,7 +41,7 @@ const submit = () => {
                     <InputError class="mt-2" :message="form.errors.first_name" />
                 </div>
                 <div class="w-1/2">
-                    <InputLabel for="last_name" value="Last Name" />
+                    <InputLabel for="last_name" value="Apellidos" />
                     <TextInput
                         id="last_name"
                         type="text"
@@ -55,7 +55,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="email" value="Email" />
+                <InputLabel for="email" value="Correo" />
 
                 <TextInput
                     id="email"
@@ -70,7 +70,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                <InputLabel for="password" value="Contraseña" />
 
                 <TextInput
                     id="password"
@@ -87,7 +87,7 @@ const submit = () => {
             <div class="mt-4">
                 <InputLabel
                     for="password_confirmation"
-                    value="Confirm Password"
+                    value="Confirmar contraseña"
                 />
 
                 <TextInput
@@ -110,7 +110,7 @@ const submit = () => {
                     :href="route('login')"
                     class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                    Already registered?
+                    ¿Ya tienes una cuenta?
                 </Link>
 
                 <PrimaryButton
@@ -118,7 +118,7 @@ const submit = () => {
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
-                    Register
+                    Registrarse
                 </PrimaryButton>
             </div>
         </form>
