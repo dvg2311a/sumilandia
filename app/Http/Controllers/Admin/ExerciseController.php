@@ -6,12 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ExerciseRequest;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
-
-
 use App\Models\Exercise;
 use App\Models\ExerciseType;
 use App\Classes\ExerciseTypeLogic;
-use Illuminate\Http\Request;
 
 class ExerciseController extends Controller
 {

@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\ExerciseController;
 use App\Http\Controllers\Admin\LevelController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\ResourceController;
 use App\Http\Controllers\Admin\UnitController;
 use Illuminate\Foundation\Application;
