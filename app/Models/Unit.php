@@ -14,28 +14,9 @@ class Unit extends Model
     protected $fillable = [
         'name',
         'description',
+        'expected_time',
         'level_id',
     ];
-
-    /**
-     * Get the name of the unit.
-     *
-     * @return string
-     */
-    public function getNameAttribute($value)
-    {
-        return ucfirst($value);
-    }
-
-    /**
-     * Get the description of the unit.
-     *
-     * @return string|null
-     */
-    public function getDescriptionAttribute($value)
-    {
-        return $value ?: 'No description available';
-    }
 
     public function level(): BelongsTo
     {

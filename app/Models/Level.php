@@ -14,21 +14,6 @@ class Level extends Model
         'description'
     ];
 
-    public function getNameAttribute($value)
-    {
-        return ucfirst($value);
-    }
-
-    /**
-     * Get the description of the level.
-     *
-     * @return string|null
-     */
-    public function getDescriptionAttribute($value)
-    {
-        return $value ?: 'No description available';
-    }
-
     public function units(): HasMany
     {
         return $this->hasMany(Unit::class);
