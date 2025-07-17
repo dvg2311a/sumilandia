@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ExerciseController;
 use App\Http\Controllers\Admin\LevelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\ResourceController;
@@ -35,6 +36,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('resources', ResourceController::class);
     Route::get('resources/{resource}/download', [ResourceController::class, 'download'])->name('resources.download');
+
+    Route::resource('exercises', ExerciseController::class);
 });
 
 require __DIR__ . '/auth.php';
