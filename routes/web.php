@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\LevelController;
+use App\Http\Controllers\Admin\LevelController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ResourceController;
-use App\Http\Controllers\UnitController;
+use App\Http\Controllers\Admin\ResourceController;
+use App\Http\Controllers\Admin\UnitController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;

@@ -17,6 +17,9 @@ class RolesAndPermissionsSeeder extends Seeder
         'levels' => [],
         'units' => [],
         'resources' => [],
+        'lessons' => [],
+        'exercises' => [],
+        'exercise_types' => ['read'],
     ];
 
     const SPECIAL_PERMISSIONS = [
@@ -66,6 +69,9 @@ class RolesAndPermissionsSeeder extends Seeder
             $this->filterPermissions('levels')->only(['read levels'])->get(),
             $this->filterPermissions('units')->only(['read units'])->get(),
             $this->filterPermissions('resources')->only(['read resources', 'download resources'])->get(),
+            $this->filterPermissions('lessons')->only(['read lessons'])->get(),
+            $this->filterPermissions('exercises')->only(['read exercises'])->get(),
+            $this->filterPermissions('exercise_types')->only(['read exercise_types'])->get()
         );
 
         $studentRole->givePermissionTo($studentPermissions);

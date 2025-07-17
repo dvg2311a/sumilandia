@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use App\Models\Unit;
-use App\Models\Level;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UnitRequest;
+use App\Models\Level;
+use App\Models\Unit;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Inertia\Inertia;
 
 class UnitController extends Controller

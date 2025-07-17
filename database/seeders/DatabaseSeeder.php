@@ -35,6 +35,14 @@ class DatabaseSeeder extends Seeder
             'level_id' => Level::inRandomOrder()->first()->id,
         ]);
 
-        ExerciseType::factory()->count(5)->create();
+        ExerciseType::insert([
+            ['name' => 'Multiple Choice', 'description' => 'Multiple choice exercises'], // Opción múltiple
+            ['name' => 'Fill in the Blanks', 'description' => 'Exercises to fill in the blanks'], // Completar espacios
+            ['name' => 'True or False', 'description' => 'Exercises to determine if statements are true or false'], // Verdadero o falso
+            ['name' => 'Matching', 'description' => 'Exercises to match items from two lists'], // Relacionar columnas
+            ['name' => 'Ordering', 'description' => 'Exercises to arrange items in the correct order'], // Ordenar elementos
+            ['name' => 'Short Answer', 'description' => 'Exercises that require a brief written response'], // Respuesta corta
+            ['name' => 'Essay', 'description' => 'Exercises that require a longer written response'], // Ensayo
+        ]);
     }
 }

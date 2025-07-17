@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\LevelRequest;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Models\Level;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Inertia\Inertia;
 
 class LevelController extends Controller

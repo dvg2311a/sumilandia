@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\Exercise;
+use App\Models\ExerciseType;
 use App\Models\Lesson;
 use App\Models\Level;
 use App\Models\Resource;
 use App\Models\Unit;
+use App\Policies\ExercisePolicy;
+use App\Policies\ExerciseTypePolicy;
 use App\Policies\LessonPolicy;
 use App\Policies\LevelPolicy;
 use App\Policies\ResourcePolicy;
@@ -36,5 +40,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Unit::class, UnitPolicy::class);
         Gate::policy(Resource::class, ResourcePolicy::class);
         Gate::policy(Lesson::class, LessonPolicy::class);
+        Gate::policy(Exercise::class, ExercisePolicy::class);
+        Gate::policy(ExerciseType::class, ExerciseTypePolicy::class);
     }
 }

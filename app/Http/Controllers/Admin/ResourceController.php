@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use Inertia\Inertia;
-use App\Models\Resource;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ResourceRequest;
-
+use App\Models\Resource;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Inertia\Inertia;
 
 class ResourceController extends Controller
 {
