@@ -32,6 +32,14 @@ class LevelController extends Controller
         return redirect()->route('levels.index')->with('success', 'Nivel creado correctamente');
     }
 
+    public function show(Level $level)
+    {
+        $this->authorize('view', $level);
+        return Inertia::render('Levels/Show', [
+            'level' => $level
+        ]);
+    }
+
     public function edit(Level $level)
     {
         $this->authorize('update', $level);

@@ -27,7 +27,6 @@ class ExerciseController extends Controller
             'types' => $types
         ]);
     }
-
     public function store(ExerciseRequest $request): RedirectResponse
     {
         $data = $request->validated();

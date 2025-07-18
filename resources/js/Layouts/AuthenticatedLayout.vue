@@ -39,6 +39,12 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     Dashboard
                                 </NavLink>
+                                <NavLink
+                                    :href="route('levels.index')"
+                                    :active="route().current('levels.index')"
+                                >
+                                    Niveles
+                                </NavLink>
                             </div>
                         </div>
 
@@ -145,6 +151,12 @@ const showingNavigationDropdown = ref(false);
                             :active="route().current('dashboard')"
                         >
                             Dashboard
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('levels.index')"
+                            :active="route().current('levels.index')"
+                        >
+                            Niveles
                         </ResponsiveNavLink>
                     </div>
 
