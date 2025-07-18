@@ -18,9 +18,18 @@ class ResourceController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Resource::class);
+        $user = auth()->user();
+        $permissions = [
+            'create' => $user->can('create resources'),
+            'view' => $user->can('read resources'),
+            'edit' => $user->can('update resources'),
+            'delete' => $user->can('destroy resources'),
+            'download' => $user->can('download resources'),
+        ];
         $resources = Resource::with('unit')->paginate(10);
         return Inertia::render('Resources/Index', [
-            'resources' => $resources
+            'resources' => $resources,
+            'permissions' => $permissions
         ]);
     }
 

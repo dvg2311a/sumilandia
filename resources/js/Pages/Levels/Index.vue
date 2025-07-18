@@ -16,9 +16,11 @@ import { Head, Link } from '@inertiajs/vue3';
                     <div class="p-6">
                         <div class="flex justify-between items-center mb-6">
                             <h1 class="text-2xl font-bold text-gray-800">Listado de Niveles</h1>
-                            <Link href="/levels/create"
-                                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Crear
-                            Nivel</Link>
+                            <template v-if="permissions.create">
+                                <Link href="/levels/create"
+                                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Crear
+                                Nivel</Link>
+                            </template>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200">
@@ -44,16 +46,22 @@ import { Head, Link } from '@inertiajs/vue3';
                                         <td class="px-6 py-4 whitespace-nowrap">{{ level.name }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ level.description }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <Link :href="`/levels/${level.id}`"
-                                                class="text-green-600 hover:underline mr-4">
-                                            Ver
-                                            </Link>
-                                            <Link :href="`/levels/${level.id}/edit`"
-                                                class="text-blue-600 hover:underline mr-4">
-                                            Editar
-                                            </Link>
-                                            <button @click="destroy(level.id)"
-                                                class="text-red-600 hover:underline">Eliminar</button>
+                                            <template v-if="permissions.view">
+                                                <Link :href="`/levels/${level.id}`"
+                                                    class="text-green-600 hover:underline mr-4">
+                                                Ver
+                                                </Link>
+                                            </template>
+                                            <template v-if="permissions.edit">
+                                                <Link :href="`/levels/${level.id}/edit`"
+                                                    class="text-blue-600 hover:underline mr-4">
+                                                Editar
+                                                </Link>
+                                            </template>
+                                            <template v-if="permissions.delete">
+                                                <button @click="destroy(level.id)"
+                                                    class="text-red-600 hover:underline">Eliminar</button>
+                                            </template>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -70,7 +78,8 @@ import { Head, Link } from '@inertiajs/vue3';
 <script>
 export default {
     props: {
-        levels: Array
+        levels: Array,
+        permissions: Object
     },
     methods: {
         destroy(id) {

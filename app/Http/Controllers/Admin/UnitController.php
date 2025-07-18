@@ -15,9 +15,17 @@ class UnitController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Unit::class);
+        $user = auth()->user();
+        $permissions = [
+            'create' => $user->can('create units'),
+            'view' => $user->can('read units'),
+            'edit' => $user->can('update units'),
+            'delete' => $user->can('destroy units'),
+        ];
         $units = Unit::with('level')->get();
         return Inertia::render('Units/Index', [
-            'units' => $units
+            'units' => $units,
+            'permissions' => $permissions
         ]);
     }
 

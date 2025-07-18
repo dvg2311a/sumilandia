@@ -3,7 +3,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
 
 const props = defineProps({
-  units: Array
+  units: Array,
+  permissions: Object
 });
 </script>
 
@@ -19,7 +20,9 @@ const props = defineProps({
           <div class="p-6">
             <div class="flex justify-between items-center mb-6">
               <h1 class="text-2xl font-bold text-gray-800">Listado de Unidades</h1>
-              <Link href="/units/create" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Crear Unidad</Link>
+              <template v-if="permissions.create">
+                <Link href="/units/create" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Crear Unidad</Link>
+              </template>
             </div>
             <div class="overflow-x-auto">
               <table class="min-w-full divide-y divide-gray-200">
@@ -41,9 +44,15 @@ const props = defineProps({
                     <td class="px-6 py-4 whitespace-nowrap">{{ unit.expected_time }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ unit.level?.name }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                      <Link :href="`/units/${unit.id}`" class="text-green-600 hover:underline mr-4">Ver</Link>
-                      <Link :href="`/units/${unit.id}/edit`" class="text-blue-600 hover:underline mr-4">Editar</Link>
-                      <button @click="destroy(unit.id)" class="text-red-600 hover:underline">Eliminar</button>
+                      <template v-if="permissions.view">
+                        <Link :href="`/units/${unit.id}`" class="text-green-600 hover:underline mr-4">Ver</Link>
+                      </template>
+                      <template v-if="permissions.edit">
+                        <Link :href="`/units/${unit.id}/edit`" class="text-blue-600 hover:underline mr-4">Editar</Link>
+                      </template>
+                      <template v-if="permissions.delete">
+                        <button @click="destroy(unit.id)" class="text-red-600 hover:underline">Eliminar</button>
+                      </template>
                     </td>
                   </tr>
                 </tbody>
@@ -59,7 +68,8 @@ const props = defineProps({
 <script>
 export default {
   props: {
-    units: Array
+    units: Array,
+    permissions: Object
   },
   methods: {
     destroy(id) {

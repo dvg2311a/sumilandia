@@ -3,7 +3,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
 const props = defineProps({
-    resources: Object
+    resources: Object,
+    permissions: Object
 });
 </script>
 
@@ -20,7 +21,9 @@ const props = defineProps({
                     <div class="p-6">
                         <div class="flex justify-between items-center mb-6">
                             <h1 class="text-2xl font-bold text-gray-800">Listado de Recursos</h1>
-                            <Link href="/resources/create" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Crear</Link>
+                            <template v-if="permissions.create">
+                                <Link href="/resources/create" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Crear</Link>
+                            </template>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200">
@@ -40,14 +43,20 @@ const props = defineProps({
                                         <td class="px-6 py-4 whitespace-nowrap">{{ resource.name }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ resource.description }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <a :href="`/storage/${resource.file_path}`" target="_blank" class="text-blue-600 underline">Ver archivo</a>
-                                            <a :href="route('resources.download', resource.id)" class="text-green-600 underline ml-2" download>Descargar</a>
+                                            <a v-if="resource.file_path" :href="`/storage/${resource.file_path}`" target="_blank" class="text-blue-600 underline">Ver archivo</a>
+                                            <a v-if="permissions.download && resource.file_path" :href="route('resources.download', resource.id)" class="text-green-600 underline ml-2" download>Descargar</a>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ resource.unit?.name }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <Link :href="`/resources/${resource.id}`" class="text-blue-600 hover:underline mr-4">Ver</Link>
-                                            <Link :href="`/resources/${resource.id}/edit`" class="text-yellow-600 hover:underline mr-4">Editar</Link>
-                                            <button @click="destroy(resource.id)" class="text-red-600 hover:underline">Eliminar</button>
+                                            <template v-if="permissions.view">
+                                                <Link :href="`/resources/${resource.id}`" class="text-blue-600 hover:underline mr-4">Ver</Link>
+                                            </template>
+                                            <template v-if="permissions.edit">
+                                                <Link :href="`/resources/${resource.id}/edit`" class="text-yellow-600 hover:underline mr-4">Editar</Link>
+                                            </template>
+                                            <template v-if="permissions.delete">
+                                                <button @click="destroy(resource.id)" class="text-red-600 hover:underline">Eliminar</button>
+                                            </template>
                                         </td>
                                     </tr>
                                 </tbody>

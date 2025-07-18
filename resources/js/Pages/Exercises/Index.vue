@@ -2,7 +2,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 const props = defineProps({
-    exercises: Object
+    exercises: Object,
+    permissions: Object
 });
 function destroy(id) {
     if (confirm('¿Seguro que deseas eliminar este ejercicio?')) {
@@ -24,10 +25,12 @@ function destroy(id) {
                     <div class="p-6">
                         <div class="flex justify-between items-center mb-6">
                             <h1 class="text-2xl font-bold text-gray-800">Listado de Ejercicios</h1>
-                            <Link href="/exercises/create"
-                                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                            Crear Ejercicio
-                            </Link>
+                            <template v-if="permissions.create">
+                                <Link href="/exercises/create"
+                                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                                Crear Ejercicio
+                                </Link>
+                            </template>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200">
@@ -57,12 +60,18 @@ function destroy(id) {
                                         <td class="px-6 py-4 whitespace-nowrap">{{ exercise.exercise_type?.name }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ exercise.lesson?.name }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <Link :href="`/exercises/${exercise.id}`"
-                                                class="text-green-600 hover:underline mr-4">Ver</Link>
-                                            <Link :href="`/exercises/${exercise.id}/edit`"
-                                                class="text-blue-600 hover:underline mr-4">Editar</Link>
-                                            <button @click="destroy(exercise.id)"
-                                                class="text-red-600 hover:underline">Eliminar</button>
+                                            <template v-if="permissions.view">
+                                                <Link :href="`/exercises/${exercise.id}`"
+                                                    class="text-green-600 hover:underline mr-4">Ver</Link>
+                                            </template>
+                                            <template v-if="permissions.edit">
+                                                <Link :href="`/exercises/${exercise.id}/edit`"
+                                                    class="text-blue-600 hover:underline mr-4">Editar</Link>
+                                            </template>
+                                            <template v-if="permissions.delete">
+                                                <button @click="destroy(exercise.id)"
+                                                    class="text-red-600 hover:underline">Eliminar</button>
+                                            </template>
                                         </td>
                                     </tr>
                                 </tbody>
