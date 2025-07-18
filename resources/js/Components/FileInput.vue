@@ -20,7 +20,7 @@ function onFileChange(e) {
     }
     fileName.value = file.name;
     model.value = file;
-    // Si es imagen, mostrar preview
+
     if (file.type.startsWith('image/')) {
         const reader = new FileReader();
         reader.onload = (event) => {
@@ -32,7 +32,6 @@ function onFileChange(e) {
     }
 }
 
-// Mostrar preview si el modelo es string/url (solo imagen)
 if (typeof model.value === 'string' && model.value && !model.value.startsWith('data:')) {
     preview.value = model.value.startsWith('http') ? model.value : `/storage/${model.value.replace(/^public\//, '')}`;
 }

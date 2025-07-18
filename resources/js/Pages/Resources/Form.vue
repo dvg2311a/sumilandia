@@ -8,38 +8,24 @@ const props = defineProps({
 });
 
 const form = useForm({
+    _method: 'POST',
     name: props.resource?.name || '',
     description: props.resource?.description || '',
-    file_path: props.resource?.file_path || '',
+    file_path: null,
     unit_id: props.resource?.unit_id || ''
 });
 
 
 function submit() {
-    // Si el usuario no selecciona un nuevo archivo, mantener el valor anterior
-    if (!form.file_path && props.resource?.file_path) {
-        form.file_path = props.resource.file_path;
-    }
-    // Crear objeto limpio solo con campos con valor
-    const data = {};
-    if (form.name) data.name = String(form.name);
-    if (form.description) data.description = String(form.description);
-    if (form.unit_id) data.unit_id = String(form.unit_id);
-    if (form.file_path !== null && form.file_path !== undefined && form.file_path !== '') {
-        data.file_path = form.file_path;
-    }
-    // Debug: mostrar datos antes de enviar
-    console.log('Datos enviados:', data);
     if (props.resource) {
-        form.put(`/resources/${props.resource.id}`, {
+        form.transform(data => ({
             ...data,
-            forceFormData: true,
+            _method: 'PUT',
+        })).post(`/resources/${props.resource.id}`, {
             onSuccess: () => form.reset('file_path'),
         });
     } else {
         form.post('/resources', {
-            ...data,
-            forceFormData: true,
             onSuccess: () => form.reset('file_path'),
         });
     }
@@ -63,6 +49,9 @@ function submit() {
         <div>
             <label for="file_path" class="block text-sm font-medium text-gray-700">Archivo</label>
             <FileInput v-model="form.file_path" />
+            <div v-if="resource?.file_path" class="mt-2 text-xs text-gray-500">
+                Archivo actual: <a :href="`/storage/${resource.file_path}`" target="_blank" class="text-indigo-600 hover:underline">{{ resource.file_path.split('/').pop() }}</a>
+            </div>
             <span v-if="form.errors.file_path" class="text-red-500 text-xs">{{ form.errors.file_path }}</span>
         </div>
         <div>

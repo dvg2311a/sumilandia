@@ -19,7 +19,7 @@ function onFileChange(e) {
         return;
     }
     fileName.value = file.name;
-    model.value = file; // Asignar el archivo real al modelo
+    model.value = file;
     console.log('Archivo seleccionado:', file);
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -28,7 +28,6 @@ function onFileChange(e) {
     reader.readAsDataURL(file);
 }
 
-// Mostrar imagen actual si el modelo es string/url
 if (typeof model.value === 'string' && model.value && !model.value.startsWith('data:')) {
     preview.value = model.value.startsWith('http') ? model.value : `/storage/${model.value.replace(/^public\//, '')}`;
 }

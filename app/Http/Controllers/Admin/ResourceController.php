@@ -71,7 +71,10 @@ class ResourceController extends Controller
         if ($request->hasFile('file_path')) {
             $fileService->updateLocal($resource, 'file_path', $request->file('file_path'), 'resources');
         } else {
-            $resource->update($data);
+            // Si no hay archivo nuevo, actualiza los demás campos
+            $resource->update(array_filter($data, function($key) {
+                return $key !== 'file_path';
+            }, ARRAY_FILTER_USE_KEY));
         }
         return redirect()->route('resources.index')->with('success', 'Recurso actualizado correctamente');
     }
