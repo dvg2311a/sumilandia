@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\LessonController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\ExerciseController;
 use App\Http\Controllers\Admin\LevelController;
@@ -33,6 +34,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('levels', LevelController::class);
     Route::resource('units', UnitController::class);
+    Route::resource('lessons', LessonController::class);
 
     Route::resource('resources', ResourceController::class);
     Route::get('resources/{resource}/download', [ResourceController::class, 'download'])->name('resources.download');

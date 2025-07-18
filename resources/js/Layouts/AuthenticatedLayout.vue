@@ -51,6 +51,12 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     Unidades
                                 </NavLink>
+                                <NavLink
+                                    :href="route('lessons.index')"
+                                    :active="route().current('lessons.index')"
+                                >
+                                    Lecciones
+                                </NavLink>
                             </div>
                         </div>
 
@@ -93,7 +99,7 @@ const showingNavigationDropdown = ref(false);
                                             method="post"
                                             as="button"
                                         >
-                                            Cerrar sesión   
+                                            Cerrar sesión
                                         </DropdownLink>
                                     </template>
                                 </Dropdown>
@@ -169,6 +175,12 @@ const showingNavigationDropdown = ref(false);
                             :active="route().current('units.index')"
                         >
                             Unidades
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('lessons.index')"
+                            :active="route().current('lessons.index')"
+                        >
+                            Lecciones
                         </ResponsiveNavLink>
                     </div>
 

@@ -33,7 +33,10 @@ class LessonController extends Controller
     public function create()
     {
         $this->authorize('create', Lesson::class);
-        return Inertia::render('Lessons/Create');
+        $units = \App\Models\Unit::all();
+        return Inertia::render('Lessons/Create', [
+            'units' => $units
+        ]);
     }
 
     public function store(LessonRequest $request)
@@ -46,8 +49,10 @@ class LessonController extends Controller
     public function edit(Lesson $lesson)
     {
         $this->authorize('update', $lesson);
+        $units = \App\Models\Unit::all();
         return Inertia::render('Lessons/Edit', [
-            'lesson' => $lesson
+            'lesson' => $lesson,
+            'units' => $units
         ]);
     }
 
