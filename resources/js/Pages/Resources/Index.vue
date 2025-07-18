@@ -25,37 +25,28 @@ const props = defineProps({
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead>
                                 <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nombre
-                                    </th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                        Descripción</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Archivo
-                                    </th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Unidad
-                                    </th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Acciones
-                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nombre</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Descripción</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Archivo</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Unidad</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="resource in resources.data" :key="resource.id">
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ resource.id }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ resource.name }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ resource.description }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <a :href="`/storage/${resource.file_path}`" target="_blank"
-                                            class="text-blue-600 underline">Ver
-                                            archivo</a>
+                                            class="text-blue-600 underline">Ver archivo</a>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ resource.unit?.name }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap flex gap-2">
-                                        <Link :href="`/resources/${resource.id}`" class="text-blue-600 hover:underline">
-                                        Ver
-                                        </Link>
-                                        <Link :href="`/resources/${resource.id}/edit`"
-                                            class="text-yellow-600 hover:underline">
-                                        Editar</Link>
-                                        <button @click="destroy(resource.id)"
-                                            class="text-red-600 hover:underline">Eliminar</button>
+                                        <Link :href="`/resources/${resource.id}`" class="text-blue-600 hover:underline">Ver</Link>
+                                        <Link :href="`/resources/${resource.id}/edit`" class="text-yellow-600 hover:underline">Editar</Link>
+                                        <button @click="destroy(resource.id)" class="text-red-600 hover:underline">Eliminar</button>
                                     </td>
                                 </tr>
                             </tbody>

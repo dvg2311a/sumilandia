@@ -1,5 +1,6 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
+import FileInput from '@/Components/FileInput.vue';
 
 const props = defineProps({
     resource: Object,
@@ -13,9 +14,6 @@ const form = useForm({
     unit_id: props.resource?.unit_id || ''
 });
 
-function handleFile(e) {
-    form.file_path = e.target.files[0];
-}
 
 function submit() {
     if (props.resource) {
@@ -48,14 +46,8 @@ function submit() {
         </div>
         <div>
             <label for="file_path" class="block text-sm font-medium text-gray-700">Archivo</label>
-            <input @change="handleFile" id="file_path" type="file"
-                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" :required="!props.resource" />
+            <FileInput v-model="form.file_path" />
             <span v-if="form.errors.file_path" class="text-red-500 text-xs">{{ form.errors.file_path }}</span>
-            <div v-if="props.resource && props.resource.file_path" class="mt-2">
-                <span class="text-xs text-gray-500">Archivo actual:</span>
-                <a :href="`/storage/${props.resource.file_path}`" target="_blank" class="text-blue-600 underline">Ver
-                    archivo</a>
-            </div>
         </div>
         <div>
             <label for="unit_id" class="block text-sm font-medium text-gray-700">Unidad</label>
