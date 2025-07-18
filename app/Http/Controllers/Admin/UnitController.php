@@ -36,6 +36,15 @@ class UnitController extends Controller
         return redirect()->route('units.index')->with('success', 'Unidad creada correctamente');
     }
 
+    public function show(Unit $unit)
+    {
+        $this->authorize('view', $unit);
+        $unit->load('level');
+        return Inertia::render('Units/Show', [
+            'unit' => $unit
+        ]);
+    }
+
     public function edit(Unit $unit)
     {
         $this->authorize('update', $unit);

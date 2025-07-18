@@ -45,11 +45,11 @@ const submitProfile = () => {
     <section>
         <header>
             <h2 class="text-lg font-medium text-gray-900">
-                Profile Information
+                Información de Perfil
             </h2>
 
             <p class="mt-1 text-sm text-gray-600">
-                Update your account's profile information and email address.
+                Actualiza la información de tu perfil y correo electrónico.
             </p>
         </header>
 
@@ -65,31 +65,31 @@ const submitProfile = () => {
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <InputLabel for="nickname" value="Nickname" />
+                    <InputLabel for="nickname" value="Apodo" />
                     <TextInput id="nickname" type="text" class="mt-1 block w-full" v-model="profileForm.nickname"
                         autocomplete="nickname" />
                     <InputError class="mt-2" :message="profileForm.errors.nickname" />
                 </div>
                 <div>
-                    <InputLabel for="gender" value="Gender" />
+                    <InputLabel for="gender" value="Género" />
                     <select id="gender" v-model="profileForm.gender"
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                        <option value="">Select gender</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
+                        <option value="">Selecciona género</option>
+                        <option value="male">Masculino</option>
+                        <option value="female">Femenino</option>
                     </select>
                     <InputError class="mt-2" :message="profileForm.errors.gender" />
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <InputLabel for="birthdate" value="Birthdate" />
+                    <InputLabel for="birthdate" value="Fecha de nacimiento" />
                     <TextInput id="birthdate" type="date" class="mt-1 block w-full" v-model="profileForm.birthdate"
                         autocomplete="bday" />
                     <InputError class="mt-2" :message="profileForm.errors.birthdate" />
                 </div>
                 <div>
-                    <InputLabel for="academic_level" value="Academic Level" />
+                    <InputLabel for="academic_level" value="Nivel académico" />
                     <TextInput id="academic_level" type="text" class="mt-1 block w-full"
                         v-model="profileForm.academic_level" />
                     <InputError class="mt-2" :message="profileForm.errors.academic_level" />
@@ -99,7 +99,7 @@ const submitProfile = () => {
                 <PrimaryButton :disabled="profileForm.processing">Guardar Perfil</PrimaryButton>
                 <Transition enter-active-class="transition ease-in-out" enter-from-class="opacity-0"
                     leave-active-class="transition ease-in-out" leave-to-class="opacity-0">
-                    <p v-if="profileForm.recentlySuccessful" class="text-sm text-gray-600">Guardado.</p>
+                    <p v-if="profileForm.recentlySuccessful" class="text-sm text-gray-600">¡Guardado!</p>
                 </Transition>
             </div>
         </form>

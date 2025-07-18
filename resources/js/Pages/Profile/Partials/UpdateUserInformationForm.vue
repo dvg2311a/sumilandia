@@ -39,11 +39,11 @@ const submitUser = () => {
     <section>
         <header>
             <h2 class="text-lg font-medium text-gray-900">
-                Profile Information
+                Información del usuario
             </h2>
 
             <p class="mt-1 text-sm text-gray-600">
-                Update your account's profile information and email address.
+                Actualiza la información de tu usuario y correo electrónico.
             </p>
         </header>
 
@@ -51,7 +51,7 @@ const submitUser = () => {
         <form @submit.prevent="submitUser" class="mt-6 space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <InputLabel for="first_name" value="First Name" />
+                    <InputLabel for="first_name" value="Nombre" />
                     <TextInput
                         id="first_name"
                         type="text"
@@ -64,7 +64,7 @@ const submitUser = () => {
                     <InputError class="mt-2" :message="userForm.errors.first_name" />
                 </div>
                 <div>
-                    <InputLabel for="last_name" value="Last Name" />
+                    <InputLabel for="last_name" value="Apellido" />
                     <TextInput
                         id="last_name"
                         type="text"
@@ -78,7 +78,7 @@ const submitUser = () => {
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <InputLabel for="email" value="Email" />
+                    <InputLabel for="email" value="Correo electrónico" />
                     <TextInput
                         id="email"
                         type="email"

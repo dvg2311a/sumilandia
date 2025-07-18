@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import Form from './Form.vue';
 </script>
 
@@ -19,8 +19,8 @@ import Form from './Form.vue';
                     <div class="p-6">
                         <div class="flex justify-between items-center mb-6">
                             <h1 class="text-2xl font-bold text-gray-800">Crear Nivel</h1>
-                            <a href="/levels"
-                                class="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300">Volver</a>
+                            <Link href="/levels"
+                                class="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300">Volver</Link>
                         </div>
                         <Form />
                     </div>
