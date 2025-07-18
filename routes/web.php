@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('lessons', LessonController::class);
 
     Route::resource('resources', ResourceController::class);
-    Route::get('resources/{resource}/download', [ResourceController::class, 'download'])->name('resources.download');
+    // Route::get('resources/{resource}/download', [ResourceController::class, 'download'])->name('resources.download');
 
     Route::resource('exercises', ExerciseController::class);
 });

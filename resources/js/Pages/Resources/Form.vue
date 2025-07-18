@@ -10,19 +10,35 @@ const props = defineProps({
 const form = useForm({
     name: props.resource?.name || '',
     description: props.resource?.description || '',
-    file_path: null,
+    file_path: props.resource?.file_path || '',
     unit_id: props.resource?.unit_id || ''
 });
 
 
 function submit() {
+    // Si el usuario no selecciona un nuevo archivo, mantener el valor anterior
+    if (!form.file_path && props.resource?.file_path) {
+        form.file_path = props.resource.file_path;
+    }
+    // Crear objeto limpio solo con campos con valor
+    const data = {};
+    if (form.name) data.name = String(form.name);
+    if (form.description) data.description = String(form.description);
+    if (form.unit_id) data.unit_id = String(form.unit_id);
+    if (form.file_path !== null && form.file_path !== undefined && form.file_path !== '') {
+        data.file_path = form.file_path;
+    }
+    // Debug: mostrar datos antes de enviar
+    console.log('Datos enviados:', data);
     if (props.resource) {
         form.put(`/resources/${props.resource.id}`, {
+            ...data,
             forceFormData: true,
             onSuccess: () => form.reset('file_path'),
         });
     } else {
         form.post('/resources', {
+            ...data,
             forceFormData: true,
             onSuccess: () => form.reset('file_path'),
         });
@@ -34,13 +50,13 @@ function submit() {
     <form @submit.prevent="submit" class="space-y-6">
         <div>
             <label for="name" class="block text-sm font-medium text-gray-700">Nombre</label>
-            <input v-model="form.name" id="name" type="text"
+            <input v-model="form.name" id="name" name="name" type="text"
                 class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required />
             <span v-if="form.errors.name" class="text-red-500 text-xs">{{ form.errors.name }}</span>
         </div>
         <div>
             <label for="description" class="block text-sm font-medium text-gray-700">Descripción</label>
-            <textarea v-model="form.description" id="description" rows="3"
+            <textarea v-model="form.description" name="description" id="description" rows="3"
                 class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
             <span v-if="form.errors.description" class="text-red-500 text-xs">{{ form.errors.description }}</span>
         </div>
@@ -51,8 +67,8 @@ function submit() {
         </div>
         <div>
             <label for="unit_id" class="block text-sm font-medium text-gray-700">Unidad</label>
-            <select v-model="form.unit_id" id="unit_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                required>
+            <select v-model="form.unit_id" id="unit_id" name="unit_id"
+                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
                 <option value="" disabled>Selecciona una unidad</option>
                 <option v-for="unit in units" :key="unit.id" :value="unit.id">{{ unit.name }}</option>
             </select>

@@ -41,14 +41,16 @@ class ResourceController extends Controller
         ]);
     }
 
-    public function store(ResourceRequest $request)
+    public function store(ResourceRequest $request, FileService $fileService)
     {
         $this->authorize('create', Resource::class);
         $data = $request->validated();
+        $resource = new Resource($data);
         if ($request->hasFile('file_path')) {
-            $data['file_path'] = $request->file('file_path')->store('resources', 'public');
+            $fileService->storeLocal($resource, 'file_path', $request->file('file_path'), 'resources');
+        } else {
+            $resource->save();
         }
-        Resource::create($data);
         return redirect()->route('resources.index')->with('success', 'Recurso creado correctamente');
     }
 
@@ -62,14 +64,15 @@ class ResourceController extends Controller
         ]);
     }
 
-    public function update(ResourceRequest $request, Resource $resource)
+    public function update(ResourceRequest $request, Resource $resource, FileService $fileService)
     {
         $this->authorize('update', $resource);
         $data = $request->validated();
         if ($request->hasFile('file_path')) {
-            $data['file_path'] = $request->file('file_path')->store('resources', 'public');
+            $fileService->updateLocal($resource, 'file_path', $request->file('file_path'), 'resources');
+        } else {
+            $resource->update($data);
         }
-        $resource->update($data);
         return redirect()->route('resources.index')->with('success', 'Recurso actualizado correctamente');
     }
 

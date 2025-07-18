@@ -74,10 +74,15 @@ const showingNavigationDropdown = ref(false);
                                         <span class="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none"
+                                                class="inline-flex items-center gap-2 rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none"
                                             >
+                                                <img
+                                                    v-if="$page.props.auth.user.profile && $page.props.auth.user.profile.avatar_url"
+                                                    :src="$page.props.auth.user.profile.avatar_url"
+                                                    alt="Avatar"
+                                                    class="h-8 w-8 rounded-full object-cover border border-gray-300 me-2"
+                                                />
                                                 {{ $page.props.auth.user.full_name }}
-
                                                 <svg
                                                     class="-me-0.5 ms-2 h-4 w-4"
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -201,9 +206,13 @@ const showingNavigationDropdown = ref(false);
                         class="border-t border-gray-200 pb-1 pt-4"
                     >
                         <div class="px-4">
-                            <div
-                                class="text-base font-medium text-gray-800"
-                            >
+                            <div class="flex items-center gap-2 text-base font-medium text-gray-800">
+                                <img
+                                    v-if="$page.props.auth.user.profile && $page.props.auth.user.profile.avatar_url"
+                                    :src="$page.props.auth.user.profile.avatar_url"
+                                    alt="Avatar"
+                                    class="h-8 w-8 rounded-full object-cover border border-gray-300"
+                                />
                                 {{ $page.props.auth.user.full_name }}
                             </div>
                             <div class="text-sm font-medium text-gray-500">

@@ -29,20 +29,25 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $user = $request->user();
+        $profile = $user && $user->profile ? $user->profile->toArray() : null;
+        if ($profile && method_exists($user->profile, 'getAvatarUrlAttribute')) {
+            $profile['avatar_url'] = $user->profile->avatar_url;
+        }
         return [
             ...parent::share($request),
             'auth' => [
-                'user' => $request->user()
+                'user' => $user
                     ? array_merge(
-                        $request->user()->only([
+                        $user->only([
                             'id',
                             'first_name',
                             'last_name',
                             'email',
                         ]),
                         [
-                            'full_name' => $request->user()->full_name,
-                            'profile' => $request->user()->profile,
+                            'full_name' => $user ? $user->getFullNameAttribute() : '',
+                            'profile' => $profile,
                         ]
                     )
                     : null,
