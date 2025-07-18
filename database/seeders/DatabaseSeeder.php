@@ -29,20 +29,27 @@ class DatabaseSeeder extends Seeder
         ]);
         $adminUser->assignRole('admin');
 
-        Level::factory()->count(3)->create();
+        Level::insert([
+            ['name' => 'Básico', 'description' => 'Nivel inicial para comenzar el aprendizaje desde cero.'],
+            ['name' => 'Intermedio', 'description' => 'Nivel para reforzar y ampliar conocimientos previos.'],
+            ['name' => 'Avanzado', 'description' => 'Nivel para dominar y profundizar en los temas más complejos.'],
+        ]);
 
-        Unit::factory()->count(4)->create([
-            'level_id' => Level::inRandomOrder()->first()->id,
+        Unit::insert([
+            ['name' => 'Números y operaciones básicas', 'description' => 'Que el estudiante aprenda a reconocer y operar con números naturales y operaciones aritméticas simples.', 'expected_time' => 30, 'level_id' => 1],
+            ['name' => 'Álgebra básica', 'description' => 'Introducción a las variables, ecuaciones y expresiones algebraicas.', 'expected_time' => 45, 'level_id' => 2],
+            ['name' => 'Geometría y medidas', 'description' => 'Conceptos básicos de geometría, figuras y medidas.', 'expected_time' => 40, 'level_id' => 3],
+            ['name' => 'Estadística y probabilidad', 'description' => 'Fundamentos de la estadística descriptiva y probabilidad.', 'expected_time' => 50, 'level_id' => 3],
         ]);
 
         ExerciseType::insert([
-            ['name' => 'Multiple Choice', 'description' => 'Multiple choice exercises'], // Opción múltiple
-            ['name' => 'Fill in the Blanks', 'description' => 'Exercises to fill in the blanks'], // Completar espacios
-            ['name' => 'True or False', 'description' => 'Exercises to determine if statements are true or false'], // Verdadero o falso
-            ['name' => 'Matching', 'description' => 'Exercises to match items from two lists'], // Relacionar columnas
-            ['name' => 'Ordering', 'description' => 'Exercises to arrange items in the correct order'], // Ordenar elementos
-            ['name' => 'Short Answer', 'description' => 'Exercises that require a brief written response'], // Respuesta corta
-            ['name' => 'Essay', 'description' => 'Exercises that require a longer written response'], // Ensayo
+            ['name' => 'Opción múltiple', 'description' => 'Ejercicios de opción múltiple'],
+            ['name' => 'Completar espacios', 'description' => 'Ejercicios para completar espacios en blanco'],
+            ['name' => 'Verdadero o falso', 'description' => 'Ejercicios para determinar si las afirmaciones son verdaderas o falsas'],
+            ['name' => 'Relacionar columnas', 'description' => 'Ejercicios para relacionar elementos de dos listas'],
+            ['name' => 'Ordenar elementos', 'description' => 'Ejercicios para ordenar elementos en el orden correcto'],
+            ['name' => 'Respuesta corta', 'description' => 'Ejercicios que requieren una respuesta breve escrita'],
+            ['name' => 'Ensayo', 'description' => 'Ejercicios que requieren una respuesta escrita más extensa'],
         ]);
     }
 }

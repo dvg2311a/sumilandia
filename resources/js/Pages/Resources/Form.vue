@@ -11,7 +11,7 @@ const form = useForm({
     _method: 'POST',
     name: props.resource?.name || '',
     description: props.resource?.description || '',
-    file_path: null,
+    file_path: '',
     unit_id: props.resource?.unit_id || ''
 });
 

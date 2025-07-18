@@ -30,7 +30,7 @@ class ExerciseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'prompt' => ['required', 'string', 'min:6', '255'],
+            'prompt' => ['required', 'string', 'min:6', 'max:255'],
             'options' => ['array', 'max:4'],
             'solution' => ['required', 'string'],
             'explanation' => ['nullable', 'string', 'min:6', 'max:255'],

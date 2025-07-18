@@ -23,8 +23,10 @@ class ExerciseController extends Controller
     public function create()
     {
         $types = ExerciseType::all();
+        $lessons = \App\Models\Lesson::all();
         return Inertia::render('Exercises/Create', [
-            'types' => $types
+            'types' => $types,
+            'lessons' => $lessons
         ]);
     }
     public function store(ExerciseRequest $request): RedirectResponse
@@ -54,9 +56,11 @@ class ExerciseController extends Controller
     public function edit(Exercise $exercise)
     {
         $types = ExerciseType::all();
+        $lessons = \App\Models\Lesson::all();
         return Inertia::render('Exercises/Edit', [
             'exercise' => $exercise,
-            'types' => $types
+            'types' => $types,
+            'lessons' => $lessons
         ]);
     }
 

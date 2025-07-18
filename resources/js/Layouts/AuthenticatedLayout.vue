@@ -63,6 +63,12 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     Recursos
                                 </NavLink>
+                                <NavLink
+                                    :href="route('exercises.index')"
+                                    :active="route().current('exercises.index')"
+                                >
+                                    Ejercicios
+                                </NavLink>
                             </div>
                         </div>
 
@@ -198,6 +204,12 @@ const showingNavigationDropdown = ref(false);
                             :active="route().current('resources.index')"
                         >
                             Recursos
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('exercises.index')"
+                            :active="route().current('exercises.index')"
+                        >
+                            Ejercicios
                         </ResponsiveNavLink>
                     </div>
 

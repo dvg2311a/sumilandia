@@ -37,11 +37,11 @@ class ResourceRequest extends FormRequest
         ];
 
         if ($this->isMethod('post')) {
-            $rules['file_path'] = ['required', 'file', 'mimes:jpg,png,jpeg,webp,pdf,doc,docx,xls,xlsx,ppt,pptx', 'max:10240'];
+            $rules['file_path'] = ['required', 'file', 'mimes:jpg,png,jpeg,webp,pdf,doc,docx,xls,xlsx,ppt,pptx', 'max:30240'];
         }
 
         if ($this->isMethod('put') || $this->isMethod('patch')) {
-            $rules['file_path'] = ['nullable', 'file', 'mimes:jpg,png,jpeg,webp,pdf,doc,docx,xls,xlsx,ppt,pptx', 'max:10240'];
+            $rules['file_path'] = ['nullable', 'file', 'mimes:jpg,png,jpeg,webp,pdf,doc,docx,xls,xlsx,ppt,pptx', 'max:30240'];
         }
 
         return $rules;
