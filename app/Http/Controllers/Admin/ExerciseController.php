@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ExerciseRequest;
+use App\Models\Lesson;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use App\Models\Exercise;
@@ -23,7 +24,7 @@ class ExerciseController extends Controller
     public function create()
     {
         $types = ExerciseType::all();
-        $lessons = \App\Models\Lesson::all();
+        $lessons = Lesson::all();
         return Inertia::render('Exercises/Create', [
             'types' => $types,
             'lessons' => $lessons
@@ -56,7 +57,7 @@ class ExerciseController extends Controller
     public function edit(Exercise $exercise)
     {
         $types = ExerciseType::all();
-        $lessons = \App\Models\Lesson::all();
+        $lessons = Lesson::all();
         return Inertia::render('Exercises/Edit', [
             'exercise' => $exercise,
             'types' => $types,

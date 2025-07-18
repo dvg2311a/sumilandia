@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ResourceRequest;
 use App\Models\Resource;
+use App\Models\Unit;
 use App\Services\FileService;
 use File;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -26,7 +27,7 @@ class ResourceController extends Controller
     public function create()
     {
         $this->authorize('create', Resource::class);
-        $units = \App\Models\Unit::all();
+        $units = Unit::all();
         return Inertia::render('Resources/Create', [
             'units' => $units
         ]);
@@ -57,7 +58,7 @@ class ResourceController extends Controller
     public function edit(Resource $resource)
     {
         $this->authorize('update', $resource);
-        $units = \App\Models\Unit::all();
+        $units = Unit::all();
         return Inertia::render('Resources/Edit', [
             'resource' => $resource,
             'units' => $units

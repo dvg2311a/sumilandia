@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LessonRequest;
 use App\Models\Lesson;
+use App\Models\Unit;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Inertia\Inertia;
 
@@ -33,7 +34,7 @@ class LessonController extends Controller
     public function create()
     {
         $this->authorize('create', Lesson::class);
-        $units = \App\Models\Unit::all();
+        $units = Unit::all();
         return Inertia::render('Lessons/Create', [
             'units' => $units
         ]);
@@ -49,7 +50,7 @@ class LessonController extends Controller
     public function edit(Lesson $lesson)
     {
         $this->authorize('update', $lesson);
-        $units = \App\Models\Unit::all();
+        $units = Unit::all();
         return Inertia::render('Lessons/Edit', [
             'lesson' => $lesson,
             'units' => $units
