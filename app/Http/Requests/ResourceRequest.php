@@ -35,9 +35,9 @@ class ResourceRequest extends FormRequest
             'description' => ['nullable', 'string'],
             'file_path' => [
                 'required',
-                'image',
-                'mimes:jpg,png,jpeg,webp',
-                'max:255'
+                'file',
+                'mimes:jpg,png,jpeg,webp,pdf,doc,docx,xls,xlsx,ppt,pptx',
+                'max:10240' // 10MB
             ],
             'unit_id' => ['required', 'exists:units,id'],
         ];

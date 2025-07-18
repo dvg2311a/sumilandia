@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ResourceRequest;
 use App\Models\Resource;
+use App\Services\FileService;
+use File;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Inertia\Inertia;
 
@@ -18,6 +20,15 @@ class ResourceController extends Controller
         $resources = Resource::with('unit')->paginate(10);
         return Inertia::render('Resources/Index', [
             'resources' => $resources
+        ]);
+    }
+
+    public function create()
+    {
+        $this->authorize('create', Resource::class);
+        $units = \App\Models\Unit::all();
+        return Inertia::render('Resources/Create', [
+            'units' => $units
         ]);
     }
 
@@ -41,6 +52,16 @@ class ResourceController extends Controller
         return redirect()->route('resources.index')->with('success', 'Recurso creado correctamente');
     }
 
+    public function edit(Resource $resource)
+    {
+        $this->authorize('update', $resource);
+        $units = \App\Models\Unit::all();
+        return Inertia::render('Resources/Edit', [
+            'resource' => $resource,
+            'units' => $units
+        ]);
+    }
+
     public function update(ResourceRequest $request, Resource $resource)
     {
         $this->authorize('update', $resource);
@@ -52,9 +73,10 @@ class ResourceController extends Controller
         return redirect()->route('resources.index')->with('success', 'Recurso actualizado correctamente');
     }
 
-    public function destroy(Resource $resource)
+    public function destroy(Resource $resource, FileService $fileService)
     {
         $this->authorize('destroy', $resource);
+        $fileService->deleteLocal($resource, 'file_path');
         $resource->delete();
         return redirect()->route('resources.index')->with('success', 'Recurso eliminado correctamente');
     }

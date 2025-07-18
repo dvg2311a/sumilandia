@@ -57,6 +57,12 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     Lecciones
                                 </NavLink>
+                                <NavLink
+                                    :href="route('resources.index')"
+                                    :active="route().current('resources.index')"
+                                >
+                                    Recursos
+                                </NavLink>
                             </div>
                         </div>
 
@@ -181,6 +187,12 @@ const showingNavigationDropdown = ref(false);
                             :active="route().current('lessons.index')"
                         >
                             Lecciones
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('resources.index')"
+                            :active="route().current('resources.index')"
+                        >
+                            Recursos
                         </ResponsiveNavLink>
                     </div>
 
