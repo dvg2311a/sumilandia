@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Classes\PermissionHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UnitRequest;
 use App\Models\Level;
@@ -15,13 +16,7 @@ class UnitController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Unit::class);
-        $user = auth()->user();
-        $permissions = [
-            'create' => $user->can('create units'),
-            'view' => $user->can('read units'),
-            'edit' => $user->can('update units'),
-            'delete' => $user->can('destroy units'),
-        ];
+        $permissions = PermissionHelper::getPermissions('units');
         $units = Unit::with('level')->get();
         return Inertia::render('Units/Index', [
             'units' => $units,

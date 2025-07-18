@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Classes\PermissionHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ExerciseRequest;
 use App\Models\Lesson;
@@ -19,13 +20,7 @@ class ExerciseController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Exercise::class);
-        $user = auth()->user();
-        $permissions = [
-            'create' => $user->can('create exercises'),
-            'view' => $user->can('read exercises'),
-            'edit' => $user->can('update exercises'),
-            'delete' => $user->can('destroy exercises'),
-        ];
+        $permissions = PermissionHelper::getPermissions('exercises');
         $exercises = Exercise::with('exerciseType', 'lesson')->paginate(10);
         return Inertia::render('Exercises/Index', [
             'exercises' => $exercises,
@@ -48,7 +43,7 @@ class ExerciseController extends Controller
         $this->authorize('create', Exercise::class);
         $data = $request->validated();
         $type = ExerciseType::find($data['exercise_type_id']);
-        if (!$type) {
+        if (!$type instanceof ExerciseType) {
             return back()->withErrors(['exercise_type_id' => 'Tipo de ejercicio inválido.']);
         }
 
@@ -86,7 +81,7 @@ class ExerciseController extends Controller
         $this->authorize('update', $exercise);
         $data = $request->validated();
         $type = ExerciseType::find($data['exercise_type_id']);
-        if (!$type) {
+        if (!$type instanceof ExerciseType) {
             return back()->withErrors(['exercise_type_id' => 'Tipo de ejercicio inválido.']);
         }
 

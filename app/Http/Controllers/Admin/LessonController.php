@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Classes\PermissionHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LessonRequest;
 use App\Models\Lesson;
@@ -16,13 +17,7 @@ class LessonController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Lesson::class);
-        $user = auth()->user();
-        $permissions = [
-            'create' => $user->can('create lessons'),
-            'view' => $user->can('read lessons'),
-            'edit' => $user->can('update lessons'),
-            'delete' => $user->can('destroy lessons'),
-        ];
+        $permissions = PermissionHelper::getPermissions('lessons');
         $lessons = Lesson::with('unit')->paginate(10);
         return Inertia::render('Lessons/Index', [
             'lessons' => $lessons,
