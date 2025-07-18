@@ -12,45 +12,47 @@ const props = defineProps({
     <Head title="Recursos" />
     <AuthenticatedLayout>
         <template #header>
-            <div class="flex items-center justify-between">
-                <h2 class="text-xl font-semibold leading-tight text-gray-800">Recursos</h2>
-                <Link href="/resources/create" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Crear
-                </Link>
-            </div>
+            <h2 class="text-xl font-semibold leading-tight text-gray-800">Recursos</h2>
         </template>
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead>
-                                <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nombre</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Descripción</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Archivo</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Unidad</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="resource in resources.data" :key="resource.id">
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ resource.id }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ resource.name }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ resource.description }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <a :href="`/storage/${resource.file_path}`" target="_blank"
-                                            class="text-blue-600 underline">Ver archivo</a>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ resource.unit?.name }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap flex gap-2">
-                                        <Link :href="`/resources/${resource.id}`" class="text-blue-600 hover:underline">Ver</Link>
-                                        <Link :href="`/resources/${resource.id}/edit`" class="text-yellow-600 hover:underline">Editar</Link>
-                                        <button @click="destroy(resource.id)" class="text-red-600 hover:underline">Eliminar</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="flex justify-between items-center mb-6">
+                            <h1 class="text-2xl font-bold text-gray-800">Listado de Recursos</h1>
+                            <Link href="/resources/create" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Crear</Link>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Archivo</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Unidad</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr v-for="resource in resources.data" :key="resource.id">
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ resource.id }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ resource.name }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ resource.description }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <a :href="`/storage/${resource.file_path}`" target="_blank" class="text-blue-600 underline">Ver archivo</a>
+                                            <a :href="route('resources.download', resource.id)" class="text-green-600 underline ml-2" download>Descargar</a>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ resource.unit?.name }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <Link :href="`/resources/${resource.id}`" class="text-blue-600 hover:underline mr-4">Ver</Link>
+                                            <Link :href="`/resources/${resource.id}/edit`" class="text-yellow-600 hover:underline mr-4">Editar</Link>
+                                            <button @click="destroy(resource.id)" class="text-red-600 hover:underline">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
