@@ -22,7 +22,7 @@ class ExerciseController extends Controller
         $this->authorize('viewAny', Exercise::class);
         $permissions = PermissionHelper::getPermissions('exercises');
         $exercises = Exercise::with('exerciseType', 'lesson')->paginate(10);
-        return Inertia::render('Exercises/Index', [
+        return Inertia::render('Admin/Exercises/Index', [
             'exercises' => $exercises,
             'permissions' => $permissions
         ]);
@@ -33,7 +33,7 @@ class ExerciseController extends Controller
         $this->authorize('create', Exercise::class);
         $types = ExerciseType::all();
         $lessons = Lesson::all();
-        return Inertia::render('Exercises/Create', [
+        return Inertia::render('Admin/Exercises/Create', [
             'types' => $types,
             'lessons' => $lessons
         ]);
@@ -59,7 +59,7 @@ class ExerciseController extends Controller
     {
         $this->authorize('view', $exercise);
         $exercise->load('exerciseType', 'lesson');
-        return Inertia::render('Exercises/Show', [
+        return Inertia::render('Admin/Exercises/Show', [
             'exercise' => $exercise
         ]);
     }
@@ -69,7 +69,7 @@ class ExerciseController extends Controller
         $this->authorize('update', $exercise);
         $types = ExerciseType::all();
         $lessons = Lesson::all();
-        return Inertia::render('Exercises/Edit', [
+        return Inertia::render('Admin/Exercises/Edit', [
             'exercise' => $exercise,
             'types' => $types,
             'lessons' => $lessons

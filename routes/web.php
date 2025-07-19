@@ -32,6 +32,13 @@ Route::middleware('auth')->group(function () {
         Route::delete('/', 'destroy')->name('destroy');
     });
 
+    // Rutas para estudiantes - Unidades
+    Route::prefix('student')->name('student.')->group(function () {
+        Route::get('units', [\App\Http\Controllers\Student\UnitController::class, 'index'])->name('units.index');
+        Route::get('units/{id}/start', [\App\Http\Controllers\Student\LessonController::class, 'index'])->name('units.start');
+        Route::get('lessons/{id}/start', [\App\Http\Controllers\Student\ExerciseController::class, 'showSequence'])->name('lessons.start');
+    });
+
     Route::middleware('role:admin')->group(function () {
         Route::resource('levels', LevelController::class);
         Route::resource('units', UnitController::class);

@@ -17,7 +17,7 @@ class LevelController extends Controller
     {
         $this->authorize('viewAny', Level::class);
         $permissions = PermissionHelper::getPermissions('levels');
-        return Inertia::render('Levels/Index', [
+        return Inertia::render('Admin/Levels/Index', [
             'levels' => Level::all(),
             'permissions' => $permissions
         ]);
@@ -26,7 +26,7 @@ class LevelController extends Controller
     public function create()
     {
         $this->authorize('create', Level::class);
-        return Inertia::render('Levels/Create');
+        return Inertia::render('Admin/Levels/Create');
     }
 
     public function store(LevelRequest $request)
@@ -38,7 +38,7 @@ class LevelController extends Controller
     public function show(Level $level)
     {
         $this->authorize('view', $level);
-        return Inertia::render('Levels/Show', [
+        return Inertia::render('Admin/Levels/Show', [
             'level' => $level
         ]);
     }
@@ -46,7 +46,7 @@ class LevelController extends Controller
     public function edit(Level $level)
     {
         $this->authorize('update', $level);
-        return Inertia::render('Levels/Edit', [
+        return Inertia::render('Admin/Levels/Edit', [
             'level' => $level
         ]);
     }

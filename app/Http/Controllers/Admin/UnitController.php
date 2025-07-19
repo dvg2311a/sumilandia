@@ -18,7 +18,7 @@ class UnitController extends Controller
         $this->authorize('viewAny', Unit::class);
         $permissions = PermissionHelper::getPermissions('units');
         $units = Unit::with('level')->get();
-        return Inertia::render('Units/Index', [
+        return Inertia::render('Admin/Units/Index', [
             'units' => $units,
             'permissions' => $permissions
         ]);
@@ -28,7 +28,7 @@ class UnitController extends Controller
     {
         $this->authorize('create', Unit::class);
         $levels = Level::all();
-        return Inertia::render('Units/Create', [
+        return Inertia::render('Admin/Units/Create', [
             'levels' => $levels
         ]);
     }
@@ -43,7 +43,7 @@ class UnitController extends Controller
     {
         $this->authorize('view', $unit);
         $unit->load('level');
-        return Inertia::render('Units/Show', [
+        return Inertia::render('Admin/Units/Show', [
             'unit' => $unit
         ]);
     }
@@ -52,7 +52,7 @@ class UnitController extends Controller
     {
         $this->authorize('update', $unit);
         $levels = Level::all();
-        return Inertia::render('Units/Edit', [
+        return Inertia::render('Admin/Units/Edit', [
             'unit' => $unit,
             'levels' => $levels
         ]);

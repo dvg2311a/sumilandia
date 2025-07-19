@@ -21,7 +21,7 @@ class ResourceController extends Controller
         $this->authorize('viewAny', Resource::class);
         $permissions = PermissionHelper::getPermissions('resources', ['download']);
         $resources = Resource::with('unit')->paginate(10);
-        return Inertia::render('Resources/Index', [
+        return Inertia::render('Admin/Resources/Index', [
             'resources' => $resources,
             'permissions' => $permissions
         ]);
@@ -31,7 +31,7 @@ class ResourceController extends Controller
     {
         $this->authorize('create', Resource::class);
         $units = Unit::all();
-        return Inertia::render('Resources/Create', [
+        return Inertia::render('Admin/Resources/Create', [
             'units' => $units
         ]);
     }
@@ -40,7 +40,7 @@ class ResourceController extends Controller
     {
         $this->authorize('view', $resource);
         $resource->load('unit');
-        return Inertia::render('Resources/Show', [
+        return Inertia::render('Admin/Resources/Show', [
             'resource' => $resource
         ]);
     }
@@ -62,7 +62,7 @@ class ResourceController extends Controller
     {
         $this->authorize('update', $resource);
         $units = Unit::all();
-        return Inertia::render('Resources/Edit', [
+        return Inertia::render('Admin/Resources/Edit', [
             'resource' => $resource,
             'units' => $units
         ]);

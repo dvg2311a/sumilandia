@@ -19,7 +19,7 @@ class LessonController extends Controller
         $this->authorize('viewAny', Lesson::class);
         $permissions = PermissionHelper::getPermissions('lessons');
         $lessons = Lesson::with('unit')->paginate(10);
-        return Inertia::render('Lessons/Index', [
+        return Inertia::render('Admin/Lessons/Index', [
             'lessons' => $lessons,
             'permissions' => $permissions
         ]);
@@ -29,7 +29,7 @@ class LessonController extends Controller
     {
         $this->authorize('view', $lesson);
         $lesson->load('unit');
-        return Inertia::render('Lessons/Show', [
+        return Inertia::render('Admin/Lessons/Show', [
             'lesson' => $lesson
         ]);
     }
@@ -38,7 +38,7 @@ class LessonController extends Controller
     {
         $this->authorize('create', Lesson::class);
         $units = Unit::all();
-        return Inertia::render('Lessons/Create', [
+        return Inertia::render('Admin/Lessons/Create', [
             'units' => $units
         ]);
     }
@@ -54,7 +54,7 @@ class LessonController extends Controller
     {
         $this->authorize('update', $lesson);
         $units = Unit::all();
-        return Inertia::render('Lessons/Edit', [
+        return Inertia::render('Admin/Lessons/Edit', [
             'lesson' => $lesson,
             'units' => $units
         ]);

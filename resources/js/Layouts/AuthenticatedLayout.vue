@@ -71,6 +71,14 @@ const showingNavigationDropdown = ref(false);
                                         Ejercicios
                                     </NavLink>
                                 </template>
+                                <template v-else>
+                                    <NavLink
+                                        :href="route('student.units.index')"
+                                        :active="route().current('student.units.index')"
+                                    >
+                                        Unidades
+                                    </NavLink>
+                                </template>
                             </div>
                         </div>
 
@@ -213,6 +221,14 @@ const showingNavigationDropdown = ref(false);
                                 :active="route().current('exercises.index')"
                             >
                                 Ejercicios
+                            </ResponsiveNavLink>
+                        </template>
+                        <template v-else>
+                            <ResponsiveNavLink
+                                :href="route('student.units.index')"
+                                :active="route().current('student.units.index')"
+                            >
+                                Unidades
                             </ResponsiveNavLink>
                         </template>
                     </div>
