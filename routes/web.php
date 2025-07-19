@@ -32,14 +32,14 @@ Route::middleware('auth')->group(function () {
         Route::delete('/', 'destroy')->name('destroy');
     });
 
-    Route::resource('levels', LevelController::class);
-    Route::resource('units', UnitController::class);
-    Route::resource('lessons', LessonController::class);
-
-    Route::resource('resources', ResourceController::class);
-    Route::get('resources/{resource}/download', [ResourceController::class, 'download'])->name('resources.download');
-
-    Route::resource('exercises', ExerciseController::class);
+    Route::middleware('role:admin')->group(function () {
+        Route::resource('levels', LevelController::class);
+        Route::resource('units', UnitController::class);
+        Route::resource('lessons', LessonController::class);
+        Route::resource('resources', ResourceController::class);
+        Route::get('resources/{resource}/download', [ResourceController::class, 'download'])->name('resources.download');
+        Route::resource('exercises', ExerciseController::class);
+    });
 });
 
 require __DIR__ . '/auth.php';

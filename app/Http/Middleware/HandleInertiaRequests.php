@@ -48,6 +48,7 @@ class HandleInertiaRequests extends Middleware
                         [
                             'full_name' => $user ? $user->getFullNameAttribute() : '',
                             'profile' => $profile,
+                            'roles' => $user->getRoleNames(),
                         ]
                     )
                     : null,

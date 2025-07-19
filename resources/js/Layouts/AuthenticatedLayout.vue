@@ -39,36 +39,38 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     Dashboard
                                 </NavLink>
-                                <NavLink
-                                    :href="route('levels.index')"
-                                    :active="route().current('levels.index')"
-                                >
-                                    Niveles
-                                </NavLink>
-                                <NavLink
-                                    :href="route('units.index')"
-                                    :active="route().current('units.index')"
-                                >
-                                    Unidades
-                                </NavLink>
-                                <NavLink
-                                    :href="route('lessons.index')"
-                                    :active="route().current('lessons.index')"
-                                >
-                                    Lecciones
-                                </NavLink>
-                                <NavLink
-                                    :href="route('resources.index')"
-                                    :active="route().current('resources.index')"
-                                >
-                                    Recursos
-                                </NavLink>
-                                <NavLink
-                                    :href="route('exercises.index')"
-                                    :active="route().current('exercises.index')"
-                                >
-                                    Ejercicios
-                                </NavLink>
+                                <template v-if="$page.props.auth.user.roles && $page.props.auth.user.roles.includes('admin')">
+                                    <NavLink
+                                        :href="route('levels.index')"
+                                        :active="route().current('levels.index')"
+                                    >
+                                        Niveles
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('units.index')"
+                                        :active="route().current('units.index')"
+                                    >
+                                        Unidades
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('lessons.index')"
+                                        :active="route().current('lessons.index')"
+                                    >
+                                        Lecciones
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('resources.index')"
+                                        :active="route().current('resources.index')"
+                                    >
+                                        Recursos
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('exercises.index')"
+                                        :active="route().current('exercises.index')"
+                                    >
+                                        Ejercicios
+                                    </NavLink>
+                                </template>
                             </div>
                         </div>
 
@@ -181,36 +183,38 @@ const showingNavigationDropdown = ref(false);
                         >
                             Dashboard
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink
-                            :href="route('levels.index')"
-                            :active="route().current('levels.index')"
-                        >
-                            Niveles
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink
-                            :href="route('units.index')"
-                            :active="route().current('units.index')"
-                        >
-                            Unidades
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink
-                            :href="route('lessons.index')"
-                            :active="route().current('lessons.index')"
-                        >
-                            Lecciones
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink
-                            :href="route('resources.index')"
-                            :active="route().current('resources.index')"
-                        >
-                            Recursos
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink
-                            :href="route('exercises.index')"
-                            :active="route().current('exercises.index')"
-                        >
-                            Ejercicios
-                        </ResponsiveNavLink>
+                        <template v-if="$page.props.auth.user.roles && $page.props.auth.user.roles.includes('admin')">
+                            <ResponsiveNavLink
+                                :href="route('levels.index')"
+                                :active="route().current('levels.index')"
+                            >
+                                Niveles
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                :href="route('units.index')"
+                                :active="route().current('units.index')"
+                            >
+                                Unidades
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                :href="route('lessons.index')"
+                                :active="route().current('lessons.index')"
+                            >
+                                Lecciones
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                :href="route('resources.index')"
+                                :active="route().current('resources.index')"
+                            >
+                                Recursos
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                :href="route('exercises.index')"
+                                :active="route().current('exercises.index')"
+                            >
+                                Ejercicios
+                            </ResponsiveNavLink>
+                        </template>
                     </div>
 
                     <!-- Responsive Settings Options -->
