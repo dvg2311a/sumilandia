@@ -11,8 +11,10 @@ const props = defineProps({
 
 const current = ref(0);
 const answered = ref([]);
+const userAnswers = ref([]);
 const showFeedback = ref(false);
 const finished = ref(false);
+const showSummary = ref(false);
 const lastAnswer = ref(null);
 
 function playSound(type) {
@@ -22,6 +24,7 @@ function playSound(type) {
 
 function handleAnswer(result, userValue = null) {
     answered.value[current.value] = result;
+    userAnswers.value[current.value] = userValue;
     lastAnswer.value = userValue;
     showFeedback.value = true;
     playSound(result ? 'success' : 'error');
@@ -33,7 +36,7 @@ function nextExercise() {
     if (current.value < props.exercises.length - 1) {
         current.value++;
     } else {
-        finished.value = true;
+        showSummary.value = true;
     }
 }
 
@@ -52,7 +55,7 @@ function goToUnits() {
             <div class="mx-auto max-w-2xl sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6">
-                        <template v-if="!finished">
+                        <template v-if="!finished && !showSummary">
                             <div class="mb-6">
                                 <h1 class="text-2xl font-bold text-gray-800 mb-2">Ejercicio {{ current + 1 }} de {{ exercises.length }}</h1>
                                 <div class="mb-4">
@@ -80,8 +83,6 @@ function goToUnits() {
                                                 </div>
                                             </div>
                                             <div v-if="showFeedback">
-                                                <span v-if="lastAnswer === exercises[current].solution" class="text-green-600 font-bold">¡Correcto!</span>
-                                                <span v-else class="text-red-600 font-bold">Incorrecto. La respuesta correcta era: <span class="font-bold">{{ exercises[current].solution }}</span></span>
                                                 <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" @click="nextExercise">Siguiente</button>
                                             </div>
                                         </template>
@@ -107,12 +108,43 @@ function goToUnits() {
                                             Comprobar respuesta
                                         </button>
                                         <div v-if="showFeedback">
-                                            <span v-if="lastAnswer === exercises[current].solution" class="text-green-600 font-bold">¡Correcto!</span>
-                                            <span v-else class="text-red-600 font-bold">Incorrecto. La respuesta correcta era: <span class="font-bold">{{ exercises[current].solution }}</span></span>
                                             <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" @click="nextExercise">Siguiente</button>
                                         </div>
                                     </div>
                                 </template>
+                            </div>
+                        </template>
+                        <template v-else-if="showSummary">
+                            <div class="text-center">
+                                <h2 class="text-2xl font-bold mb-4">Resumen de tus respuestas</h2>
+                                <div class="mb-6">
+                                    <table class="mx-auto w-full max-w-xl text-left border">
+                                        <thead>
+                                            <tr>
+                                                <th class="border px-2 py-1">#</th>
+                                                <th class="border px-2 py-1">Enunciado</th>
+                                                <th class="border px-2 py-1">Tu respuesta</th>
+                                                <th class="border px-2 py-1">Resultado</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(exercise, idx) in exercises" :key="idx">
+                                                <td class="border px-2 py-1">{{ idx + 1 }}</td>
+                                                <td class="border px-2 py-1">{{ exercise.prompt }}</td>
+                                                <td class="border px-2 py-1">
+                                                    <span v-if="userAnswers[idx] !== undefined">{{ userAnswers[idx] }}</span>
+                                                    <span v-else class="text-gray-500">Sin respuesta</span>
+                                                </td>
+                                                <td class="border px-2 py-1">
+                                                    <span v-if="answered[idx] === true" class="text-green-600 font-bold">Correcto</span>
+                                                    <span v-else-if="answered[idx] === false" class="text-red-600 font-bold">Incorrecto</span>
+                                                    <span v-else class="text-gray-500">Sin respuesta</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" @click="finished = true; showSummary = false;">Finalizar</button>
                             </div>
                         </template>
                         <template v-else>
