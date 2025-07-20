@@ -6,6 +6,7 @@ import MultipleChoice from './components/MultipleChoice.vue';
 import TrueFalse from './components/TrueFalse.vue';
 import FillBlank from './components/FillBlank.vue';
 import OrderElements from './components/OrderElements.vue';
+import MatchColumns from './components/MatchColumns.vue';
 
 const props = defineProps({
     lesson: Object,
@@ -73,8 +74,9 @@ function goToUnits() {
                                         : exercises[current].exercise_type?.name === 'Verdadero o falso' ? TrueFalse
                                         : exercises[current].exercise_type?.name === 'Completar espacios' ? FillBlank
                                         : exercises[current].exercise_type?.name === 'Ordenar elementos' ? OrderElements
+                                        : exercises[current].exercise_type?.name === 'Relacionar columnas' ? MatchColumns
                                         : null"
-                                    v-if="['Opción múltiple', 'Verdadero o falso', 'Completar espacios', 'Ordenar elementos'].includes(exercises[current].exercise_type?.name)"
+                                    v-if="['Opción múltiple', 'Verdadero o falso', 'Completar espacios', 'Ordenar elementos', 'Relacionar columnas'].includes(exercises[current].exercise_type?.name)"
                                     :exercise="exercises[current]"
                                     :showFeedback="showFeedback"
                                     :lastAnswer="lastAnswer"
