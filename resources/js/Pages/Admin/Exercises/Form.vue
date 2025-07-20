@@ -1,5 +1,11 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
+import MultipleChoiceFields from './components/MultipleChoiceFields.vue';
+import TrueFalseFields from './components/TrueFalseFields.vue';
+import ShortAnswerFields from './components/ShortAnswerFields.vue';
+import MatchColumnsFields from './components/MatchColumnsFields.vue';
+import OrderElementsFields from './components/OrderElementsFields.vue';
+import CompleteSpacesFields from './components/CompleteSpacesFields.vue';
 const props = defineProps({
     form: Object,
     types: Array,
@@ -39,11 +45,12 @@ function removeOption(idx) {
                     <option v-for="type in props.types" :key="type.id" :value="type.id">{{ type.name }}</option>
                 </select>
                 <span v-if="props.errors.exercise_type_id" class="text-red-500 text-xs">{{ props.errors.exercise_type_id
-                    }}</span>
+                }}</span>
             </div>
             <div class="col-span-1">
                 <label class="block text-sm font-medium text-gray-700">Lección</label>
-                <select v-model="props.form.lesson_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm text-gray-800 bg-white">
+                <select v-model="props.form.lesson_id"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm text-gray-800 bg-white">
                     <option value="">Selecciona una lección</option>
                     <option v-for="lesson in props.lessons" :key="lesson.id" :value="lesson.id">{{ lesson.name }}
                     </option>
@@ -51,70 +58,14 @@ function removeOption(idx) {
                 <span v-if="props.errors.lesson_id" class="text-red-500 text-xs">{{ props.errors.lesson_id }}</span>
             </div>
             <!-- Campos dinámicos según tipo -->
-            <div v-if="selectedType.name === 'Opción múltiple'" class="col-span-2">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Opciones</label>
-                <div class="space-y-2">
-                    <div v-for="(option, idx) in props.form.options" :key="idx" class="flex gap-2">
-                        <input v-model="props.form.options[idx]" type="text"
-                            class="flex-1 border-gray-300 rounded-md shadow-sm" />
-                        <button type="button" @click="removeOption(idx)" class="text-red-500 text-xs">Eliminar</button>
-                    </div>
-                </div>
-                <button type="button" @click="addOption" class="mt-2 bg-blue-500 text-white px-2 py-1 rounded">Agregar
-                    opción</button>
-                <span v-if="props.errors.options" class="text-red-500 text-xs">{{ props.errors.options }}</span>
-                <div class="mt-4">
-                    <label class="block text-sm font-medium text-gray-700">Solución</label>
-                    <input v-model="props.form.solution" type="text"
-                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" placeholder="Escribe la solución" />
-                    <span v-if="props.errors.solution" class="text-red-500 text-xs">{{ props.errors.solution }}</span>
-                </div>
-            </div>
-            <div v-else-if="selectedType.name === 'Verdadero o falso'" class="col-span-2">
-                <label class="block text-sm font-medium text-gray-700">Solución</label>
-                <input v-model="props.form.solution" type="text"
-                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" placeholder="Escribe la solución (Verdadero/Falso)" />
-                <span v-if="props.errors.solution" class="text-red-500 text-xs">{{ props.errors.solution }}</span>
-            </div>
-            <div
-                v-else-if="selectedType.name === 'Completar espacios' || selectedType.name === 'Respuesta corta' || selectedType.name === 'Ensayo'"
-                class="col-span-2">
-                <label class="block text-sm font-medium text-gray-700">Solución</label>
-                <input v-model="props.form.solution" type="text"
-                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
-                <span v-if="props.errors.solution" class="text-red-500 text-xs">{{ props.errors.solution }}</span>
-            </div>
-            <div v-else-if="selectedType.name === 'Relacionar columnas'" class="col-span-2">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Pares para relacionar</label>
-                <div class="space-y-2">
-                    <div v-for="(option, idx) in props.form.options" :key="idx" class="flex gap-2">
-                        <input v-model="props.form.options[idx]" type="text"
-                            class="flex-1 border-gray-300 rounded-md shadow-sm" placeholder="Par" />
-                        <button type="button" @click="removeOption(idx)" class="text-red-500 text-xs">Eliminar</button>
-                    </div>
-                </div>
-                <button type="button" @click="addOption" class="mt-2 bg-blue-500 text-white px-2 py-1 rounded">Agregar
-                    par</button>
-                <span v-if="props.errors.options" class="text-red-500 text-xs">{{ props.errors.options }}</span>
-            </div>
-            <div v-else-if="selectedType.name === 'Ordenar elementos'" class="col-span-2">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Elementos para ordenar</label>
-                <div class="space-y-2">
-                    <div v-for="(option, idx) in props.form.options" :key="idx" class="flex gap-2">
-                        <input v-model="props.form.options[idx]" type="text"
-                            class="flex-1 border-gray-300 rounded-md shadow-sm" placeholder="Elemento" />
-                        <button type="button" @click="removeOption(idx)" class="text-red-500 text-xs">Eliminar</button>
-                    </div>
-                </div>
-                <button type="button" @click="addOption" class="mt-2 bg-blue-500 text-white px-2 py-1 rounded">Agregar
-                    elemento</button>
-                <span v-if="props.errors.options" class="text-red-500 text-xs">{{ props.errors.options }}</span>
-                <div class="mt-4">
-                    <label class="block text-sm font-medium text-gray-700">Solución (orden correcto)</label>
-                    <input v-model="props.form.solution" type="text"
-                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" placeholder="Ej: 2,1,3" />
-                    <span v-if="props.errors.solution" class="text-red-500 text-xs">{{ props.errors.solution }}</span>
-                </div>
+            <div class="col-span-2">
+                <component :is="selectedType.name === 'Opción múltiple' ? MultipleChoiceFields :
+                    selectedType.name === 'Verdadero o falso' ? TrueFalseFields :
+                        selectedType.name === 'Completar espacios' ? CompleteSpacesFields :
+                            (selectedType.name === 'Respuesta corta' || selectedType.name === 'Ensayo') ? ShortAnswerFields :
+                                selectedType.name === 'Relacionar columnas' ? MatchColumnsFields :
+                                    selectedType.name === 'Ordenar elementos' ? OrderElementsFields : null
+                    " v-if="selectedType.name" :form="props.form" :errors="props.errors" />
             </div>
             <div class="col-span-2">
                 <label class="block text-sm font-medium text-gray-700">Explicación (opcional)</label>

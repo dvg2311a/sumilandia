@@ -13,8 +13,8 @@ return new class extends Migration {
         Schema::create('exercises', function (Blueprint $table) {
             $table->increments('id');
             $table->string('prompt');
-            $table->string('options')->nullable();
-            $table->string('solution');
+            $table->json('options')->nullable();
+            $table->json('solution');
             $table->string('explanation')->nullable();
 
             $table->integer('exercise_type_id')->unsigned();

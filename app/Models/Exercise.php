@@ -20,6 +20,7 @@ class Exercise extends Model
     {
         return [
             'options' => 'array',
+            'solution' => 'array',
         ];
     }
 

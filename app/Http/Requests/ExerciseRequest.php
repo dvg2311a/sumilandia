@@ -32,7 +32,7 @@ class ExerciseRequest extends FormRequest
         return [
             'prompt' => ['required', 'string', 'min:6', 'max:255'],
             'options' => ['array', 'max:4'],
-            'solution' => ['required', 'string'],
+            'solution' => ['array', 'max:4'],
             'explanation' => ['nullable', 'string', 'min:6', 'max:255'],
             'exercise_type_id' => ['required', 'exists:exercise_types,id'],
             'lesson_id' => ['required', 'exists:lessons,id'],

@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Exercise;
 use App\Models\ExerciseType;
+use App\Models\Lesson;
 use App\Models\Level;
 use App\Models\Profile;
 use App\Models\Unit;
@@ -29,19 +31,6 @@ class DatabaseSeeder extends Seeder
         ]);
         $adminUser->assignRole('admin');
 
-        Level::insert([
-            ['name' => 'Básico', 'description' => 'Nivel inicial para comenzar el aprendizaje desde cero.'],
-            ['name' => 'Intermedio', 'description' => 'Nivel para reforzar y ampliar conocimientos previos.'],
-            ['name' => 'Avanzado', 'description' => 'Nivel para dominar y profundizar en los temas más complejos.'],
-        ]);
-
-        Unit::insert([
-            ['name' => 'Números y operaciones básicas', 'description' => 'Que el estudiante aprenda a reconocer y operar con números naturales y operaciones aritméticas simples.', 'expected_time' => 30, 'level_id' => 1],
-            ['name' => 'Álgebra básica', 'description' => 'Introducción a las variables, ecuaciones y expresiones algebraicas.', 'expected_time' => 45, 'level_id' => 2],
-            ['name' => 'Geometría y medidas', 'description' => 'Conceptos básicos de geometría, figuras y medidas.', 'expected_time' => 40, 'level_id' => 3],
-            ['name' => 'Estadística y probabilidad', 'description' => 'Fundamentos de la estadística descriptiva y probabilidad.', 'expected_time' => 50, 'level_id' => 3],
-        ]);
-
         ExerciseType::insert([
             ['name' => 'Opción múltiple', 'description' => 'Ejercicios de opción múltiple'],
             ['name' => 'Completar espacios', 'description' => 'Ejercicios para completar espacios en blanco'],
@@ -50,6 +39,44 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Ordenar elementos', 'description' => 'Ejercicios para ordenar elementos en el orden correcto'],
             ['name' => 'Respuesta corta', 'description' => 'Ejercicios que requieren una respuesta breve escrita'],
             ['name' => 'Ensayo', 'description' => 'Ejercicios que requieren una respuesta escrita más extensa'],
+        ]);
+
+        Level::insert([
+            ['name' => 'Básico', 'description' => 'Nivel inicial para comenzar el aprendizaje desde cero.'],
+            ['name' => 'Intermedio', 'description' => 'Nivel para reforzar y ampliar conocimientos previos.'],
+            ['name' => 'Avanzado', 'description' => 'Nivel para dominar y profundizar en los temas más complejos.'],
+        ]);
+
+        $unit = Unit::create([
+            'name' => 'Números y operaciones básicas',
+            'description' => 'Que el estudiante aprenda a reconocer y operar con números naturales y operaciones aritméticas simples.',
+            'expected_time' => 60,
+            'level_id' => 1
+        ]);
+
+        $lesson = Lesson::create([
+            'unit_id' => $unit->id,
+            'name' => 'Contar del 1 al 20',
+            'description' => 'Aprende a contar los números del 1 al 20.'
+        ]);
+
+        $multipleChoiceType = ExerciseType::where('name', 'Opción múltiple')->first();
+        $fillBlankType = ExerciseType::where('name', 'Completar espacios')->first();
+
+        Exercise::create([
+            'lesson_id' => $lesson->id,
+            'exercise_type_id' => $multipleChoiceType->id,
+            'prompt' => '¿Cuál de los siguientes números viene después del 14?',
+            'options' => [12, 13, 15, 16],
+            'solution' => '15'
+        ]);
+
+        Exercise::create([
+            'lesson_id' => $lesson->id,
+            'exercise_type_id' => $fillBlankType->id,
+            'prompt' => 'Escribe el número que viene antes del 8.',
+            'options' => [],
+            'solution' => '7'
         ]);
     }
 }

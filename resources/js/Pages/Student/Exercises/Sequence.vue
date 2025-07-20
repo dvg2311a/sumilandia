@@ -2,12 +2,15 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import MultipleChoice from './components/MultipleChoice.vue';
+import TrueFalse from './components/TrueFalse.vue';
+import FillBlank from './components/FillBlank.vue';
+import OrderElements from './components/OrderElements.vue';
 
 const props = defineProps({
     lesson: Object,
     exercises: Array
 });
-
 
 const current = ref(0);
 const answered = ref([]);
@@ -64,54 +67,20 @@ function goToUnits() {
                                 <div class="mb-4">
                                     <span class="font-semibold">Enunciado:</span> {{ exercises[current].prompt }}
                                 </div>
-                                <!-- Aquí van los inputs dinámicos según el tipo -->
-                                <template v-if="exercises[current].exercise_type?.name === 'Opción múltiple'">
-                                    <div class="mb-4">
-                                        <template v-if="Array.isArray(exercises[current].options) && exercises[current].options.length">
-                                            <div class="grid grid-cols-1 gap-2">
-                                                <div v-for="option in exercises[current].options" :key="option">
-                                                    <button
-                                                        class="px-4 py-2 rounded border w-full shadow hover:bg-blue-100"
-                                                        :class="{
-                                                            'bg-green-100': showFeedback && option === exercises[current].solution,
-                                                            'bg-red-100': showFeedback && lastAnswer === option && lastAnswer !== exercises[current].solution
-                                                        }"
-                                                        :disabled="showFeedback"
-                                                        @click="handleAnswer(option === exercises[current].solution, option)">
-                                                        {{ option }}
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div v-if="showFeedback">
-                                                <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" @click="nextExercise">Siguiente</button>
-                                            </div>
-                                        </template>
-                                        <template v-else>
-                                            <div class="text-red-600 font-bold">No hay opciones disponibles para este ejercicio.</div>
-                                        </template>
-                                    </div>
-                                </template>
-                                <template v-else-if="exercises[current].exercise_type?.name === 'Completar espacios'">
-                                    <div class="mb-4">
-                                        <input
-                                            v-model="lastAnswer"
-                                            type="text"
-                                            class="border rounded px-3 py-2 w-full mb-2"
-                                            :disabled="showFeedback"
-                                            placeholder="Escribe tu respuesta aquí"
-                                        />
-                                        <button
-                                            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full"
-                                            @click="handleAnswer(lastAnswer === exercises[current].solution, lastAnswer)"
-                                            :disabled="lastAnswer === undefined || lastAnswer === '' || showFeedback"
-                                        >
-                                            Comprobar respuesta
-                                        </button>
-                                        <div v-if="showFeedback">
-                                            <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" @click="nextExercise">Siguiente</button>
-                                        </div>
-                                    </div>
-                                </template>
+                                <!-- Inputs dinámicos por tipo de ejercicio -->
+                                <component
+                                    :is="exercises[current].exercise_type?.name === 'Opción múltiple' ? MultipleChoice
+                                        : exercises[current].exercise_type?.name === 'Verdadero o falso' ? TrueFalse
+                                        : exercises[current].exercise_type?.name === 'Completar espacios' ? FillBlank
+                                        : exercises[current].exercise_type?.name === 'Ordenar elementos' ? OrderElements
+                                        : null"
+                                    v-if="['Opción múltiple', 'Verdadero o falso', 'Completar espacios', 'Ordenar elementos'].includes(exercises[current].exercise_type?.name)"
+                                    :exercise="exercises[current]"
+                                    :showFeedback="showFeedback"
+                                    :lastAnswer="lastAnswer"
+                                    :handleAnswer="handleAnswer"
+                                    :nextExercise="nextExercise"
+                                />
                             </div>
                         </template>
                         <template v-else-if="showSummary">

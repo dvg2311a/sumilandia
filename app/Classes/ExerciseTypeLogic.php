@@ -8,31 +8,44 @@ class ExerciseTypeLogic
     {
         $errors = [];
         switch ($typeName) {
-            case 'Multiple Choice':
+            case 'Opción múltiple':
                 if (!isset($data['options']) || count($data['options']) < 2) {
                     $errors['options'] = 'Debes agregar al menos dos opciones.';
                 }
-                if (!in_array($data['solution'] ?? '', $data['options'] ?? [])) {
+                // Permitir que la solución sea array (para opción múltiple)
+                $solution = $data['solution'] ?? [];
+                if (!is_array($solution)) {
+                    $solution = [$solution];
+                }
+                $invalid = array_filter($solution, function($sol) use ($data) {
+                    return !in_array($sol, $data['options'] ?? []);
+                });
+                if (count($invalid) > 0) {
                     $errors['solution'] = 'La solución debe estar entre las opciones.';
                 }
                 break;
-            case 'Fill in the Blanks':
+            case 'Completar espacios':
                 if (empty($data['solution'])) {
                     $errors['solution'] = 'Debes ingresar la solución.';
                 }
                 break;
-            case 'True or False':
+            case 'Verdadero o falso':
                 $data['options'] = ['True', 'False'];
-                if (!in_array($data['solution'] ?? '', $data['options'])) {
+                $solution = $data['solution'] ?? [];
+                if (!is_array($solution)) {
+                    $solution = [$solution];
+                }
+                // Solo debe haber un valor y debe ser True o False
+                if (count($solution) !== 1 || !in_array($solution[0], $data['options'])) {
                     $errors['solution'] = 'La solución debe ser True o False.';
                 }
                 break;
-            case 'Matching':
+            case 'Relacionar columnas':
                 if (!is_array($data['options']) || count($data['options']) < 2) {
                     $errors['options'] = 'Debes agregar al menos dos pares para relacionar.';
                 }
                 break;
-            case 'Ordering':
+            case 'Ordenar elementos':
                 if (!is_array($data['options']) || count($data['options']) < 2) {
                     $errors['options'] = 'Debes agregar al menos dos elementos para ordenar.';
                 }
@@ -40,8 +53,8 @@ class ExerciseTypeLogic
                     $errors['solution'] = 'La solución debe ser un array con el orden correcto.';
                 }
                 break;
-            case 'Short Answer':
-            case 'Essay':
+            case 'Respuesta corta':
+            case 'Ensayo':
                 if (empty($data['solution'])) {
                     $errors['solution'] = 'Debes ingresar la respuesta.';
                 }
