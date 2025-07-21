@@ -49,6 +49,26 @@ class ExerciseController extends Controller
         $lessonId = $attempts[0]['lesson_id'] ?? null;
         $unitId = $attempts[0]['unit_id'] ?? null;
 
+        // Guardar progreso de la lección
+        if ($lessonId) {
+            $lesson = Lesson::with('exercises')->find($lessonId);
+            $total = $lesson->exercises->count();
+            $correct = collect($attempts)->where('is_correct', true)->count();
+            $progress = $total > 0 ? intval(($correct / $total) * 100) : 0;
+            $status = $progress === 100 ? 'completado' : 'en_progreso';
+
+            \App\Models\LessonUserProgress::updateOrCreate(
+                [
+                    'user_id' => $userId,
+                    'lesson_id' => $lessonId,
+                ],
+                [
+                    'progress' => $progress,
+                    'status' => $status,
+                ]
+            );
+        }
+
         if ($unitId) {
             return redirect()->route('student.units.start', $unitId);
         }

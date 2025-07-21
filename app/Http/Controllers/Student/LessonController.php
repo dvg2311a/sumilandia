@@ -11,10 +11,21 @@ class LessonController extends Controller
 {
     public function index($unitId)
     {
-        $unit = Unit::with('lessons')->findOrFail($unitId);
+        $unit = Unit::with(['lessons.lessonUserProgress' => function($q) {
+            $q->where('user_id', auth()->id());
+        }])->findOrFail($unitId);
+
+        $lessons = $unit->lessons->map(function($lesson) {
+            $progress = $lesson->lessonUserProgress->first();
+            $lessonArr = $lesson->toArray();
+            $lessonArr['progress'] = $progress ? $progress->progress : 0;
+            $lessonArr['status'] = $progress ? $progress->status : 'no_comenzado';
+            return $lessonArr;
+        });
+
         return Inertia::render('Student/Lessons/Index', [
             'unit' => $unit,
-            'lessons' => $unit->lessons
+            'lessons' => $lessons
         ]);
     }
 }

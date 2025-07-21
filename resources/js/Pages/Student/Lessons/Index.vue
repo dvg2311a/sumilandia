@@ -28,6 +28,18 @@ const props = defineProps({
                                 <div>
                                     <h2 class="text-xl font-semibold mb-2">{{ lesson.name }}</h2>
                                     <p class="mb-2 text-gray-600">{{ lesson.description }}</p>
+                                    <div class="mb-2">
+                                        <span class="font-semibold">Progreso:</span>
+                                        <span :class="lesson.progress === 100 ? 'text-green-600 font-bold' : lesson.progress > 0 ? 'text-yellow-600 font-bold' : 'text-gray-500'">
+                                            {{ lesson.progress }}%
+                                        </span>
+                                    </div>
+                                    <div class="mb-2">
+                                        <span class="font-semibold">Estado:</span>
+                                        <span :class="lesson.status === 'completado' ? 'text-green-600 font-bold' : lesson.status === 'en_progreso' ? 'text-yellow-600 font-bold' : 'text-gray-500'">
+                                            {{ lesson.status === 'completado' ? 'Completado' : lesson.status === 'en_progreso' ? 'En progreso' : 'No comenzado' }}
+                                        </span>
+                                    </div>
                                 </div>
                                 <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
                                     @click="$inertia.get(route('student.lessons.start', { id: lesson.id }))">
