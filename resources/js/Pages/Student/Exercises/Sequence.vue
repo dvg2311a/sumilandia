@@ -23,6 +23,24 @@ const finished = ref(false);
 const showSummary = ref(false);
 const lastAnswer = ref(null);
 
+async function saveSummary() {
+    const attempts = props.exercises.map((exercise, idx) => ({
+        exercise_id: exercise.id,
+        answer_given: userAnswers.value[idx],
+        is_correct: answered.value[idx] === true,
+        attempt_number: 1,
+    }));
+
+    await router.post(route('student.exercises.attemptsBatch'), {
+        attempts
+    }, {
+        onSuccess: () => {
+            finished.value = true;
+            showSummary.value = false;
+        }
+    });
+}
+
 function playSound(type) {
     const audio = new Audio(type === 'success' ? '/sounds/success.mp3' : '/sounds/error.mp3');
     audio.play();
@@ -52,6 +70,7 @@ function goToUnits() {
 </script>
 
 <template>
+
     <Head :title="`Ejercicios de ${props.lesson.name}`" />
     <AuthenticatedLayout>
         <template #header>
@@ -63,30 +82,27 @@ function goToUnits() {
                     <div class="p-6">
                         <template v-if="!finished && !showSummary">
                             <div class="mb-6">
-                                <h1 class="text-2xl font-bold text-gray-800 mb-2">Ejercicio {{ current + 1 }} de {{ exercises.length }}</h1>
+                                <h1 class="text-2xl font-bold text-gray-800 mb-2">Ejercicio {{ current + 1 }} de {{
+                                    exercises.length }}</h1>
                                 <div class="mb-4">
-                                    <span class="font-semibold">Tipo:</span> {{ exercises[current].exercise_type?.name }}
+                                    <span class="font-semibold">Tipo:</span> {{ exercises[current].exercise_type?.name
+                                    }}
                                 </div>
                                 <div class="mb-4">
                                     <span class="font-semibold">Enunciado:</span> {{ exercises[current].prompt }}
                                 </div>
                                 <!-- Inputs dinámicos por tipo de ejercicio -->
-                                <component
-                                    :is="exercises[current].exercise_type?.name === 'Opción múltiple' ? MultipleChoice
-                                        : exercises[current].exercise_type?.name === 'Verdadero o falso' ? TrueFalse
+                                <component :is="exercises[current].exercise_type?.name === 'Opción múltiple' ? MultipleChoice
+                                    : exercises[current].exercise_type?.name === 'Verdadero o falso' ? TrueFalse
                                         : exercises[current].exercise_type?.name === 'Completar espacios' ? FillBlank
-                                        : exercises[current].exercise_type?.name === 'Ordenar elementos' ? OrderElements
-                                        : exercises[current].exercise_type?.name === 'Relacionar columnas' ? MatchColumns
-                                        : exercises[current].exercise_type?.name === 'Emparejar definiciones' ? MatchDefinitions
-                                        : exercises[current].exercise_type?.name === 'Completar diálogo' ? CompleteDialog
-                                        : null"
+                                            : exercises[current].exercise_type?.name === 'Ordenar elementos' ? OrderElements
+                                                : exercises[current].exercise_type?.name === 'Relacionar columnas' ? MatchColumns
+                                                    : exercises[current].exercise_type?.name === 'Emparejar definiciones' ? MatchDefinitions
+                                                        : exercises[current].exercise_type?.name === 'Completar diálogo' ? CompleteDialog
+                                                            : null"
                                     v-if="['Opción múltiple', 'Verdadero o falso', 'Completar espacios', 'Ordenar elementos', 'Relacionar columnas', 'Emparejar definiciones', 'Completar diálogo'].includes(exercises[current].exercise_type?.name)"
-                                    :exercise="exercises[current]"
-                                    :showFeedback="showFeedback"
-                                    :lastAnswer="lastAnswer"
-                                    :handleAnswer="handleAnswer"
-                                    :nextExercise="nextExercise"
-                                />
+                                    :exercise="exercises[current]" :showFeedback="showFeedback" :lastAnswer="lastAnswer"
+                                    :handleAnswer="handleAnswer" :nextExercise="nextExercise" />
                             </div>
                         </template>
                         <template v-else-if="showSummary">
@@ -107,27 +123,28 @@ function goToUnits() {
                                                 <td class="border px-2 py-1">{{ idx + 1 }}</td>
                                                 <td class="border px-2 py-1">{{ exercise.prompt }}</td>
                                                 <td class="border px-2 py-1">
-                                                    <span v-if="userAnswers[idx] !== undefined">{{ userAnswers[idx] }}</span>
+                                                    <span v-if="userAnswers[idx] !== undefined">{{ userAnswers[idx]
+                                                    }}</span>
                                                     <span v-else class="text-gray-500">Sin respuesta</span>
                                                 </td>
                                                 <td class="border px-2 py-1">
-                                                    <span v-if="answered[idx] === true" class="text-green-600 font-bold">Correcto</span>
-                                                    <span v-else-if="answered[idx] === false" class="text-red-600 font-bold">Incorrecto</span>
+                                                    <span v-if="answered[idx] === true"
+                                                        class="text-green-600 font-bold">Correcto</span>
+                                                    <span v-else-if="answered[idx] === false"
+                                                        class="text-red-600 font-bold">Incorrecto</span>
                                                     <span v-else class="text-gray-500">Sin respuesta</span>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" @click="finished = true; showSummary = false;">Finalizar</button>
+                                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                                    @click="saveSummary">Finalizar</button>
                             </div>
                         </template>
                         <template v-else>
                             <div class="text-center">
                                 <h2 class="text-2xl font-bold mb-4">¡Has terminado la ronda de ejercicios!</h2>
-                                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" @click="goToUnits">
-                                    Volver a la lista de unidades
-                                </button>
                             </div>
                         </template>
                     </div>

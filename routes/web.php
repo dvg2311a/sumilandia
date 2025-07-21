@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
         Route::get('units', [\App\Http\Controllers\Student\UnitController::class, 'index'])->name('units.index');
         Route::get('units/{id}/start', [\App\Http\Controllers\Student\LessonController::class, 'index'])->name('units.start');
         Route::get('lessons/{id}/start', [\App\Http\Controllers\Student\ExerciseController::class, 'showSequence'])->name('lessons.start');
+        Route::post('exercises/attempts-batch', [\App\Http\Controllers\Student\ExerciseController::class, 'storeAttemptsBatch'])->name('exercises.attemptsBatch');
     });
 
     Route::middleware('role:admin')->group(function () {
