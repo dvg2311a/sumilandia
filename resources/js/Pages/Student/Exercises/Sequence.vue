@@ -26,6 +26,8 @@ const lastAnswer = ref(null);
 async function saveSummary() {
     const attempts = props.exercises.map((exercise, idx) => ({
         exercise_id: exercise.id,
+        lesson_id: props.lesson.id,
+        unit_id: props.lesson.unit_id, // asegúrate que lesson tiene unit_id
         answer_given: userAnswers.value[idx],
         is_correct: answered.value[idx] === true,
         attempt_number: 1,

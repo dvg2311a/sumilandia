@@ -50,14 +50,10 @@ class ExerciseController extends Controller
         }
 
         $lessonId = $attempts[0]['lesson_id'] ?? null;
-        $unitId = null;
-        if ($lessonId) {
-            $lesson = Lesson::find($lessonId);
-            $unitId = $lesson?->unit_id;
-        }
+        $unitId = $attempts[0]['unit_id'] ?? null;
 
         if ($unitId) {
-            return redirect()->route('student.units.index');
+            return redirect()->route('student.units.start', $unitId);
         }
         return redirect()->route('student.units.index');
     }
