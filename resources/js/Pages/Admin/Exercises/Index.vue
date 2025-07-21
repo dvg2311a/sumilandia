@@ -7,7 +7,7 @@ const props = defineProps({
 });
 function destroy(id) {
     if (confirm('¿Seguro que deseas eliminar este ejercicio?')) {
-        router.delete(`/admin/exercises/${id}`);
+        router.delete(`/exercises/${id}`);
     }
 }
 </script>

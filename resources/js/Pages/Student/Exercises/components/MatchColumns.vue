@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 const props = defineProps({
     exercise: Object,
     showFeedback: Boolean,
@@ -8,15 +8,31 @@ const props = defineProps({
     nextExercise: Function
 });
 // Estado local para los matches del estudiante
-const leftValues = Array.isArray(props.exercise.options)
+function getLeftValues() {
+  return Array.isArray(props.exercise.options)
     ? [...new Set(props.exercise.options.map(opt => opt.left).filter(v => v))]
     : [];
-const rightValues = Array.isArray(props.exercise.options)
+}
+function getRightValues() {
+  return Array.isArray(props.exercise.options)
     ? [...new Set(props.exercise.options.map(opt => opt.right).filter(v => v))]
     : [];
+}
+const leftValues = ref(getLeftValues());
+const rightValues = ref(getRightValues());
 const selectedLeft = ref(null);
 const selectedRight = ref(null);
 const studentMatches = ref([]);
+const checked = ref(false);
+
+watch(() => props.exercise, () => {
+  leftValues.value = getLeftValues();
+  rightValues.value = getRightValues();
+  selectedLeft.value = null;
+  selectedRight.value = null;
+  studentMatches.value = [];
+  checked.value = false;
+}, { immediate: true });
 
 function selectLeft(left) {
   selectedLeft.value = left;
@@ -40,15 +56,20 @@ function isMatched(left, right) {
   return studentMatches.value.some(p => p.left === left && p.right === right);
 }
 function checkAnswer() {
-    // La solución puede ser array de pares
     const solutionArray = Array.isArray(props.exercise.solution)
         ? props.exercise.solution
         : [props.exercise.solution];
-    // Compara cada par
     const isCorrect = studentMatches.value.every(pair => {
         return solutionArray.some(sol => sol.left === pair.left && sol.right === pair.right);
     }) && studentMatches.value.length === solutionArray.length;
+    checked.value = true;
     props.handleAnswer(isCorrect, JSON.parse(JSON.stringify(studentMatches.value)));
+}
+function isPairCorrect(pair) {
+    const solutionArray = Array.isArray(props.exercise.solution)
+        ? props.exercise.solution
+        : [props.exercise.solution];
+    return solutionArray.some(sol => sol.left === pair.left && sol.right === pair.right);
 }
 </script>
 <template>
@@ -98,7 +119,8 @@ function checkAnswer() {
         <div v-if="studentMatches.length" class="mb-2">
             <div class="font-bold text-xs mb-1">Pares seleccionados:</div>
             <ul class="text-xs">
-                <li v-for="(pair, idx) in studentMatches" :key="idx">
+                <li v-for="(pair, idx) in studentMatches" :key="idx"
+                    :class="checked ? (isPairCorrect(pair) ? 'text-green-600 font-bold' : 'text-red-600 font-bold') : ''">
                     {{ pair.left }} → {{ pair.right }}
                 </li>
             </ul>
@@ -106,11 +128,11 @@ function checkAnswer() {
         <button
             class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full mt-2"
             @click="checkAnswer"
-            :disabled="props.showFeedback"
+            :disabled="props.showFeedback || checked"
         >
             Comprobar respuesta
         </button>
-        <div v-if="props.showFeedback">
+        <div v-if="props.showFeedback || checked">
             <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" @click="props.nextExercise">Siguiente</button>
         </div>
     </div>

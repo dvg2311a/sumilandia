@@ -21,7 +21,8 @@ const selectedType = computed(() => {
 });
 watch(() => props.form.exercise_type_id, () => {
     props.form.options = [];
-    props.form.solution = '';
+    // Reset solution to an array so dialog-complete fields render correctly
+    props.form.solution = [];
 });
 function addOption() {
     props.form.options.push('');
