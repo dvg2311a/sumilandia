@@ -70,6 +70,12 @@ const showingNavigationDropdown = ref(false);
                                     >
                                         Ejercicios
                                     </NavLink>
+                                    <NavLink
+                                        :href="route('admin.progress.index')"
+                                        :active="route().current('admin.progress.index')"
+                                    >
+                                        Progreso estudiantes
+                                    </NavLink>
                                 </template>
                                 <template v-else>
                                     <NavLink
