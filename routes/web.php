@@ -49,6 +49,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('exercises', ExerciseController::class);
         Route::get('progress', [\App\Http\Controllers\Admin\ProgressController::class, 'index'])->name('admin.progress.index');
     });
+
+    Route::get('/admin/progress/{user}', [\App\Http\Controllers\Admin\ProgressController::class, 'show'])->name('admin.progress.show');
+
 });
 
 require __DIR__ . '/auth.php';

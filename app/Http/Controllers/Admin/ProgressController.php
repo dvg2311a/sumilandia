@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Unit;
 use App\Models\Lesson;
-use App\Models\User;
 use App\Models\UnitUserProgress;
+use App\Models\User;
 use App\Models\LessonUserProgress;
+use App\Models\UserExerciseAttempt;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -51,6 +52,32 @@ class ProgressController extends Controller
             'selectedUser' => $userId,
             'selectedLesson' => $lessonId,
             'selectedStatus' => $status
+        ]);
+    }
+
+    public function show($userId)
+    {
+        $user = User::findOrFail($userId);
+        $units = Unit::all();
+        $lessons = Lesson::with('unit')->get();
+        $lessonProgress = LessonUserProgress::with(['lesson.unit'])
+            ->where('user_id', $userId)
+            ->get();
+        $unitProgress = UnitUserProgress::with(['unit'])
+            ->where('user_id', $userId)
+            ->get();
+        $attempts = UserExerciseAttempt::with(['lesson', 'exercise'])
+            ->where('user_id', $userId)
+            ->orderByDesc('created_at')
+            ->get();
+
+        return Inertia::render('Admin/Progress/Show', [
+            'user' => $user,
+            'units' => $units,
+            'lessons' => $lessons,
+            'lessonProgress' => $lessonProgress,
+            'unitProgress' => $unitProgress,
+            'attempts' => $attempts
         ]);
     }
 }

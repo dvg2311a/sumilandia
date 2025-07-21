@@ -87,29 +87,32 @@ function handleFilter() {
                                         <th class="border px-2 py-1">Lección</th>
                                         <th class="border px-2 py-1">Progreso</th>
                                         <th class="border px-2 py-1">Estado</th>
+                                        <th class="border px-2 py-1">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="row in progress" :key="row.id">
-                                        <td class="border px-2 py-1">{{ row.user?.first_name }} {{ row.user?.last_name
-                                            }}</td>
-                                        <td class="border px-2 py-1">{{row.lesson && row.lesson.unit ?
-                                            row.lesson.unit.name :
-                                            (units.find(u => u.id === row.lesson?.unit_id)?.name || '-') }}</td>
+                                        <td class="border px-2 py-1">{{ row.user?.first_name }} {{ row.user?.last_name }}</td>
+                                        <td class="border px-2 py-1">{{ row.lesson && row.lesson.unit ? row.lesson.unit.name : (units.find(u => u.id === row.lesson?.unit_id)?.name || '-') }}</td>
                                         <td class="border px-2 py-1">{{ row.lesson ? row.lesson.name : '-' }}</td>
                                         <td class="border px-2 py-1">
-                                            <span
-                                                :class="row.progress === 100 ? 'text-green-600 font-bold' : row.progress > 0 ? 'text-yellow-600 font-bold' : 'text-gray-500'">
+                                            <span :class="row.progress === 100 ? 'text-green-600 font-bold' : row.progress > 0 ? 'text-yellow-600 font-bold' : 'text-gray-500'">
                                                 {{ row.progress }}%
                                             </span>
                                         </td>
                                         <td class="border px-2 py-1">
-                                            <span
-                                                :class="row.status === 'completado' ? 'text-green-600 font-bold' : row.status === 'en_progreso' ? 'text-yellow-600 font-bold' : 'text-gray-500'">
-                                                {{ row.status === 'completado' ? 'Completado' : row.status ===
-                                                'en_progreso' ?
-                                                'En progreso' : 'No comenzado' }}
+                                            <span :class="row.status === 'completado' ? 'text-green-600 font-bold' : row.status === 'en_progreso' ? 'text-yellow-600 font-bold' : 'text-gray-500'">
+                                                {{ row.status === 'completado' ? 'Completado' : row.status === 'en_progreso' ? 'En progreso' : 'No comenzado' }}
                                             </span>
+                                        </td>
+                                        <td class="border px-2 py-1">
+                                            <button
+                                                v-if="row.user"
+                                                @click="router.get(route('admin.progress.show', row.user.id))"
+                                                class="bg-blue-500 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm"
+                                            >
+                                                Ver detalles
+                                            </button>
                                         </td>
                                     </tr>
                                 </tbody>

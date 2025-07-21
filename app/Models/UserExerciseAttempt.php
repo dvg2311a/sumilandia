@@ -37,4 +37,16 @@ class UserExerciseAttempt extends Model
     {
         return $this->belongsTo(Exercise::class);
     }
+
+    public function lesson()
+    {
+        return $this->hasOneThrough(
+            Lesson::class,
+            Exercise::class,
+            'id', // Exercise.id
+            'id', // Lesson.id
+            'exercise_id', // UserExerciseAttempt.exercise_id
+            'lesson_id' // Exercise.lesson_id
+        );
+    }
 }
