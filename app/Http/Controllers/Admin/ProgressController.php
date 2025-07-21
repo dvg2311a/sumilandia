@@ -26,7 +26,7 @@ class ProgressController extends Controller
         $lessons = Lesson::all();
 
         // Filtrar por unidad, usuario, lección y estado en LessonUserProgress
-        $query = LessonUserProgress::with(['user', 'lesson']);
+        $query = LessonUserProgress::with(['user', 'lesson.unit']);
         if ($unitId) {
             $lessonIds = Lesson::where('unit_id', $unitId)->pluck('id');
             $query->whereIn('lesson_id', $lessonIds);
