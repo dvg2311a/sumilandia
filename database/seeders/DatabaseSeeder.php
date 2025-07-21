@@ -37,8 +37,8 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Verdadero o falso', 'description' => 'Ejercicios para determinar si las afirmaciones son verdaderas o falsas'],
             ['name' => 'Relacionar columnas', 'description' => 'Ejercicios para relacionar elementos de dos listas'],
             ['name' => 'Ordenar elementos', 'description' => 'Ejercicios para ordenar elementos en el orden correcto'],
-            ['name' => 'Respuesta corta', 'description' => 'Ejercicios que requieren una respuesta breve escrita'],
-            ['name' => 'Ensayo', 'description' => 'Ejercicios que requieren una respuesta escrita más extensa'],
+            ['name' => 'Emparejar definiciones', 'description' => 'Ejercicios para emparejar conceptos con sus definiciones'],
+            ['name' => 'Completar diálogo', 'description' => 'Ejercicios para completar diálogos con frases faltantes']
         ]);
 
         Level::insert([

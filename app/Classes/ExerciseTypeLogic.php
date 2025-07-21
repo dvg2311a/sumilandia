@@ -17,7 +17,7 @@ class ExerciseTypeLogic
                 if (!is_array($solution)) {
                     $solution = [$solution];
                 }
-                $invalid = array_filter($solution, function($sol) use ($data) {
+                $invalid = array_filter($solution, function ($sol) use ($data) {
                     return !in_array($sol, $data['options'] ?? []);
                 });
                 if (count($invalid) > 0) {
@@ -53,13 +53,23 @@ class ExerciseTypeLogic
                     $errors['solution'] = 'La solución debe ser un array con el orden correcto.';
                 }
                 break;
-            case 'Respuesta corta':
-            case 'Ensayo':
-                if (empty($data['solution'])) {
-                    $errors['solution'] = 'Debes ingresar la respuesta.';
+            case 'Emparejar definiciones':
+                // options: [{concepto, definicion}], solution: [{concepto, definicion}]
+                if (!is_array($data['options']) || count($data['options']) < 2) {
+                    $errors['options'] = 'Debes agregar al menos dos pares de concepto y definición.';
+                }
+                if (!is_array($data['solution']) || count($data['solution']) < 2) {
+                    $errors['solution'] = 'Debes ingresar la solución como pares de concepto y definición.';
                 }
                 break;
-            default:
+            case 'Completar diálogo':
+                // options: [{frase, hueco}], solution: [frase1, frase2, ...]
+                if (!is_array($data['options']) || count($data['options']) < 2) {
+                    $errors['options'] = 'Debes agregar al menos dos frases para el diálogo.';
+                }
+                if (!is_array($data['solution']) || count($data['solution']) < 1) {
+                    $errors['solution'] = 'Debes ingresar la(s) frase(s) correcta(s) para completar el diálogo.';
+                }
                 break;
         }
         return [

@@ -6,6 +6,8 @@ import ShortAnswerFields from './components/ShortAnswerFields.vue';
 import MatchColumnsFields from './components/MatchColumnsFields.vue';
 import OrderElementsFields from './components/OrderElementsFields.vue';
 import CompleteSpacesFields from './components/CompleteSpacesFields.vue';
+import MatchDefinitionsFields from './components/MatchDefinitionsFields.vue';
+import CompleteDialogFields from './components/CompleteDialogFields.vue';
 const props = defineProps({
     form: Object,
     types: Array,
@@ -64,7 +66,9 @@ function removeOption(idx) {
                         selectedType.name === 'Completar espacios' ? CompleteSpacesFields :
                             (selectedType.name === 'Respuesta corta' || selectedType.name === 'Ensayo') ? ShortAnswerFields :
                                 selectedType.name === 'Relacionar columnas' ? MatchColumnsFields :
-                                    selectedType.name === 'Ordenar elementos' ? OrderElementsFields : null
+                                    selectedType.name === 'Ordenar elementos' ? OrderElementsFields :
+                                        selectedType.name === 'Emparejar definiciones' ? MatchDefinitionsFields :
+                                            selectedType.name === 'Completar diálogo' ? CompleteDialogFields : null
                     " v-if="selectedType.name" :form="props.form" :errors="props.errors" />
             </div>
             <div class="col-span-2">
