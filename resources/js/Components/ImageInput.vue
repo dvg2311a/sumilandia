@@ -33,9 +33,7 @@ if (typeof model.value === 'string' && model.value && !model.value.startsWith('d
 }
 
 onMounted(() => {
-    if (input.value && input.value.hasAttribute('autofocus')) {
-        input.value.focus();
-    }
+    // Removed autofocus logic to prevent conflicts
 });
 
 defineExpose({ focus: () => input.value.focus() });

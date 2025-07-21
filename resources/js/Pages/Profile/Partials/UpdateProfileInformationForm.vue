@@ -23,7 +23,7 @@ const profileForm = useForm({
     avatar: profile?.avatar || '',
     nickname: profile?.nickname || '',
     birthdate: profile?.birthdate || '',
-    academic_level: profile?.academic_level || '',
+    academic_level: String(profile?.academic_level || ''),
     gender: profile?.gender || '',
 });
 
