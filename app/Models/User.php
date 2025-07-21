@@ -59,4 +59,19 @@ class User extends Authenticatable
     {
         return $this->hasOne(Profile::class);
     }
+
+    public function userExerciseAttempts()
+    {
+        return $this->hasMany(UserExerciseAttempt::class);
+    }
+
+    public function lessonUserProgress()
+    {
+        return $this->hasMany(LessonUserProgress::class);
+    }
+
+    public function unitUserProgress()
+    {
+        return $this->hasMany(UnitUserProgress::class);
+    }
 }

@@ -33,4 +33,9 @@ class Exercise extends Model
     {
         return $this->belongsTo(ExerciseType::class);
     }
+
+    public function userExerciseAttempts()
+    {
+        return $this->hasMany(UserExerciseAttempt::class);
+    }
 }

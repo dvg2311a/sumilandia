@@ -31,4 +31,9 @@ class Unit extends Model
     {
         return $this->hasMany(Lesson::class);
     }
+
+    public function unitUserProgress()
+    {
+        return $this->hasMany(UnitUserProgress::class);
+    }
 }
