@@ -24,9 +24,6 @@ class ExerciseController extends Controller
             'exercises' => $exercises
         ]);
     }
-    /**
-     * Guarda un intento de ejercicio del estudiante
-     */
 
     public function storeAttemptsBatch(UserExerciseAttemptRequest $request)
     {
