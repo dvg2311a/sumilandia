@@ -53,6 +53,18 @@ function startUnit(id) {
                                             unit.level?.name ||
                                             'Sin nivel' }}</span></p>
                                     <p class="text-sm text-gray-500">Tiempo estimado: <span class="font-semibold">{{ unit.expected_time ? unit.expected_time + ' min' : 'No definido' }}</span></p>
+                                    <div class="mt-2">
+                                        <span class="font-semibold">Progreso:</span>
+                                        <span :class="unit.progress === 100 ? 'text-green-600 font-bold' : unit.progress > 0 ? 'text-yellow-600 font-bold' : 'text-gray-500'">
+                                            {{ unit.progress }}%
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="font-semibold">Estado:</span>
+                                        <span :class="unit.status === 'completado' ? 'text-green-600 font-bold' : unit.status === 'en_progreso' ? 'text-yellow-600 font-bold' : 'text-gray-500'">
+                                            {{ unit.status === 'completado' ? 'Completado' : unit.status === 'en_progreso' ? 'En progreso' : 'No comenzado' }}
+                                        </span>
+                                    </div>
                                 </div>
                                 <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
                                     @click="startUnit(unit.id)">

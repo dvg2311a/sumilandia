@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lesson;
+use App\Models\LessonUserProgress;
+use App\Models\UnitUserProgress;
 use App\Models\UserExerciseAttempt;
 use App\Http\Requests\UserExerciseAttemptRequest;
 use Inertia\Inertia;
@@ -67,6 +69,34 @@ class ExerciseController extends Controller
                     'status' => $status,
                 ]
             );
+
+            // Guardar progreso de la unidad
+            if ($unitId) {
+                $unitLessons = Lesson::where('unit_id', $unitId)->pluck('id');
+                $userLessonProgress = LessonUserProgress::where('user_id', $userId)
+                    ->whereIn('lesson_id', $unitLessons)
+                    ->get();
+
+                $totalLessons = count($unitLessons);
+                $sumProgress = $userLessonProgress->sum('progress');
+                $completedCount = $userLessonProgress->where('status', 'completado')->count();
+
+                $unitProgress = $totalLessons > 0 ? intval($sumProgress / $totalLessons) : 0;
+                $unitStatus = $completedCount === $totalLessons && $totalLessons > 0
+                    ? 'completado'
+                    : ($sumProgress > 0 ? 'en_progreso' : 'no_comenzado');
+
+                UnitUserProgress::updateOrCreate(
+                    [
+                        'user_id' => $userId,
+                        'unit_id' => $unitId,
+                    ],
+                    [
+                        'progress' => $unitProgress,
+                        'status' => $unitStatus,
+                    ]
+                );
+            }
         }
 
         if ($unitId) {
