@@ -42,6 +42,8 @@ const alignmentClasses = computed(() => {
 });
 
 const open = ref(false);
+
+const model = defineModel();
 </script>
 
 <template>
