@@ -5,11 +5,16 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
+import Dropdown from '@/Components/Dropdown.vue';
 
 const form = useForm({
     first_name: '',
     last_name: '',
+    academic_level: '',
+    birthdate: '',
     email: '',
+    gender: '',
     password: '',
     password_confirmation: '',
 });
@@ -19,108 +24,175 @@ const submit = () => {
         onFinish: () => form.reset('password', 'password_confirmation'),
     });
 };
+
+// ? Function to icon of calendar
+const birthdateInput = ref(null);
+
+function focusDateInput() {
+    birthdateInput.value?.showPicker?.();
+}
+
+const selectHiden = ref(null);
+
+// ? Function to hide the select option
+// * This function is used to hide the select option when the user clicks on it
+const btnSelect = () => {
+    selectHiden.value.style.display = 'none';
+}
+
 </script>
 
 <template>
-    <GuestLayout>
+    <GuestLayout :showImage="false">
+
         <Head title="Registro" />
 
-        <form @submit.prevent="submit">
-            <div class="flex gap-4">
-                <div class="w-1/2">
-                    <InputLabel for="first_name" value="Nombres" />
-                    <TextInput
-                        id="first_name"
-                        type="text"
-                        class="mt-1 block w-full"
-                        v-model="form.first_name"
-                        required
-                        autofocus
-                        autocomplete="given-name"
-                    />
-                    <InputError class="mt-2" :message="form.errors.first_name" />
+        <form @submit.prevent="submit" class="form-register">
+            <div class="title-register">
+                <h1>Registro</h1>
+            </div>
+            <!--
+                ? Nombres y apellidos
+            -->
+            <div class="elements-container">
+                <div>
+                    <InputLabel for="first_name" value="Nombres" class="text-labels" />
+                    <!-- ? Contenedor del input y el icono -->
+                    <div class="input-icon-container">
+                        <img src="icons/names.gif" alt="lapiz-icon" class="gif-icons" />
+                        <TextInput id="first_name" type="text" v-model="form.first_name" required
+                            autocomplete="given-name" class="inputs" />
+                    </div>
                 </div>
-                <div class="w-1/2">
-                    <InputLabel for="last_name" value="Apellidos" />
-                    <TextInput
-                        id="last_name"
-                        type="text"
-                        class="mt-1 block w-full"
-                        v-model="form.last_name"
-                        required
-                        autocomplete="family-name"
-                    />
-                    <InputError class="mt-2" :message="form.errors.last_name" />
+                <InputError :message="form.errors.first_name" />
+
+                <!-- * Apellido -->
+                <div>
+                    <InputLabel for="last_name" value="Apellidos" class="text-labels" />
+                    <!-- ? Contenedor del input y el icono -->
+                    <div class="input-icon-container">
+                        <img src="icons/names.gif" alt="lapiz-icon" class="gif-icons" />
+                        <TextInput id="last_name" type="text" v-model="form.last_name" required
+                            autocomplete="family-name" class="inputs" />
+                    </div>
+                    <InputError :message="form.errors.last_name" />
                 </div>
             </div>
 
-            <div class="mt-4">
-                <InputLabel for="email" value="Correo" />
+            <!-- ? Academic Level and birthdate -->
+            <div class="elements-container">
 
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autocomplete="username"
-                />
+                <div>
+                    <InputLabel for="academic-level" value="Grado Adémico" class="text-labels" />
+                    <!-- ? Contenedor del input y el icono -->
+                    <div class="input-icon-container">
+                        <img src="icons/grade-icon.gif" alt="" class="gif-icons">
+                        <TextInput id="academic-level" type="text" v-model="form.academic_level" required
+                            autocomplete="number" placeholder="1: Primaria, 2: Secundaria" class="inputs" />
+                    </div>
+                    <InputError :message="form.errors.academic_level" />
+                </div>
 
-                <InputError class="mt-2" :message="form.errors.email" />
+
+                <div>
+                    <InputLabel for="birthdate" value="Fecha de Nacimiento" class="text-labels" />
+                    <!-- ? Contenedor del input y el icono -->
+                    <div class="input-icon-container">
+                        <img src="icons/calendar-icon.gif" class="gif-icons" @click="focusDateInput" />
+                        <TextInput id="birthdate" type="date" v-model="form.birthdate" class="inputs"
+                            ref="birthdateInput" />
+                    </div>
+                    <InputError :message="form.errors.birthdate" />
+                </div>
             </div>
 
-            <div class="mt-4">
-                <InputLabel for="password" value="Contraseña" />
+            <!-- ? Email and gender -->
+            <div class="elements-container">
 
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="new-password"
-                />
+                <div>
+                    <InputLabel for="email" value="Correo" class="text-labels" />
 
-                <InputError class="mt-2" :message="form.errors.password" />
+                    <div class="input-icon-container">
+                        <img src="icons/mail-icon.gif" alt="" class="gif-icons">
+                        <TextInput id="email" type="email" v-model="form.email" required autocomplete="username"
+                            class="inputs" />
+                    </div>
+                    <InputError :message="form.errors.email" />
+                </div>
+
+                <div>
+                    <InputLabel for="gender" value="Sexo" class="text-labels" />
+
+                    <div class="input-icon-container">
+                        <Dropdown v-model="form.gender">
+                            <template #trigger>
+                                <div class="">
+                                    <span v-if="form.gender === 'Male'" class="gender-containerIf">
+                                        <img src="icons/male-icon.gif" class="gif-icons" /> Niño
+                                    </span>
+                                    <span v-else-if="form.gender === 'Female'" class="gender-containerIf">
+                                        <img src="icons/female-icon.gif" class="gif-icons" /> Niña
+                                    </span>
+                                    <span v-else class="text-labels select" @click="btnSelect" ref="selectHiden">Seleccione su sexo <img src="icons/chevron-down.svg" alt="Icon Arrow dropdown"></span>
+                                </div>
+                            </template>
+
+                            <template #content>
+                                <ul class="dropdown">
+                                    <li @click="form.gender = 'Male'"
+                                        class="gender-container">
+                                        <img src="icons/male-icon.gif" class="gif-icons" /> Niño
+                                    </li>
+                                    <li @click="form.gender = 'Female'"
+                                        class="gender-container">
+                                        <img src="icons/female-icon.gif" class="gif-icons" /> Niña
+                                    </li>
+                                </ul>
+                            </template>
+                        </Dropdown>
+                    </div>
+
+                    <InputError :message="form.errors.gender" />
+                </div>
+
             </div>
 
-            <div class="mt-4">
-                <InputLabel
-                    for="password_confirmation"
-                    value="Confirmar contraseña"
-                />
+            <!-- ? Password and password confirmation -->
+            <div class="elements-container">
 
-                <TextInput
-                    id="password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password_confirmation"
-                    required
-                    autocomplete="new-password"
-                />
+                <div>
+                    <InputLabel for="password" value="Contraseña" class="text-labels" />
+                    <div class="input-icon-container">
+                        <img src="icons/password-icon.gif" alt="" class="gif-icons">
+                        <TextInput id="password" type="password" v-model="form.password" required
+                            autocomplete="new-password" class="inputs" />
+                    </div>
+                    <InputError :message="form.errors.password" />
+                </div>
 
-                <InputError
-                    class="mt-2"
-                    :message="form.errors.password_confirmation"
-                />
+                <div>
+                    <InputLabel for="password_confirmation" value="Confirmar contraseña" class="text-labels" />
+                    <div class="input-icon-container">
+                        <img src="icons/password-icon.gif" alt="" class="gif-icons">
+                        <TextInput id="password_confirmation" type="password" v-model="form.password_confirmation"
+                            required autocomplete="new-password" class="inputs" />
+                    </div>
+                    <InputError :message="form.errors.password_confirmation" />
+                </div>
             </div>
 
-            <div class="mt-4 flex items-center justify-end">
-                <Link
-                    :href="route('login')"
-                    class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                    ¿Ya tienes una cuenta?
-                </Link>
-
-                <PrimaryButton
-                    class="ms-4"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
+            <div class="end-card">
+                <PrimaryButton class="btn-ok" :disabled="form.processing">
                     Registrarse
                 </PrimaryButton>
+                <span class="question">
+                    ¿Ya tienes una cuenta? <br>
+                    <Link :href="route('login')" class="question link">Iniciar sesión</Link>
+                </span>
+
             </div>
         </form>
+
+
     </GuestLayout>
 </template>
