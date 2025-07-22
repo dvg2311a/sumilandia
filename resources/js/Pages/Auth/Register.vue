@@ -133,7 +133,7 @@ const btnSelect = () => {
                                     <span v-else-if="form.gender === 'Female'" class="gender-containerIf">
                                         <img src="icons/female-icon.gif" class="gif-icons" /> Niña
                                     </span>
-                                    <span v-else class="text-labels select" @click="btnSelect" ref="selectHiden">Seleccione su sexo <img src="icons/chevron-down.svg" alt="Icon Arrow dropdown"></span>
+                                    <span v-else class=" select" @click="btnSelect" ref="selectHiden">Seleccione su sexo <img src="icons/chevron-down.svg" alt="Icon Arrow dropdown"></span>
                                 </div>
                             </template>
 
