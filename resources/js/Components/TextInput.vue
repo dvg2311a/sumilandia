@@ -14,7 +14,10 @@ onMounted(() => {
     }
 });
 
-defineExpose({ focus: () => input.value.focus() });
+defineExpose({
+    focus: () => input.value.focus(),
+    showPicker: () => input.value.showPicker?.(),
+    });
 </script>
 
 <template>
