@@ -4,22 +4,27 @@ body, input, button
 
 
 .form-register
+
+
     .title-register
         font-size: $title-card
 
     background: $cards
-    width: 130rem
+    flex-wrap: wrap
+    width: 100%
+    max-width: 130rem
+    flex: 1 1 50rem
     height: 90rem
     border-radius: 1.6rem
     display: flex
     align-items: center
-    justify-content: space-between
-    flex-wrap: wrap
-    flex-direction: column
+    justify-content: center
+    flex-direction: row
     box-shadow: $shadow
 
     & .elements-container
         width: 100%
+        flex-wrap: wrap
         display: flex
         flex-direction: row
         margin: -3rem 1rem 0 0
@@ -34,6 +39,8 @@ body, input, button
         & .input-icon-container
             position: relative
             display: flex
+            flex-wrap: wrap
+            flex: 1 1 59rem
             background: $background
             justify-content: space-evenly
             align-items: center
@@ -61,6 +68,8 @@ body, input, button
             .inputs
                 width: 53rem
                 outline: none
+                flex: 1 1 25rem
+                display: flex
                 height: 4rem
                 font-size: $subtitle-card
                 border: 2px solid transparent
