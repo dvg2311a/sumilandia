@@ -96,6 +96,9 @@ body, input, button
                 outline: none
                 border: 2px solid $active
 
+    & .elements-container ~ div
+        margin-top: 3rem
+
     .gender-containerIf
         width: 57rem
         display: flex
@@ -112,7 +115,9 @@ body, input, button
         cursor: pointer
         transition: $standar
         display: flex
+        align-items: center
         justify-content: space-between
+        font-size: $subtitle-card
         // margin-right: 25rem
 
 
@@ -126,19 +131,21 @@ body, input, button
         list-style: none
         border-radius: $br-rad
         padding: 0 1rem
+        z-index: 999
 
         .gender-container
             width: 50rem
             display: flex
             align-items: center
+            background: $background
             justify-content: center
             font-size: $subtitle-card
             cursor: pointer
 
+
             .gif-icons
                 width: 4rem
                 height: 4rem
-
 
 
 
