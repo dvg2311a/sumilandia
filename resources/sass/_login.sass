@@ -1,14 +1,14 @@
 .img-logo
-    width: 31.4rem
-    height: 31.4rem
+    width: 28rem
+    height: 28em
 
 .form-login
     width: 90rem
-    height: 80rem
+    height: 90rem
     background: $cards
     display: flex
-    justify-content: space-around
     align-items: center
+    justify-content: space-evenly
     flex-direction: column
     position: absolute
     left: 50%
@@ -17,12 +17,23 @@
     box-shadow: $shadow
     border-radius: $br-rad
 
+    .text-login
+        font-size: $title-card
+        width: 40rem
+        margin-top: -4rem
+        display: flex
+        justify-content: center
+
     .element-login-container
         width: 20rem
         display: flex
         align-items: center
         flex-direction: column
-        justify-content: center
+        height: 30rem
+        justify-content: start
+
+    .items-login
+        height: 12rem
 
         label
             font-size: $title

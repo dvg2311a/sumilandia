@@ -20,7 +20,6 @@ defineProps({
 const form = useForm({
     email: '',
     password: '',
-    remember: false,
 });
 
 const submit = () => {
@@ -55,7 +54,11 @@ const showPassword = () => {
     <form @submit.prevent="submit" class="form-login">
 
         <GuestLayout />
+        <div class="text-login">
+            <h1>Iniciar Sesión</h1>
+        </div>
         <div class="element-login-container">
+
 
             <div class="items-login">
                 <InputLabel for="email" value="Correo" />
@@ -85,7 +88,7 @@ const showPassword = () => {
 
         </div>
 
-        <div class="end-card">
+        <div class="end-card btn">
             <PrimaryButton class="btn-ok" :disabled="form.processing">
                 Ingresar
             </PrimaryButton>
