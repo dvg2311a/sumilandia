@@ -1,0 +1,59 @@
+.img-logo
+    width: 31.4rem
+    height: 31.4rem
+
+.form-login
+    width: 90rem
+    height: 80rem
+    background: $cards
+    display: flex
+    justify-content: space-around
+    align-items: center
+    flex-direction: column
+    position: absolute
+    left: 50%
+    top: 50%
+    transform: translate(-50%, -50%)
+    box-shadow: $shadow
+    border-radius: $br-rad
+
+    .element-login-container
+        width: 20rem
+        display: flex
+        align-items: center
+        flex-direction: column
+        justify-content: center
+
+        label
+            font-size: $title
+
+        input
+                width: 45rem
+                outline: none
+                flex: 1 1 25rem
+                display: flex
+                height: 4rem
+                font-size: $subtitle-card
+                border: 2px solid transparent
+                border-radius: .8rem
+                transition: $standar
+
+                &:-webkit-autofill, .inputs:-webkit-autofill:focus
+                    background: $background
+                    box-shadow: 0 0 0 1000px $background inset;
+                    -webkit-box-shadow: 0 0 0 1000px $background inset;
+                    transition: background 5000s ease-in-out 0s;
+
+    .input-icon-container-login
+        background: $background
+        width: 58rem
+        display: flex
+        justify-content: space-around
+        align-items: center
+        border-radius: $br-rad
+        box-shadow: $shadow
+
+        .gif-icons
+            width: 5rem
+            height: 5rem
+            margin-right: 1rem

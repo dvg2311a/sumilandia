@@ -6,6 +6,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 defineProps({
     canResetPassword: {
@@ -27,74 +28,71 @@ const submit = () => {
         onFinish: () => form.reset('password'),
     });
 };
+
+const viewPassword = ref(null);
+
+const showPassword = () => {
+    if (viewPassword.value.src.includes('eyes-close-icon')) {
+        viewPassword.value.src = 'icons/eyes-open-icon.png';
+        document.getElementById('password').type = 'text';
+        viewPassword.value.style.cursor = 'pointer';
+    } else {
+        viewPassword.value.src = 'icons/eyes-close-icon.png';
+        document.getElementById('password').type = 'password';
+    }
+};
 </script>
 
 <template>
-    <GuestLayout>
-        <Head title="Log in" />
 
-        <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
-            {{ status }}
-        </div>
 
-        <form @submit.prevent="submit">
-            <div>
+    <Head title="Iniciar sesión" />
+
+    <div v-if="status" class="">
+        {{ status }}
+    </div>
+
+    <form @submit.prevent="submit" class="form-login">
+
+        <GuestLayout />
+        <div class="element-login-container">
+
+            <div class="items-login">
                 <InputLabel for="email" value="Correo" />
 
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
+                <div class="input-icon-container-login">
+                    <img src="icons/user-icon.gif" alt="User Icon" class="gif-icons" />
+                    <TextInput id="email" type="email" class="" v-model="form.email" required autofocus
+                    autocomplete="username" />
+                </div>
 
-                <InputError class="mt-2" :message="form.errors.email" />
+                    <InputError class="" :message="form.errors.email" />
             </div>
 
-            <div class="mt-4">
+            <div class="items-login">
                 <InputLabel for="password" value="Contraseña" />
 
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="current-password"
-                />
+                <div class="input-icon-container-login">
 
-                <InputError class="mt-2" :message="form.errors.password" />
+                    <img src="icons/password-icon.gif" alt="Lock Icon" class="gif-icons" />
+                    <TextInput id="password" type="password" class="" v-model="form.password" required
+                    autocomplete="current-password" />
+                    <img src="icons/eyes-close-icon.png" alt="View Password" id="password" class="gif-icons" @click="showPassword" ref="viewPassword" />
+                </div>
+
+                <InputError class="" :message="form.errors.password" />
             </div>
 
-            <div class="mt-4 block">
-                <label class="flex items-center">
-                    <Checkbox name="remember" v-model:checked="form.remember" />
-                    <span class="ms-2 text-sm text-gray-600"
-                        >Recuerdame</span
-                    >
-                </label>
-            </div>
+        </div>
 
-            <div class="mt-4 flex items-center justify-end">
-                <Link
-                    v-if="canResetPassword"
-                    :href="route('password.request')"
-                    class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                                        ¿Olvidaste tu contraseña?
-                </Link>
-
-                <PrimaryButton
-                    class="ms-4"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
-                    Iniciar sesión
-                </PrimaryButton>
-            </div>
-        </form>
-    </GuestLayout>
+        <div class="end-card">
+            <PrimaryButton class="btn-ok" :disabled="form.processing">
+                Ingresar
+            </PrimaryButton>
+            <span class="question">
+                ¿No tienes una cuenta? <br>
+                <Link :href="route('register')" class="question link">Crear cuenta</Link>
+            </span>
+        </div>
+    </form>
 </template>
