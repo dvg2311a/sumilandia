@@ -108,7 +108,6 @@ body, input, button
         border-radius: $br-rad
         cursor: pointer
         font-size: $subtitle-card
-        // transition: $standar
 
     .select
         width: 57rem
@@ -118,12 +117,6 @@ body, input, button
         align-items: center
         justify-content: space-between
         font-size: $subtitle-card
-        // margin-right: 25rem
-
-
-
-
-
 
     .dropdown
         background: $background
@@ -204,7 +197,46 @@ body, input, button
 
 
 
-.img-logo
-    width: 18rem
 
+@media screen and (max-width: 1299px) and (min-width: 1212px)
+    .form-register
+        width: 100%
+        max-width: 110rem
+        height: 80rem
+        transition: $standar
+
+        & .elements-container
+            width: 100%
+            max-width: 100rem
+            padding: 0
+
+
+            & .text-labels
+                font-size: $subtitle-card
+
+
+        & .elements-container > div
+            width: 46%
+
+            .input-icon-container
+                width: 47rem
+                height: 4rem
+
+                .inputs
+                    width: 45rem
+                    height: 2.2rem
+
+                .gif-icons
+                    width: 3rem
+                    height: 3rem
+
+        .select, .gender-containerIf
+            width: 47rem
+
+        .dropdown
+            transform: translateX(-.3rem)
+            width: 45.6rem
+
+            .gender-container
+                width: 44rem
 
