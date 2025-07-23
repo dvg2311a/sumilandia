@@ -88,11 +88,11 @@ const showPassword = () => {
 
         </div>
 
-        <div class="end-card btn">
-            <PrimaryButton class="btn-ok" :disabled="form.processing">
+        <div class="end-card ">
+            <PrimaryButton class="btn-ok btn" id="btn-login" :disabled="form.processing">
                 Ingresar
             </PrimaryButton>
-            <span class="question">
+            <span class="question" id="question-login">
                 ¿No tienes una cuenta? <br>
                 <Link :href="route('register')" class="question link">Crear cuenta</Link>
             </span>
