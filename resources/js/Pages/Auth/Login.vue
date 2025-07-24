@@ -32,6 +32,7 @@ const viewPassword = ref(null);
 
 const showPassword = () => {
     if (viewPassword.value.src.includes('eyes-close-icon')) {
+        viewPassword.value.classList.add('gif-icons');
         viewPassword.value.src = 'icons/eyes-open-icon.png';
         document.getElementById('password').type = 'text';
         viewPassword.value.style.cursor = 'pointer';
