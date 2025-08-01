@@ -63,17 +63,17 @@
                     flex-direction: column
                     justify-content: space-around
                     transition: $standar
-                            transition-delay: calc( .1s * var(--i))
+                    transition-delay: calc( .1s * var(--i))
 
                     .icons-sidebar
                         width: 4rem
                         height: 4rem
 
                     a
-                        color: #000
                         width: 37rem
-                        text-align: left
                         display: flex
+                        color: #000
+                        text-align: left
                         align-items: center
                         margin-left: 2.7rem
                         pointer-events: auto
@@ -137,6 +137,7 @@
                         border-radius: $br-rad
                         background: $background
                         font-size: $subtitle-card
+
                         &:active
                             transform: scale(.9)
 
@@ -166,6 +167,8 @@
                         font-size: $title-card
                         background: transparent
                         transition-delay: calc( .1s * var(--i))
+            main
+                transition: $standar
 
 
         // ? SIDEBAR COLLAPSE POR MEDIO DE JS
@@ -255,3 +258,124 @@
         main
             grid-area: main
             margin-left: 6rem
+            transition: $standar
+
+
+//  todo PC DE 14 Y 15 INCH
+
+@media screen and (max-width: 1299px) and (min-width: 1212px)
+    .container-page
+            display: grid
+            grid-template-columns: 25rem 1fr
+
+            .sidebar
+                width: 25rem
+
+                .items-sidebar
+
+                    .logo-sidebar
+                        height: 15rem
+
+                        a
+
+                            img
+                                width: 13rem
+                                height: 13rem
+                                transition: $standar
+
+                            .logo-short
+                                width: 8rem
+                                height: 8rem
+
+                        .hamburguer-icon
+                            width: 2.6rem
+                            height: 2.6rem
+                            margin-left: -3rem
+
+                    .nav-links
+                        height: 35rem
+                        margin-top: -4rem
+
+                        .icons-sidebar
+                            width: 3rem
+                            height: 3rem
+                            transition: $standar
+
+                        a
+                            width: 25rem
+                            font-size: $description-card - .1rem
+
+
+                .settings-dropdown
+                    width: 25rem
+                    height: 8rem
+                    display: flex
+                    align-items: end
+                    margin-bottom: 1rem
+
+                    .dropdown-trigger
+                        width: 25rem
+                        height: 4rem
+                        transition: $standar
+
+                        .img-sidebar
+                            width: 3rem
+                            height: 3rem
+                            margin-left: 1.5rem
+
+                        .btn-profile
+                            margin-left: 5rem
+                            font-size: $description-card - .1rem
+
+                    .dropdown-content
+                        left: -.3rem
+                        width: 25rem
+                        height: 4rem
+                        bottom: 7.5rem
+
+                        .img-logout
+                            height: 3rem
+                            width: 3rem
+
+                        a
+                            width: 12rem
+                            height: 4rem
+                            font-size: $description-card - .3rem
+
+                        button
+                            height: 4rem
+                            font-size: $description-card - .3rem
+
+            &.container-page.sidebar-collapsed
+
+                .sidebar
+
+                    .items-sidebar
+
+                        .logo-short
+                            translate: .7rem 0
+
+                        .hamburguer-icon
+                            margin-left: -.5rem
+
+                        .nav-links
+                            height: 35rem
+                            translate: 0 0
+
+
+                .dropdown-trigger
+                    margin-left: 1.5rem
+                    transition: $standar
+
+                .dropdown-content
+                    margin-left: 4rem
+
+                    a
+
+                    button
+                        width: 3rem
+                        height: 3rem
+
+            .main
+                left: 5rem
+                transition: $standar
