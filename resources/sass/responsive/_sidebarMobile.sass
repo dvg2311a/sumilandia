@@ -1,0 +1,58 @@
+@media screen and ( max-width: 599px ) and (min-width: 320px)
+            .container-page
+                display: flex
+                flex-direction: column
+
+                .sidebar
+                    display: none
+
+                .container-menu-mobile
+                    display: block
+                    position: absolute
+                    pointer-events: auto
+
+                    .menu-mobile img
+                        width: 3rem
+                        height: 3rem
+                        margin: 1rem 0 0 .5rem
+
+                    .nav-links-mobile
+                        width: 15rem
+                        height: 20rem
+                        display: none
+                        background: $cards
+                        pointer-events: none
+                        flex-direction: column
+                        border-radius: $br-rad
+                        justify-content: space-around
+
+                        a
+                            display: flex
+                            margin-top: .5rem
+                            color: #000
+                            height: fit-content
+                            align-items: center
+                            text-decoration: none
+
+                            &:active
+                                transform: scale(.9)
+
+                        .icons-sidebar
+                            width: 2rem
+                            height: 2rem
+                            margin: 0 .5rem
+
+                        .hidden
+                            font-size: $description-card - .5rem
+
+                &.container-page.sidebar-collapsed
+
+                    .container-menu-mobile
+                        background: $cards
+                        border-radius: 0 .8rem .8rem 0
+
+                        .nav-links-mobile
+                            display: flex
+                            cursor: pointer
+                            pointer-events: auto
+                            transition-delay: calc( .1s * var(--i))
