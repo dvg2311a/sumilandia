@@ -1,0 +1,92 @@
+.container-table
+    width: 99.5%
+    margin-right: 2rem
+    height: fit-content
+
+    .table-responsive
+
+        .header
+            h1
+                font-size: $subtitle
+
+            a
+                display: flex
+                color: #000
+                padding: 1rem
+                width: fit-content
+                align-items: center
+                text-decoration: none
+                font-size: $subtitle - .4rem
+
+                img
+                    width: 4rem
+                    height: 4rem
+                    transition: $standar
+
+                span
+                    margin-left: 1rem
+                    transition: $standar
+
+                &:active
+                    transform: scale(.9)
+                    transition: $standar
+
+        .table-container
+            width: 100%
+            height: fit-content
+
+            .table
+                width: inherit
+                border-spacing: 0
+                box-shadow: .1rem .2rem 1rem #ffffff
+                border: .19rem solid $cards
+
+                thead
+                    font-size: $title-card - .3rem
+
+                    tr th
+                        border: .19rem solid $cards
+
+
+                tbody
+                    font-size: $subtitle-card - .2rem
+
+                    tr td
+                        border: .19rem solid $cards
+
+                        &:nth-child(2)
+                            width: 35rem
+
+                        &:nth-child(3)
+                            width: 80rem
+
+                        &:nth-child(4)
+                            width: fit-content
+
+                        &:nth-child(6)
+                            width: 17rem
+
+                            section
+                                width: 100%
+                                display: flex
+                                align-items: center
+                                justify-content: space-around
+
+
+                        .btn-action
+                            width: 3.8rem
+                            height: 3.8rem
+                            transition: $standar
+
+                            &:hover
+                                transform: scale(1.1)
+                                transition: $standar
+
+                            &:active
+                                transform: scale(.9)
+                                transition: $standar
+
+                        button
+                            background: transparent
+                            border: none
+
