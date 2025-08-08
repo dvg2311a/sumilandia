@@ -7,11 +7,7 @@ const props = defineProps({
     permissions: Object
 });
 
-function destroy(id) {
-    if (confirm('¿Estás seguro de que deseas eliminar esta lección?')) {
-        window.Inertia.delete(`/lessons/${id}`);
-    }
-}
+
 </script>
 
 <template>
@@ -72,3 +68,19 @@ function destroy(id) {
         </div>
     </AuthenticatedLayout>
 </template>
+
+<script>
+
+    export default {
+        props: {
+            lessons: Object
+        },
+        methods: {
+            destroy(id) {
+                if (confirm('¿Estás seguro de que deseas eliminar esta lección?')) {
+                    this.$inertia.delete(`/lessons/${id}`);
+                }
+            }
+        }
+    };
+</script>
