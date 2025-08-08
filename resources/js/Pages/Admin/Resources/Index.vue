@@ -1,17 +1,11 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 
 const props = defineProps({
     resources: Object,
     permissions: Object
 });
-
-function destroy(id) {
-    if (confirm('¿Estás seguro de que deseas eliminar este recurso?')) {
-        window.Inertia.delete(`/resources/${id}`);
-    }
-}
 </script>
 
 <template>
@@ -86,3 +80,18 @@ function destroy(id) {
 </div>
 </AuthenticatedLayout>
 </template>
+
+<script>
+export default {
+    props: {
+        resources: Object
+    },
+    methods: {
+        destroy(id) {
+            if (confirm('¿Estás seguro de que deseas eliminar este recurso?')) {
+                this.$inertia.delete(`/resources/${id}`);
+            }
+        }
+    }
+}
+</script>
