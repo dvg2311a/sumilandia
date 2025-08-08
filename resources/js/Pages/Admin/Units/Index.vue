@@ -1,3 +1,13 @@
+<script setup>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { Head, Link } from '@inertiajs/vue3';
+
+const props = defineProps({
+    units: Array,
+    permissions: Object
+});
+</script>
+
 <template>
 
     <Head title="Unidades" />
@@ -59,18 +69,20 @@
     </AuthenticatedLayout>
 </template>
 
-<script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link } from '@inertiajs/vue3';
 
-const props = defineProps({
-    units: Array,
-    permissions: Object
-});
 
-function destroy(id) {
-    if (confirm('¿Estás seguro de que deseas eliminar esta unidad?')) {
-        window.Inertia.delete(`/units/${id}`);
+<script>
+export default {
+    props: {
+        units: Array,
+        permissions: Object
+    },
+    methods: {
+        destroy(id) {
+            if (confirm('¿Estás seguro de que deseas eliminar esta unidad?')) {
+                this.$inertia.delete(`/units/${id}`);
+            }
+        }
     }
 }
 </script>
