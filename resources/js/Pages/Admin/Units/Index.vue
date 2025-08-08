@@ -33,7 +33,7 @@
                                 <td>{{ unit.description }}</td>
                                 <td>{{ unit.expected_time }} Minutos</td>
                                 <td>{{ unit.level?.name }}</td>
-                                <td>
+                                <td class="actions">
                                     <section>
 
                                         <template v-if="permissions.view">
