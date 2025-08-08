@@ -167,8 +167,16 @@
                         font-size: $title-card
                         background: transparent
                         transition-delay: calc( .1s * var(--i))
+
+        .container-menu-mobile
+                display: none
+                cursor: default
+                pointer-events: none
+                
         main
-                transition: $standar
+            grid-area: main
+            margin-left: 2rem
+            transition: $standar
 
 
         // ? SIDEBAR COLLAPSE POR MEDIO DE JS
@@ -256,15 +264,9 @@
                             visibility: hidden
                             pointer-events: none
 
-        .container-menu-mobile
-            display: none
-            cursor: default
-            pointer-events: none
-            
-        main
-            grid-area: main
-            margin-left: 6rem
-            transition: $standar
+            main
+                margin-left: 6rem
+                transition: $standar
 
 
 //  todo PC DE 14 Y 15 INCH
