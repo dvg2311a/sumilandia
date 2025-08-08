@@ -27,11 +27,11 @@ const toggleSidebar = () => {
             <div class="items-sidebar">
                 <!-- Logo -->
                 <div class="logo-sidebar">
-                    <Link :href="route('dashboard')">
+                    <Link :href="route('units.index')">
                     <img src="/icons/logo-short.png" alt="Logo" class="logo-short" />
                     </Link>
 
-                    <Link :href="route('dashboard')">
+                    <Link :href="route('units.index')">
                     <ApplicationLogo />
                     </Link>
 
