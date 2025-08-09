@@ -32,6 +32,35 @@
                 &:active
                     transform: scale(.9)
                     transition: $standar
+        .filters
+            display: flex
+            flex-wrap: wrap
+            margin-top: 3rem
+            height: fit-content
+            margin-bottom: 3rem
+            justify-content: space-around
+
+            .filter-group
+                width: 27rem
+                display: flex
+                flex-wrap: wrap
+
+                label
+                    font-size: $subtitle-card
+                    margin-bottom: 1rem
+
+                select
+                    width: 27rem
+                    height: 4rem
+                    border-radius: $br-rad
+                    border: 2px solid $cards
+                    outline: none
+                    font-size: $description-card
+                    font-family: 'Poppins', sans-serif
+
+                    option
+                        background: $cards
+
 
         .table-container
             width: 100%
@@ -145,7 +174,7 @@
 
 
 @media screen and (max-width: 599px) and (min-width: 320px)
-    .container-table    
+    .container-table
         height: fit-content
         width: max-content
         min-width: max-content
