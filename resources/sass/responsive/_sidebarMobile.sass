@@ -45,6 +45,12 @@
                         .hidden
                             font-size: $description-card - .5rem
 
+                main
+                    translate: 0 1.5rem
+                    z-index: -10
+                    display: flex
+                    min-width: 0
+                    
                 &.container-page.sidebar-collapsed
 
                     .container-menu-mobile
@@ -56,3 +62,5 @@
                             cursor: pointer
                             pointer-events: auto
                             transition-delay: calc( .1s * var(--i))
+
+
