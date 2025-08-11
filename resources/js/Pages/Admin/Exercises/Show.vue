@@ -1,55 +1,76 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
+
 const props = defineProps({
-  exercise: Object
+    exercise: Object
 });
+
+function tryParseJSON(value) {
+    try {
+        return JSON.parse(value);
+    } catch {
+        return null;
+    }
+}
+
+function normalizeField(field) {
+    if (typeof field === 'string') {
+        const parsed = tryParseJSON(field);
+        if (parsed && Array.isArray(parsed)) {
+            return parsed.map(o => o.frase || o);
+        }
+        return [field]; // texto plano
+    }
+    if (Array.isArray(field)) {
+        return field.map(o => o.frase || o);
+    }
+    return [];
+}
+
+const frases = props.exercise;
+frases.solution = normalizeField(frases.solution);
+frases.options = normalizeField(frases.options);
 </script>
+
 <template>
-  <Head title="Detalle Ejercicio" />
-  <AuthenticatedLayout>
-    <template #header>
-      <h2 class="text-xl font-semibold leading-tight text-gray-800">Detalle del Ejercicio</h2>
-    </template>
-    <div class="py-12">
-      <div class="mx-auto max-w-2xl sm:px-6 lg:px-8">
-        <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-          <div class="p-6">
-            <div class="mb-4">
-              <strong class="block text-gray-700">Enunciado:</strong>
-              <span>{{ exercise.prompt }}</span>
+
+    <Head title="Detalle Ejercicio" />
+    <AuthenticatedLayout>
+        <div class="page-content">
+            <div class="back">
+                <Link href="/exercises">
+                <img src="/icons/return-icon.gif" alt="Regresar a la página anterior" class="btn-back" />
+                </Link>
             </div>
-            <div class="mb-4">
-              <strong class="block text-gray-700">Tipo de Ejercicio:</strong>
-              <span>{{ exercise.exercise_type?.name }}</span>
+            <div class="card">
+                <div class="header-actions">
+                    <h1>Detalle del Ejercicio</h1>
+                </div>
+                <div class="unit-details">
+                    <p><strong>Enunciado:</strong> {{ exercise.prompt }}</p>
+                    <p><strong>Tipo de Ejercicio:</strong> {{ exercise.exercise_type?.name }}</p>
+                    <p><strong>Lección:</strong> {{ exercise.lesson?.name }}</p>
+
+                    <div v-if="exercise.options.length" class="exercise-options">
+                        <p><strong>Opciones:</strong></p>
+                        <ul>
+                            <li v-for="(option, idx) in exercise.options" :key="idx">{{ option }}</li>
+                        </ul>
+                    </div>
+
+                    <div v-if="exercise.solution.length" class="exercise-options">
+                        <p><strong>Solución:</strong></p>
+                        <ul>
+                            <li v-for="(sol, idx) in exercise.solution" :key="idx">{{ sol }}</li>
+                        </ul>
+                    </div>
+
+                    <p v-if="exercise.explanation">
+                        <strong>Explicación:</strong> {{ exercise.explanation }}
+                    </p>
+                </div>
             </div>
-            <div class="mb-4">
-              <strong class="block text-gray-700">Lección:</strong>
-              <span>{{ exercise.lesson?.name }}</span>
-            </div>
-            <div v-if="exercise.options && exercise.options.length" class="mb-4">
-              <strong class="block text-gray-700">Opciones:</strong>
-              <ul class="list-disc ml-6">
-                <li v-for="(option, idx) in exercise.options" :key="idx">{{ option }}</li>
-              </ul>
-            </div>
-            <div class="mb-4">
-              <strong class="block text-gray-700">Solución:</strong>
-              <span>{{ exercise.solution }}</span>
-            </div>
-            <div v-if="exercise.explanation" class="mb-4">
-              <strong class="block text-gray-700">Explicación:</strong>
-              <span>{{ exercise.explanation }}</span>
-            </div>
-            <div class="flex justify-end">
-              <Link :href="`/exercises`" class="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400">Volver</Link>
-            </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </AuthenticatedLayout>
+    </AuthenticatedLayout>
 </template>
-<style scoped>
-/* Puedes agregar estilos personalizados aquí */
-</style>

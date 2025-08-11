@@ -1,0 +1,19 @@
+
+@mixin btn-return($left, $position, $height, $width)
+    .back
+        top: 3rem
+        left: $left
+        width: $width
+        height: $width
+        position: $position
+
+        .btn-back
+            z-index: 100
+            width: 8rem
+            height: 8rem
+
+            &:active
+                scale: .7
+                transition: $standar
+
+
