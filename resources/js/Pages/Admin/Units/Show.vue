@@ -14,7 +14,7 @@ const props = defineProps({
         <div class="page-content">
             <div class="back">
             <Link href="/units" >
-                <img src="/icons/back-icon.gif" alt="Regresar a la página anterior" class="btn-back"/>
+                <img src="/icons/return-icon.gif" alt="Regresar a la página anterior" class="btn-back"/>
             </Link>
             </div>
             <div class="card">
