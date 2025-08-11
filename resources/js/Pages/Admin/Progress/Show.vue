@@ -13,127 +13,171 @@ const props = defineProps({
 });
 
 const filter = ref('all');
+
+function formatAnswer(answer) {
+    if (!answer) return '';
+    let parsed = answer;
+    if (typeof answer === 'string') {
+        try {
+            parsed = JSON.parse(answer);
+        } catch {
+            return answer;
+        }
+    }
+    if (Array.isArray(parsed)) {
+        return parsed.map(o => o.frase || o).join(', ');
+    }
+    if (typeof parsed === 'object') {
+        return Object.values(parsed).join(', ');
+    }
+    return String(parsed);
+}
+
+// Convertir la hora
+function horaLocal(dateString) {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleString('es-NI', {
+        timeZone: 'America/Managua',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+    });
+}
 </script>
 
+
 <template>
+
     <Head :title="`Detalle de estudiante: ${props.user.first_name} ${props.user.last_name}`" />
     <AuthenticatedLayout>
-        <template #header>
-            <h2 class="text-xl font-semibold leading-tight text-gray-800">Detalle de estudiante</h2>
-        </template>
-        <div class="py-12">
-            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                    <div class="p-6">
-                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
-                            <div>
-                                <h3 class="text-2xl font-bold mb-2">{{ props.user.first_name }} {{ props.user.last_name }}</h3>
-                                <div class="text-gray-600 mb-2">ID: {{ props.user.id }} | Email: {{ props.user.email }}</div>
-                            </div>
-                            <div class="flex gap-6 mt-4 md:mt-0">
-                                <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded shadow">
-                                    <div class="font-bold text-lg">{{ unitProgress.length }}</div>
-                                    <div class="text-xs">Unidades trabajadas</div>
-                                </div>
-                                <div class="bg-green-100 text-green-800 px-4 py-2 rounded shadow">
-                                    <div class="font-bold text-lg">{{ lessonProgress.length }}</div>
-                                    <div class="text-xs">Lecciones trabajadas</div>
-                                </div>
-                                <div class="bg-yellow-100 text-yellow-800 px-4 py-2 rounded shadow">
-                                    <div class="font-bold text-lg">{{ attempts.length }}</div>
-                                    <div class="text-xs">Intentos realizados</div>
-                                </div>
-                            </div>
+
+        <div class="container-table">
+            <section>
+
+                <div class="back">
+                    <a href="/progress" class="btn-return">
+                        <img src="/icons/return-icon.gif" alt="Regresar a la página anterior" class="btn-back" />
+                    </a>
+                </div>
+                <div class="unit-details">
+                    <div class="user-info">
+                        <h3>{{ props.user.first_name }} {{ props.user.last_name }}</h3>
+                        <p>ID: {{ props.user.id }} | Email: {{ props.user.email }}</p>
+                    </div>
+                    <div class="progress-summary">
+                        <div class="progress-item one">
+                            <p class="title-progress">Unidades trabajadas</p>
+                            <p class="text-progress">{{ unitProgress.length }}</p>
                         </div>
-                        <div class="mb-8">
-                            <div class="flex gap-4 mb-4">
-                                <label class="font-semibold">Filtrar vista:</label>
-                                <select v-model="filter" class="border rounded px-3 py-2">
-                                    <option value="all">Ver todo</option>
-                                    <option value="units">Solo unidades</option>
-                                    <option value="lessons">Solo lecciones</option>
-                                    <option value="attempts">Solo intentos</option>
-                                </select>
-                            </div>
-                            <div v-if="filter === 'all' || filter === 'units'">
-                                <h4 class="font-semibold mb-2 text-lg">Unidades trabajadas</h4>
-                                <table class="w-full border text-left mb-4">
-                                    <thead>
-                                        <tr>
-                                            <th class="border px-2 py-1">Unidad</th>
-                                            <th class="border px-2 py-1">Progreso</th>
-                                            <th class="border px-2 py-1">Estado</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="unit in unitProgress" :key="unit.id">
-                                            <td class="border px-2 py-1">{{ unit.unit?.name }}</td>
-                                            <td class="border px-2 py-1">{{ unit.progress }}%</td>
-                                            <td class="border px-2 py-1">
-                                                <span :class="unit.status === 'completado' ? 'text-green-600 font-bold' : unit.status === 'en_progreso' ? 'text-yellow-600 font-bold' : 'text-gray-500'">
-                                                    {{ unit.status === 'completado' ? 'Completado' : unit.status === 'en_progreso' ? 'En progreso' : 'No comenzado' }}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div v-if="filter === 'all' || filter === 'lessons'">
-                                <h4 class="font-semibold mb-2 text-lg">Lecciones trabajadas</h4>
-                                <table class="w-full border text-left mb-4">
-                                    <thead>
-                                        <tr>
-                                            <th class="border px-2 py-1">Lección</th>
-                                            <th class="border px-2 py-1">Unidad</th>
-                                            <th class="border px-2 py-1">Progreso</th>
-                                            <th class="border px-2 py-1">Estado</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="lesson in lessonProgress" :key="lesson.id">
-                                            <td class="border px-2 py-1">{{ lesson.lesson?.name }}</td>
-                                            <td class="border px-2 py-1">{{ lesson.lesson?.unit?.name }}</td>
-                                            <td class="border px-2 py-1">{{ lesson.progress }}%</td>
-                                            <td class="border px-2 py-1">
-                                                <span :class="lesson.status === 'completado' ? 'text-green-600 font-bold' : lesson.status === 'en_progreso' ? 'text-yellow-600 font-bold' : 'text-gray-500'">
-                                                    {{ lesson.status === 'completado' ? 'Completado' : lesson.status === 'en_progreso' ? 'En progreso' : 'No comenzado' }}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div v-if="filter === 'all' || filter === 'attempts'">
-                                <h4 class="font-semibold mb-2 text-lg">Intentos realizados</h4>
-                                <table class="w-full border text-left">
-                                    <thead>
-                                        <tr>
-                                            <th class="border px-2 py-1">Lección</th>
-                                            <th class="border px-2 py-1">Ejercicio</th>
-                                            <th class="border px-2 py-1">Respuesta</th>
-                                            <th class="border px-2 py-1">Correcta</th>
-                                            <th class="border px-2 py-1">Fecha</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="attempt in attempts" :key="attempt.id">
-                                            <td class="border px-2 py-1">{{ attempt.lesson?.name }}</td>
-                                            <td class="border px-2 py-1">{{ attempt.exercise?.name }}</td>
-                                            <td class="border px-2 py-1">{{ attempt.answer }}</td>
-                                            <td class="border px-2 py-1">
-                                                <span :class="attempt.is_correct ? 'text-green-600 font-bold' : 'text-red-600 font-bold'">
-                                                    {{ attempt.is_correct ? 'Correcta' : 'Incorrecta' }}
-                                                </span>
-                                            </td>
-                                            <td class="border px-2 py-1">{{ attempt.created_at }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                        <div class="progress-item two">
+                            <p class="title-progress">Lecciones trabajadas</p>
+                            <p class="text-progress">{{ lessonProgress.length }}</p>
+                        </div>
+                        <div class="progress-item three">
+                            <p class="title-progress">Intentos realizados</p>
+                            <p class="text-progress">{{ attempts.length }}</p>
                         </div>
                     </div>
+                    <div class="filter-options">
+                        <label>Filtrar vista:</label>
+                        <select v-model="filter">
+                            <option value="all">Ver todo</option>
+                            <option value="units">Solo unidades</option>
+                            <option value="lessons">Solo lecciones</option>
+                            <option value="attempts">Solo intentos</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+
+            <div class="table-responsive">
+                <div v-if="filter === 'all' || filter === 'units'" class="table-container">
+                    <h4>Unidades trabajadas</h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Unidad</th>
+                                <th>Progreso</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="unit in unitProgress" :key="unit.id">
+                                <td>{{ unit.unit?.name }}</td>
+                                <td>{{ unit.progress }}%</td>
+                                <td class="status">
+                                    <span
+                                        :class="unit.status === 'completado' ? 'text-green' : unit.status === 'en_progreso' ? 'text-yellow' : 'text-gray'">
+                                        {{ unit.status === 'completado' ? 'Completado' : unit.status ===
+                                            'en_progreso' ? 'En progreso' : 'No comenzado' }}
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div v-if="filter === 'all' || filter === 'lessons'" class="table-container">
+                    <h4>Lecciones trabajadas</h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Lección</th>
+                                <th>Unidad</th>
+                                <th>Progreso</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="lesson in lessonProgress" :key="lesson.id">
+                                <td>{{ lesson.lesson?.name }}</td>
+                                <td>{{ lesson.lesson?.unit?.name }}</td>
+                                <td class="status">{{ lesson.progress }}%</td>
+                                <td>
+                                    <span
+                                        :class="lesson.status === 'completado' ? 'text-green' : lesson.status === 'en_progreso' ? 'text-yellow' : 'text-gray'">
+                                        {{ lesson.status === 'completado' ? 'Completado' : lesson.status ===
+                                            'en_progreso' ? 'En progreso' : 'No comenzado' }}
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div v-if="filter === 'all' || filter === 'attempts'" class="table-container">
+                    <h4>Intentos realizados</h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Lección</th>
+                                <th>Ejercicio</th>
+                                <th>Respuesta</th>
+                                <th>Correcta</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="attempt in attempts" :key="attempt.id">
+                                <td>{{ attempt.lesson?.name }}</td>
+                                <td>{{ attempt.exercise?.prompt }}</td>
+                                <td class="status">{{ formatAnswer(attempt.answer_given) }}</td>
+
+                                <td>
+                                    <span :class="attempt.is_correct ? 'text-green' : 'text-red'">
+                                        {{ attempt.is_correct ? 'Correcta' : 'Incorrecta' }}
+                                    </span>
+                                </td>
+                                <td>{{ horaLocal(attempt.created_at) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+
     </AuthenticatedLayout>
 </template>
