@@ -1,0 +1,116 @@
+@import '_mixins'
+
+.container-forms
+    width: 70%
+    height: 62rem
+    display: flex
+    box-shadow: $shadow
+    flex-direction: column
+    border-radius: $br-rad
+    justify-content: space-around
+    transform: translate(20%, 13%)
+
+    .title-forms
+        width: 100%
+        height: 5rem
+        display: flex
+        align-items: center
+        font-size: $description-card
+        justify-content: space-around
+
+        @include btn-return($left: 1rem, $top: 0, $position: relative, $height: 7rem, $width: 4rem)
+
+    h1
+        width: 40rem
+
+
+    .form-container
+        height: 50rem
+
+        .form-space
+            width: 100%
+            height: 50rem
+            display: flex
+            flex-direction: row
+            align-items: center
+            flex-direction: column
+            justify-content: space-between
+
+
+            .container-items
+                width: 30rem
+
+                .items-form
+                    width: 35rem
+                    display: flex
+                    height: 10rem
+                    flex-wrap: wrap
+                    margin-bottom: 1rem
+
+                    label
+                        font-size: $description-card
+
+                    input, select, textarea
+                        width: 34rem
+                        outline: none
+                        padding: .5rem
+                        border-radius: $br-rad
+                        border: 2px solid $cards
+
+                    .error-text
+                        color: $errors
+                        font-size: $description-card
+
+            .button-container
+                height: 4rem
+                width: 34rem
+                padding-left: 4rem
+                position: relative
+
+                button
+                    height: 4rem
+                    width: 34rem
+                    outline: none
+                    transition: $standar
+                    border-radius: $br-rad
+                    background: transparent
+                    border: 2px solid $cards
+
+                    &:hover
+                        color: #ffff
+                        background: $buttons
+                        transition: $standar
+
+
+@media screen and (max-width: 1211px) and (min-width: 600px)
+    .container-forms
+        width: 55rem
+        transform: translate(4%, 13%)
+
+
+@media screen and (max-width: 599px) and (min-width: 320px)
+    .container-forms
+        width: 35rem
+        transform: translate(0, 7%)
+        margin-left: clamp(4rem, 5rem, 6rem)
+
+        .title-forms
+
+            @include btn-return($left: -2.4rem, $top: -2rem, $position: relative, $height: 4rem, $width: 4rem)
+
+
+        .form-container
+            .form-space
+                .container-items
+                    .items-form
+                        width: 30rem
+
+                        input, select, textarea
+                            width: 30rem
+
+                .button-container
+                    width: 30rem
+                    padding: 0
+
+                    button
+                        width: 30rem
