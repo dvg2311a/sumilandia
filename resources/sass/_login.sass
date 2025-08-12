@@ -1,10 +1,10 @@
 .img-logo
-    width: 28rem
-    height: 28rem
+    width: 20rem
+    height: 20rem
 
 .form-login
-    width: 90rem
-    height: 90rem
+    width: 65rem
+    height: 65rem
     background: $cards
     display: flex
     align-items: center
@@ -18,18 +18,18 @@
     border-radius: $br-rad
 
     .text-login
-        font-size: $title-card
         width: 40rem
-        margin-top: -4rem
         display: flex
+        margin-top: -4rem
         justify-content: center
+        font-size: $subtitle-card - .2rem
 
     .element-login-container
         width: 20rem
         display: flex
+        height: 30rem
         align-items: center
         flex-direction: column
-        height: 30rem
         justify-content: start
 
 
@@ -37,10 +37,10 @@
         height: 12rem
 
         label
-            font-size: $title
+            font-size: $title-card
 
         input
-                width: 45rem
+                width: 40rem
                 outline: none
                 flex: 1 1 25rem
                 display: flex
@@ -72,6 +72,7 @@
 
     .error-container
         margin-top: -1.5rem
+        
         .error
             font-size: $description-card
             color: $errors
