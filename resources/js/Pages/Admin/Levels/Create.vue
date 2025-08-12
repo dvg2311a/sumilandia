@@ -9,23 +9,23 @@ import Form from './Form.vue';
     <Head title="Crear Nivel" />
     <AuthenticatedLayout>
         <template #header>
-            <div class="flex items-center justify-between">
-                <h2 class="text-xl font-semibold leading-tight text-gray-800">Crear Nivel</h2>
+            <div class="">
+                <h2 class="">Crear Nivel</h2>
             </div>
         </template>
-        <div class="py-12">
-            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                    <div class="p-6">
-                        <div class="flex justify-between items-center mb-6">
-                            <h1 class="text-2xl font-bold text-gray-800">Crear Nivel</h1>
-                            <Link href="/levels"
-                                class="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300">Volver</Link>
-                        </div>
-                        <Form />
-                    </div>
+        <div class="container-forms">
+            <div class="title-forms">
+                <div class="back">
+                    <Link href="/levels">
+                    <img src="/icons/return-icon.gif" alt="Regresar a la página anterior" class="btn-back" />
+                    </Link>
                 </div>
+                <h1>Crear Nivel</h1>
+            </div>
+            <div class="form-container">
+                <Form />
             </div>
         </div>
+
     </AuthenticatedLayout>
 </template>

@@ -34,7 +34,7 @@
             flex-direction: row
             align-items: center
             flex-direction: column
-            justify-content: space-between
+            justify-content: space-around
 
 
             .container-items
@@ -71,6 +71,7 @@
                     height: 4rem
                     width: 34rem
                     outline: none
+                    cursor: pointer
                     transition: $standar
                     border-radius: $br-rad
                     background: transparent
@@ -79,6 +80,10 @@
                     &:hover
                         color: #ffff
                         background: $buttons
+                        transition: $standar
+
+                    &:active
+                        scale: .9
                         transition: $standar
 
 
