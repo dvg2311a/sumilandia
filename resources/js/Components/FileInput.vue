@@ -48,9 +48,9 @@ defineExpose({ focus: () => input.value.focus() });
 <template>
     <div>
         <input type="file"
-            class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+            class="file-input"
             @change="onFileChange" ref="input" />
-        <div v-if="fileName" class="mt-2 text-xs text-gray-400">{{ fileName }}</div>
-        <img v-if="preview" :src="preview" alt="Preview" class="mt-2 max-h-40 rounded-md border" />
+        <div v-if="fileName" class="name-file">{{ fileName }}</div>
+        <img v-if="preview" :src="preview" alt="Preview" class="file" />
     </div>
 </template>
