@@ -1,30 +1,33 @@
 <template>
-    <form @submit.prevent="submit" class="space-y-6">
-        <div>
-            <label for="name" class="block text-sm font-medium text-gray-700">Nombre</label>
-            <input v-model="form.name" id="name" type="text"
-                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required />
-            <span v-if="form.errors.name" class="text-red-500 text-xs">{{ form.errors.name }}</span>
+    <form @submit.prevent="submit" class="form-space">
+        <div class="container-items">
+            <div class="items-form">
+                <label for="name" class="label">Nombre</label>
+                <input v-model="form.name" id="name" type="text" class="input" required />
+                <span v-if="form.errors.name" class="error-text">{{ form.errors.name }}</span>
+            </div>
+
+            <div class="items-form">
+                <label for="description" class="label">Descripción</label>
+                <textarea v-model="form.description" id="description" rows="3" class="input"></textarea>
+                <span v-if="form.errors.description" class="error-text">{{ form.errors.description }}</span>
+            </div>
+
+            <div class="items-form">
+                <label for="unit_id" class="label">Unidad</label>
+                <select v-model="form.unit_id" id="unit_id" class="input" required>
+                    <option value="" disabled>Selecciona una unidad</option>
+                    <option v-for="unit in units" :key="unit.id" :value="unit.id">{{ unit.name }}</option>
+                </select>
+                <span v-if="form.errors.unit_id" class="error-text">{{ form.errors.unit_id }}</span>
+            </div>
         </div>
-        <div>
-            <label for="description" class="block text-sm font-medium text-gray-700">Descripción</label>
-            <textarea v-model="form.description" id="description" rows="3"
-                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
-            <span v-if="form.errors.description" class="text-red-500 text-xs">{{ form.errors.description }}</span>
-        </div>
-        <div>
-            <label for="unit_id" class="block text-sm font-medium text-gray-700">Unidad</label>
-            <select v-model="form.unit_id" id="unit_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                required>
-                <option value="" disabled>Selecciona una unidad</option>
-                <option v-for="unit in units" :key="unit.id" :value="unit.id">{{ unit.name }}</option>
-            </select>
-            <span v-if="form.errors.unit_id" class="text-red-500 text-xs">{{ form.errors.unit_id }}</span>
-        </div>
-        <div class="flex justify-end">
-            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Guardar</button>
+
+        <div class="button-container">
+            <button type="submit" class="btn-primary">Guardar</button>
         </div>
     </form>
+
 </template>
 
 <script setup>
