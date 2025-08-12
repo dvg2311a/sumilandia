@@ -1,5 +1,43 @@
 @import '_mixins'
 
+@mixin inputs
+    input, select, textarea
+                        width: 34rem
+                        outline: none
+                        padding: .5rem
+                        font-family: 'Poppins', sans-serif
+                        border-radius: $br-rad
+                        border: 2px solid $cards
+
+// Mixin button
+@mixin btnContainer
+        .button-container
+                height: 4rem
+                width: 34rem
+                padding-left: 4rem
+                position: relative
+
+                button
+                    height: 4rem
+                    width: 34rem
+                    outline: none
+                    cursor: pointer
+                    transition: $standar
+                    border-radius: $br-rad
+                    background: transparent
+                    border: 2px solid $cards
+
+                    &:hover
+                        color: #ffff
+                        background: $buttons
+                        transition: $standar
+
+                    &:active
+                        scale: .9
+                        transition: $standar
+
+
+
 .container-forms
     width: 70%
     height: 62rem
@@ -50,12 +88,8 @@
                     label
                         font-size: $description-card
 
-                    input, select, textarea
-                        width: 34rem
-                        outline: none
-                        padding: .5rem
-                        border-radius: $br-rad
-                        border: 2px solid $cards
+                    @include inputs
+
 
                     .file-input
                         background: transparent
@@ -79,30 +113,92 @@
                         color: $errors
                         font-size: $description-card
 
-            .button-container
-                height: 4rem
-                width: 34rem
-                padding-left: 4rem
-                position: relative
+            @include btnContainer
 
-                button
-                    height: 4rem
-                    width: 34rem
-                    outline: none
-                    cursor: pointer
-                    transition: $standar
-                    border-radius: $br-rad
-                    background: transparent
-                    border: 2px solid $cards
+.formulario-exercises
+    width: 100%
+    display: flex
+    align-items: center
+    height: fit-content
+    flex-direction: column
 
-                    &:hover
-                        color: #ffff
+    .container-items-exercises
+        width: 95%
+        display: flex
+        margin-bottom: 1rem
+        flex-wrap: wrap
+        height: fit-content
+        justify-content: space-between
+
+        .items-form-exercises
+
+            label, .left
+                padding: 1rem
+                font-size: $description-card
+
+            display: flex
+            @include inputs
+            margin-top: 1rem
+            flex-direction: column
+
+            .draggable-item
+                    display: flex
+                    flex-direction: row
+                    width: 100%
+
+                    .item
+                        color: #fff
+                        border-radius: $br-rad
+                        width: fit-content
+                        height: fit-content
+                        margin-top: 1rem
                         background: $buttons
-                        transition: $standar
+                        font-size: $description-card
 
-                    &:active
-                        scale: .9
-                        transition: $standar
+            .bnt-excersice
+                margin: 1rem
+                outline: none
+                cursor: pointer
+                width: fit-content
+                transition: $standar
+                border-radius: $br-rad
+                background: transparent
+                border: 2px solid $cards
+                font-size: $description-card
+
+                &:hover
+                    color: #fff
+                    transition: $standar
+                    background: $buttons
+
+                &:active
+                    scale: .9
+                    transition: $standar
+
+
+            .div-checkbox
+                    width: 100%
+                    display: flex
+                    height: 4rem
+                    align-items: center
+                    justify-content: start
+
+
+                    .form-checkbox
+                        width: 2rem
+                        height: 2rem
+                        border: none
+                        border-radius: 50%
+
+                    .option
+                        text-size-adjust: 100%
+                        width: 30rem
+                        display: flex
+                        align-items: center
+                        font-size: $description-card
+
+    @include btnContainer
+
 
 
 @media screen and (max-width: 1211px) and (min-width: 600px)
