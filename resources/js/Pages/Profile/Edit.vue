@@ -27,27 +27,22 @@ defineProps({
             </h2>
         </template>
 
-        <div class="py-12">
-            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div class="space-y-6">
-                        <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8">
-                            <UpdateUserInformationForm :must-verify-email="mustVerifyEmail" :status="status"
-                                class="w-full" />
-                        </div>
-                        <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8">
-                            <UpdateProfileInformationForm class="w-full" />
-                        </div>
-                        <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8">
-                            <UpdatePasswordForm class="w-full" />
-                        </div>
-                    </div>
-                    <div class="flex flex-col justify-between h-full">
-                        <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8 h-fit">
-                            <DeleteUserForm class="w-full" />
-                        </div>
-                    </div>
+
+        <div class="container-profile">
+            <div class="container-forms-profile">
+                <div class="form-space">
+                    <UpdateProfileInformationForm class="" />
                 </div>
+                <div class="form-space">
+                    <UpdateUserInformationForm :must-verify-email="mustVerifyEmail" :status="status" class="w-full" />
+                </div>
+                <div class="form-space">
+                    <UpdatePasswordForm class="" />
+                </div>
+            </div>
+
+            <div class="form-space">
+                <DeleteUserForm class="" />
             </div>
         </div>
     </AuthenticatedLayout>
