@@ -37,70 +37,42 @@ const submitUser = () => {
 
 <template>
     <section>
-        <header>
-            <h2 class="text-lg font-medium text-gray-900">
+        <header class="header-profile">
+            <h2>
                 Información del usuario
             </h2>
 
-            <p class="mt-1 text-sm text-gray-600">
+            <p>
                 Actualiza la información de tu usuario y correo electrónico.
             </p>
         </header>
 
         <!-- Formulario de datos del usuario -->
-        <form @submit.prevent="submitUser" class="mt-6 space-y-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <InputLabel for="first_name" value="Nombre" />
-                    <TextInput
-                        id="first_name"
-                        type="text"
-                        class="mt-1 block w-full"
-                        v-model="userForm.first_name"
-                        required
-                        autofocus
-                        autocomplete="given-name"
-                    />
-                    <InputError class="mt-2" :message="userForm.errors.first_name" />
+        <form @submit.prevent="submitUser" class="first-block-container">
+            <div class="container-inputs">
+                <div class="input-container">
+                    <InputLabel for="first_name" value="Nombre"/>
+                    <TextInput id="first_name" type="text" v-model="userForm.first_name" required autofocus autocomplete="given-name" />
+                    <InputError :message="userForm.errors.first_name" class="error-text"/>
                 </div>
-                <div>
-                    <InputLabel for="last_name" value="Apellido" />
-                    <TextInput
-                        id="last_name"
-                        type="text"
-                        class="mt-1 block w-full"
-                        v-model="userForm.last_name"
-                        required
-                        autocomplete="family-name"
-                    />
-                    <InputError class="mt-2" :message="userForm.errors.last_name" />
+                <div class="input-container">
+                    <InputLabel for="last_name" value="Apellido"/>
+                    <TextInput id="last_name" type="text" v-model="userForm.last_name" required autocomplete="family-name" />
+                    <InputError :message="userForm.errors.last_name" class="error-text"/>
+                </div>
+                <div class="input-container">
+                    <InputLabel for="email" value="Correo electrónico"/>
+                    <TextInput id="email" type="email" v-model="userForm.email" required autocomplete="email" />
+                    <InputError :message="userForm.errors.email" class="error-text"/>
                 </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <InputLabel for="email" value="Correo electrónico" />
-                    <TextInput
-                        id="email"
-                        type="email"
-                        class="mt-1 block w-full"
-                        v-model="userForm.email"
-                        required
-                        autocomplete="email"
-                    />
-                    <InputError class="mt-2" :message="userForm.errors.email" />
-                </div>
-            </div>
-            <div class="flex items-center gap-4">
-                <PrimaryButton :disabled="userForm.processing">Guardar Usuario</PrimaryButton>
-                <Transition
-                    enter-active-class="transition ease-in-out"
-                    enter-from-class="opacity-0"
-                    leave-active-class="transition ease-in-out"
-                    leave-to-class="opacity-0"
-                >
-                    <p v-if="userForm.recentlySuccessful" class="text-sm text-gray-600">Guardado.</p>
+            <div class="button-container">
+                <PrimaryButton :disabled="userForm.processing" class="user">Guardar Usuario</PrimaryButton>
+                <Transition enter-active-class="" enter-from-class="" leave-active-class="" leave-to-class="">
+                    <p v-if="userForm.recentlySuccessful">Guardado.</p>
                 </Transition>
             </div>
         </form>
     </section>
+
 </template>
