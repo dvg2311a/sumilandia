@@ -35,87 +35,51 @@ const updatePassword = () => {
 
 <template>
     <section>
-        <header>
-            <h2 class="text-lg font-medium text-gray-900">
+        <header class="header-profile">
+            <h2>
                 Cambiar contraseña
             </h2>
 
-            <p class="mt-1 text-sm text-gray-600">
+            <p>
                 Asegúrate de usar una contraseña larga y segura para proteger tu cuenta.
             </p>
         </header>
 
-        <form @submit.prevent="updatePassword" class="mt-6 space-y-6">
-            <div>
-                <InputLabel for="current_password" value="Contraseña actual" />
+        <!-- Formulario de cambio de contraseña -->
+        <form @submit.prevent="updatePassword" class="first-block-container">
+            <div class="container-inputs">
+                <div class="input-container">
+                    <InputLabel for="current_password" value="Contraseña actual" />
+                    <TextInput id="current_password" ref="currentPasswordInput" v-model="form.current_password"
+                        type="password" autocomplete="current-password" />
+                    <InputError :message="form.errors.current_password" class="error-text"/>
+                </div>
 
-                <TextInput
-                    id="current_password"
-                    ref="currentPasswordInput"
-                    v-model="form.current_password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    autocomplete="current-password"
-                />
+                <div class="input-container">
+                    <InputLabel for="password" value="Nueva contraseña" />
+                    <TextInput id="password" ref="passwordInput" v-model="form.password" type="password"
+                        autocomplete="new-password" />
+                    <InputError :message="form.errors.password" class="error-text"/>
+                </div>
 
-                <InputError
-                    :message="form.errors.current_password"
-                    class="mt-2"
-                />
+                <div class="input-container">
+                    <InputLabel for="password_confirmation" value="Confirmar contraseña" />
+                    <TextInput id="password_confirmation" v-model="form.password_confirmation" type="password"
+                        autocomplete="new-password" />
+                    <InputError :message="form.errors.password_confirmation" class="error-text"/>
+                </div>
             </div>
 
-            <div>
-                <InputLabel for="password" value="Nueva contraseña" />
+            <div class="button-container">
+                <PrimaryButton :disabled="form.processing" class="password">Guardar</PrimaryButton>
 
-                <TextInput
-                    id="password"
-                    ref="passwordInput"
-                    v-model="form.password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    autocomplete="new-password"
-                />
-
-                <InputError :message="form.errors.password" class="mt-2" />
-            </div>
-
-            <div>
-                <InputLabel
-                    for="password_confirmation"
-                    value="Confirmar contraseña"
-                />
-
-                <TextInput
-                    id="password_confirmation"
-                    v-model="form.password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    autocomplete="new-password"
-                />
-
-                <InputError
-                    :message="form.errors.password_confirmation"
-                    class="mt-2"
-                />
-            </div>
-
-            <div class="flex items-center gap-4">
-                <PrimaryButton :disabled="form.processing">Guardar</PrimaryButton>
-
-                <Transition
-                    enter-active-class="transition ease-in-out"
-                    enter-from-class="opacity-0"
-                    leave-active-class="transition ease-in-out"
-                    leave-to-class="opacity-0"
-                >
-                    <p
-                        v-if="form.recentlySuccessful"
-                        class="text-sm text-gray-600"
-                    >
+                <Transition enter-active-class="" enter-from-class="" leave-active-class="" leave-to-class="">
+                    <p v-if="form.recentlySuccessful">
                         ¡Guardado!
                     </p>
                 </Transition>
             </div>
         </form>
     </section>
+
 </template>
