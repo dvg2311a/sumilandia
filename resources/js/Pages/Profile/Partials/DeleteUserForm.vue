@@ -39,66 +39,53 @@ const closeModal = () => {
 </script>
 
 <template>
-    <section class="space-y-6">
-        <header>
-            <h2 class="text-lg font-medium text-gray-900">
-                Eliminar cuenta
-            </h2>
+    <section class="">
+        <header class="danger-header">
+            <h2>Eliminar cuenta</h2>
 
-            <p class="mt-1 text-sm text-gray-600">
-                Una vez que elimines tu cuenta, todos tus recursos y datos serán eliminados permanentemente. Antes de continuar, descarga cualquier información que desees conservar.
+            <p>
+                Una vez que elimines tu cuenta, todos tus recursos y datos serán eliminados permanentemente.
+                Antes de continuar, descarga cualquier información que desees conservar.
             </p>
         </header>
+        <div class="button-delete">
+            <DangerButton @click="confirmUserDeletion">
+                Eliminar cuenta
+            </DangerButton>
+        </div>
 
-        <DangerButton @click="confirmUserDeletion">Eliminar cuenta</DangerButton>
+        <!-- ? MODAL -->
 
         <Modal :show="confirmingUserDeletion" @close="closeModal">
-            <div class="p-6">
-                <h2
-                    class="text-lg font-medium text-gray-900"
-                >
+            <div class="modal-content">
+                <h2>
                     ¿Estás seguro que deseas eliminar tu cuenta?
                 </h2>
 
-                <p class="mt-1 text-sm text-gray-600">
-                    Una vez que elimines tu cuenta, todos tus recursos y datos serán eliminados permanentemente. Ingresa tu contraseña para confirmar que deseas eliminar tu cuenta de forma definitiva.
+                <p>
+                    Una vez que elimines tu cuenta, todos tus recursos y datos serán eliminados permanentemente.
+                    Ingresa tu contraseña para confirmar que deseas eliminar tu cuenta de forma definitiva.
                 </p>
 
-                <div class="mt-6">
-                    <InputLabel
-                        for="password"
-                        value="Contraseña"
-                        class="sr-only"
-                    />
+                <div class="form-group">
+                    <InputLabel for="password" value="Contraseña" class="sr-only" />
 
-                    <TextInput
-                        id="password"
-                        ref="passwordInput"
-                        v-model="form.password"
-                        type="password"
-                        class="mt-1 block w-3/4"
-                        placeholder="Contraseña"
-                        @keyup.enter="deleteUser"
-                    />
+                    <TextInput id="password" ref="passwordInput" v-model="form.password" type="password" @keyup.enter="deleteUser" />
 
-                    <InputError :message="form.errors.password" class="mt-2" />
+                    <InputError :message="form.errors.password" />
                 </div>
 
-                <div class="mt-6 flex justify-end">
-                    <SecondaryButton @click="closeModal">
+                <div class="modal-actions">
+                    <SecondaryButton @click="closeModal" class="button-cancel button">
                         Cancelar
                     </SecondaryButton>
 
-                    <DangerButton
-                        class="ms-3"
-                        :class="{ 'opacity-25': form.processing }"
-                        :disabled="form.processing"
-                        @click="deleteUser"
-                    >
-                        Eliminar cuenta
+                    <DangerButton :class="{ 'disabled': form.processing }" :disabled="form.processing"
+                        @click="deleteUser" class="button-delete button"> Eliminar cuenta
                     </DangerButton>
                 </div>
             </div>
         </Modal>
     </section>
+
 </template>
