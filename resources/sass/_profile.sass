@@ -1,0 +1,221 @@
+.container-profile
+        width: 95%
+
+        .container-forms-profile
+            width: 100%
+
+            .header-profile
+                font-size:  $description-card
+
+            .first-block-container
+                display: grid
+                width: 100%
+                grid-template-columns: 40rem 1fr
+                grid-template-rows: auto
+                grid-template-areas: "image label"
+
+                .container-inputs
+                    grid-area: label
+                    height: fit-content
+
+                    .input-container
+                        height: fit-content
+
+                        label
+                            margin-right: 1rem
+                            font-size: $description-card
+
+                        input, select
+                                width: 34rem
+                                outline: none
+                                padding: .5rem
+                                margin-top: 1rem
+                                border-radius: $br-rad
+                                border: 2px solid $cards
+                                font-family: 'Poppins', sans-serif
+
+                        .error-text
+                            color: $errors
+                            font-size: $description-card
+
+                .button-container
+                    width: 20rem
+                    pointer-events: none
+                    translate: 40rem 0
+
+                    button
+                        height: 4rem
+                        width: 20rem
+                        outline: none
+                        pointer-events: auto
+                        cursor: pointer
+                        position: relative
+                        transition: $standar
+                        border-radius: $br-rad
+                        background: transparent
+                        border: 2px solid $cards
+
+                        &:hover
+                            color: #ffff
+                            background: $buttons
+                            transition: $standar
+
+                        &:active
+                            scale: .9
+                            transition: $standar
+
+                    .user, .password
+
+                        margin-top: 16rem
+
+                    .message
+                        color: #fff
+                        background: $buttons
+                        font-size: $description-card
+
+
+
+            .container-image
+                    width: 35rem
+                    grid-area: image
+
+                    section
+                        width: 20rem
+                        height: 20rem
+                        display: flex
+                        box-shadow: $shadow
+                        border-radius: $br-rad
+                        border: 2px solid $cards
+
+                        img
+                            width: 15rem
+                            height: 15rem
+                            margin-top: 2rem
+                            margin-left: 2rem
+                            margin-bottom: 4rem
+
+                        .label-image
+                            cursor: pointer
+                            z-index: 1000
+                            margin-left: 5rem
+                            transition: $standar
+                            text-decoration: underline
+                            font-size: $description-card
+
+                            &:hover
+                                color: $buttons
+                                transition: $standar
+
+                            &:active
+                                scale: .9
+                                transition: $standar
+
+
+                        input
+                            display: none
+
+
+
+.danger-header
+    font-size: $description-card
+
+.button-delete
+        width: 60rem
+        display: flex
+        justify-content: end
+
+        button
+            height: 4rem
+            width: 20rem
+            outline: none
+            cursor: pointer
+            transition: $standar
+            border-radius: $br-rad
+            background: transparent
+            border: 2px solid $cards
+
+            &:hover
+                color: #ffff
+                background: $buttons
+                transition: $standar
+
+            &:active
+                scale: .9
+                transition: $standar
+
+.modal-container
+    width: fit-content
+    height: fit-content
+    box-shadow: $shadow
+    border-radius: $br-rad
+    border: 2px solid $cards
+
+    .modal-content
+        width: fit-content
+        height: fit-content
+
+        h2
+            text-align: center
+            font-size: $subtitle-card
+
+        p
+            font-size: $description-card
+            width: 50rem
+
+        .form-group
+            height: fit-content
+
+            label
+                font-size: $description-card
+                margin-right: 1rem
+
+            input
+                    width: 34rem
+                    outline: none
+                    padding: .5rem
+                    margin-top: 1rem
+                    font-family: 'Poppins', sans-serif
+                    border-radius: $br-rad
+                    border: 2px solid $cards
+
+        .modal-actions
+            width: 100%
+            display: flex
+            margin-top: 1rem
+            justify-content: space-evenly
+
+            .button
+                height: 4rem
+                width: 20rem
+                outline: none
+                cursor: pointer
+                transition: $standar
+                border-radius: $br-rad
+                background: transparent
+                border: 2px solid $cards
+
+                &:hover
+                    color: #ffff
+                    background: $buttons
+                    transition: $standar
+
+                &:active
+                    scale: .9
+                transition: $standar
+
+            .button-delete
+                display: flex
+                justify-content: center
+                align-items: center
+
+                &:hover
+                    background: $errors
+
+
+
+@media screen and (max-width: 599px) and (min-width: 320px)
+    .container-forms-profile
+        margin-left: 5rem
+
+    .danger-header
+            margin-left: 5rem

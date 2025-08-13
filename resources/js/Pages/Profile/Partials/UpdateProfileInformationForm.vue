@@ -1,5 +1,4 @@
 <script setup>
-
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -43,63 +42,57 @@ const submitProfile = () => {
 
 <template>
     <section>
-        <header>
-            <h2 class="text-lg font-medium text-gray-900">
+        <header class="header-profile">
+            <h2>
                 Información de Perfil
             </h2>
 
-            <p class="mt-1 text-sm text-gray-600">
+            <p>
                 Actualiza la información de tu perfil y correo electrónico.
             </p>
         </header>
 
         <!-- Formulario de datos del perfil -->
-        <form @submit.prevent="submitProfile" enctype="multipart/form-data" class="mt-6 space-y-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <form @submit.prevent="submitProfile" enctype="multipart/form-data" class="first-block-container">
+            <div class="container-image">
                 <div>
-                    <InputLabel for="avatar" value="Avatar" />
-                    <ImageInput id="avatar" v-model="profileForm.avatar" class="mt-1 block w-full"
-                        autocomplete="photo" />
-                    <InputError class="mt-2" :message="profileForm.errors.avatar" />
+                    <section>
+                        <ImageInput id="avatar" v-model="profileForm.avatar" autocomplete="photo" class="" />
+                    </section>
+                    <InputError :message="profileForm.errors.avatar" class="error-text"/>
                 </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
+            <div class="container-inputs">
+                <div class="input-container">
                     <InputLabel for="nickname" value="Apodo" />
-                    <TextInput id="nickname" type="text" class="mt-1 block w-full" v-model="profileForm.nickname"
-                        autocomplete="nickname" />
-                    <InputError class="mt-2" :message="profileForm.errors.nickname" />
+                    <TextInput id="nickname" type="text" v-model="profileForm.nickname" autocomplete="nickname" />
+                    <InputError :message="profileForm.errors.nickname" class="error-text"/>
                 </div>
-                <div>
+                <div class="input-container">
                     <InputLabel for="gender" value="Género" />
-                    <select id="gender" v-model="profileForm.gender"
-                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                    <select id="gender" v-model="profileForm.gender">
                         <option value="">Selecciona género</option>
                         <option value="male">Masculino</option>
                         <option value="female">Femenino</option>
                     </select>
-                    <InputError class="mt-2" :message="profileForm.errors.gender" />
+                    <InputError :message="profileForm.errors.gender" class="error-text"/>
                 </div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
+
+                <div class="input-container">
                     <InputLabel for="birthdate" value="Fecha de nacimiento" />
-                    <TextInput id="birthdate" type="date" class="mt-1 block w-full" v-model="profileForm.birthdate"
-                        autocomplete="bday" />
-                    <InputError class="mt-2" :message="profileForm.errors.birthdate" />
+                    <TextInput id="birthdate" type="date" v-model="profileForm.birthdate" autocomplete="bday" />
+                    <InputError :message="profileForm.errors.birthdate" class="error-text"/>
                 </div>
-                <div>
+                <div class="input-container">
                     <InputLabel for="academic_level" value="Nivel académico" />
-                    <TextInput id="academic_level" type="text" class="mt-1 block w-full"
-                        v-model="profileForm.academic_level" />
-                    <InputError class="mt-2" :message="profileForm.errors.academic_level" />
+                    <TextInput id="academic_level" type="text" v-model="profileForm.academic_level" placeholder="1: Primaria, 2: Secundaria"/>
+                    <InputError :message="profileForm.errors.academic_level" class="error-text"/>
                 </div>
             </div>
-            <div class="flex items-center gap-4">
-                <PrimaryButton :disabled="profileForm.processing">Guardar Perfil</PrimaryButton>
-                <Transition enter-active-class="transition ease-in-out" enter-from-class="opacity-0"
-                    leave-active-class="transition ease-in-out" leave-to-class="opacity-0">
-                    <p v-if="profileForm.recentlySuccessful" class="text-sm text-gray-600">¡Guardado!</p>
+            <div class="button-container">
+                <PrimaryButton :disabled="profileForm.processing" >Guardar Perfil</PrimaryButton>
+                <Transition enter-active-class="" enter-from-class="" leave-active-class="" leave-to-class="">
+                    <p v-if="profileForm.recentlySuccessful" class="message">¡Guardado!</p>
                 </Transition>
             </div>
         </form>
