@@ -83,12 +83,14 @@ const btnSelect = () => {
             <div class="elements-container">
 
                 <div>
-                    <InputLabel for="academic-level" value="Grado Adémico" class="text-labels" />
-                    <!-- ? Contenedor del input y el icono -->
+                    <InputLabel for="academic-level" value="Grado Académico" class="text-labels" />
                     <div class="input-icon-container">
                         <img src="icons/grade-icon.gif" alt="" class="gif-icons">
-                        <TextInput id="academic-level" type="text" v-model="form.academic_level" required
-                            autocomplete="number" placeholder="1: Primaria, 2: Secundaria" class="inputs" />
+                        <select id="academic-level" v-model="form.academic_level" required class="inputs">
+                            <option value="">Selecciona grado académico</option>
+                            <option value="primary">Primaria</option>
+                            <option value="secondary">Secundaria</option>
+                        </select>
                     </div>
                     <InputError :message="form.errors.academic_level" />
                 </div>
@@ -127,10 +129,10 @@ const btnSelect = () => {
                         <Dropdown v-model="form.gender">
                             <template #trigger>
                                 <div class="">
-                                    <span v-if="form.gender === 'Male'" class="gender-containerIf">
+                                    <span v-if="form.gender === 'male'" class="gender-containerIf">
                                         <img src="icons/male-icon.gif" class="gif-icons" /> Niño
                                     </span>
-                                    <span v-else-if="form.gender === 'Female'" class="gender-containerIf">
+                                    <span v-else-if="form.gender === 'female'" class="gender-containerIf">
                                         <img src="icons/female-icon.gif" class="gif-icons" /> Niña
                                     </span>
                                     <span v-else class=" select" @click="btnSelect" ref="selectHiden">Seleccione su sexo <img src="icons/chevron-down.svg" alt="Icon Arrow dropdown"></span>
@@ -139,11 +141,11 @@ const btnSelect = () => {
 
                             <template #content>
                                 <ul class="dropdown">
-                                    <li @click="form.gender = 'Male'"
+                                    <li @click="form.gender = 'male'"
                                         class="gender-container">
                                         <img src="icons/male-icon.gif" class="gif-icons" /> Niño
                                     </li>
-                                    <li @click="form.gender = 'Female'"
+                                    <li @click="form.gender = 'female'"
                                         class="gender-container">
                                         <img src="icons/female-icon.gif" class="gif-icons" /> Niña
                                     </li>

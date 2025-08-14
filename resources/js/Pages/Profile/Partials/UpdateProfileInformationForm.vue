@@ -85,7 +85,11 @@ const submitProfile = () => {
                 </div>
                 <div class="input-container">
                     <InputLabel for="academic_level" value="Nivel académico" />
-                    <TextInput id="academic_level" type="text" v-model="profileForm.academic_level" placeholder="1: Primaria, 2: Secundaria"/>
+                    <select id="academic_level" v-model="profileForm.academic_level">
+                        <option value="">Selecciona nivel académico</option>
+                        <option value="primary">Primaria</option>
+                        <option value="secondary">Secundaria</option>
+                    </select>
                     <InputError :message="profileForm.errors.academic_level" class="error-text"/>
                 </div>
             </div>

@@ -33,12 +33,13 @@ class ProfileUpdateRequest extends FormRequest
             ],
             'academic_level' => [
                 'nullable',
-                'integer',
+                'string',
+                Rule::in(['primary', 'secondary']),
             ],
             'gender' => [
                 'nullable',
                 'string',
-                'max:255',
+                Rule::in(['male', 'female']),
             ],
         ];
     }
