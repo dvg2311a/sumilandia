@@ -14,8 +14,14 @@ class Unit extends Model
         'name',
         'description',
         'expected_time',
+        'image',
         'level_id',
     ];
+
+    public function getImageUrlAttribute(): ?string
+    {
+        return $this->image ? asset('storage/' . $this->image) : null;
+    }
 
     public function level(): BelongsTo
     {

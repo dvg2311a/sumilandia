@@ -64,7 +64,7 @@ class ProfileController extends Controller
             ]));
 
             if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
-                $fileService->updateLocal($profile, 'avatar', $request->file('avatar'));
+                $profile->avatar = $fileService->updateLocal($profile, 'avatar', $request->file('avatar'));
             }
 
             $profile->user()->associate($user);

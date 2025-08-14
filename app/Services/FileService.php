@@ -23,9 +23,7 @@ class FileService
     {
         $modelName = strtolower(class_basename($model));
         $folderName = $modelName . '_' . $file_attribute;
-        $imageUrl = $file->store($folder ?? $folderName, 'public');
-        $model->$file_attribute = $imageUrl;
-        return $model->save();
+        return $file->store($folder ?? $folderName, 'public');
     }
 
     /**

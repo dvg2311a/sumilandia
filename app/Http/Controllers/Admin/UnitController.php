@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UnitRequest;
 use App\Models\Level;
 use App\Models\Unit;
+use App\Services\FileService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Inertia\Inertia;
 
@@ -33,9 +34,19 @@ class UnitController extends Controller
         ]);
     }
 
-    public function store(UnitRequest $request)
+    public function store(UnitRequest $request, FileService $fileService)
     {
-        Unit::create($request->validated());
+        $data = $request->validated();
+
+        $unit = new Unit();
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $fileService->storeLocal($unit, 'image', $request->file('image'));
+        }
+
+        $unit->fill($data);
+        $unit->save();
+
         return redirect()->route('units.index')->with('success', 'Unidad creada correctamente');
     }
 
@@ -58,9 +69,15 @@ class UnitController extends Controller
         ]);
     }
 
-    public function update(UnitRequest $request, Unit $unit)
+    public function update(UnitRequest $request, Unit $unit, FileService $fileService)
     {
-        $unit->update($request->validated());
+        $data = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $fileService->storeLocal($unit, 'image', $request->file('image'));
+        }
+
+        $unit->update($data);
         return redirect()->route('units.index')->with('success', 'Unidad actualizada correctamente');
     }
 

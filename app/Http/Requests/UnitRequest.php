@@ -35,6 +35,12 @@ class UnitRequest extends FormRequest
             'name' => ['required', 'string', 'min:4', 'max:20', Rule::unique('units')->ignore($this->unit)],
             'description' => ['nullable', 'string', 'max:255'],
             'expected_time' => ['required', 'integer', 'min:1'],
+            'image' => [
+                'nullable',
+                'image',
+                'mimes:jpg,png,jpeg,webp',
+                'max:4096',
+            ],
             'level_id' => ['required', 'exists:levels,id'],
         ];
     }
