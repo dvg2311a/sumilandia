@@ -33,8 +33,11 @@ class RegisteredUserController extends Controller
         $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'academic_level' => 'required|string|max:255',
+            'birthdate' => 'required|date',
+            'gender' => 'required|string|in:male,female,other',
         ]);
 
         $user = User::create([
@@ -42,6 +45,13 @@ class RegisteredUserController extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+        ]);
+
+        // Crear perfil asociado
+        $user->profile()->create([
+            'academic_level' => $request->academic_level,
+            'birthdate' => $request->birthdate,
+            'gender' => $request->gender,
         ]);
 
         $user->assignRole('student');
