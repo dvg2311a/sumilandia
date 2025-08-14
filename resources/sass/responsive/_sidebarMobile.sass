@@ -11,56 +11,128 @@
                     position: absolute
                     pointer-events: auto
 
-                    .menu-mobile img
-                        width: 3rem
-                        height: 3rem
-                        margin: 1rem 0 0 .5rem
+                    .menu-mobile
 
-                    .nav-links-mobile
+                        img
+                            width: 3rem
+                            height: 3rem
+                            margin: 1rem 0 0 .5rem
+
+                    .items-mobile
+                        height: 30rem
+
+                        .nav-links-mobile
+                            width: 15rem
+                            height: 20rem
+                            display: none
+                            background: $cards
+                            pointer-events: none
+                            flex-direction: column
+                            border-radius: $br-rad
+                            justify-content: space-around
+
+                            a
+                                color: #000
+                                display: flex
+                                margin-top: .5rem
+                                height: fit-content
+                                align-items: center
+                                text-decoration: none
+
+                                &:active
+                                    transform: scale(.9)
+
+                            .icons-sidebar
+                                width: 2rem
+                                height: 2rem
+                                margin: 0 .5rem
+
+                            .hidden
+                                font-size: $description-card - .5rem
+
+                    .settings-dropdown-mobile
                         width: 15rem
-                        height: 20rem
+                        height: 3rem
                         display: none
-                        background: $cards
-                        pointer-events: none
-                        flex-direction: column
-                        border-radius: $br-rad
-                        justify-content: space-around
 
-                        a
-                            display: flex
-                            margin-top: .5rem
-                            color: #000
-                            height: fit-content
-                            align-items: center
-                            text-decoration: none
+                        .dropdown-content
+                            width: 15rem
+                            height: 10rem
 
-                            &:active
-                                transform: scale(.9)
+                        .dropdown-trigger
 
-                        .icons-sidebar
-                            width: 2rem
-                            height: 2rem
-                            margin: 0 .5rem
+                            .img-sidebar
+                                display: none
+                                pointer-events: none
 
-                        .hidden
-                            font-size: $description-card - .5rem
 
                 main
                     translate: 0 1.5rem
                     z-index: -10
                     display: flex
                     min-width: 0
-                    
+
                 &.container-page.sidebar-collapsed
 
                     .container-menu-mobile
                         background: $cards
                         border-radius: 0 .8rem .8rem 0
 
+                    .items-mobile
+
                         .nav-links-mobile
                             display: flex
                             cursor: pointer
                             pointer-events: auto
                             transition-delay: calc( .1s * var(--i))
+
+                    .settings-dropdown-mobile
+                            display: flex
+
+                            .dropdown-trigger
+
+                                button
+                                    outline: none
+                                    translate: 3rem
+                                    border-radius: $br-rad
+                                    border: 2px solid #ffff
+                                    background: transparent
+
+                            .dropdown-content
+                                height: 7rem
+                                width: 10rem
+                                display: flex
+                                flex-wrap: wrap
+                                translate: 2.3rem -10rem
+                                justify-content: center
+
+                                .img-logout
+                                    display: none
+
+                                a
+                                    color: #000
+                                    width: 9.5rem
+                                    padding-top: .2rem
+                                    translate: 0 -.5rem
+                                    text-align: center
+                                    text-decoration: none
+
+                                    &:hover
+                                        transition: $standar
+                                        border-radius: $br-rad
+                                        background: $background
+
+                                span
+                                    translate: 2rem
+                                    font-size: $description-card - .3rem
+
+
+                                button
+                                    height: 3rem
+                                    background: #fff
+                                    border: 2px solid #fff
+                                    border-radius: $br-rad
+                                    font-size: $description-card - 1rem
+
 
 

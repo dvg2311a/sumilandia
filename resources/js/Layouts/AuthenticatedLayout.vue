@@ -27,11 +27,11 @@ const toggleSidebar = () => {
             <div class="items-sidebar">
                 <!-- Logo -->
                 <div class="logo-sidebar">
-                    <Link :href="route('units.index')">
+                    <Link>
                     <img src="/icons/logo-short.png" alt="Logo" class="logo-short" />
                     </Link>
 
-                    <Link :href="route('units.index')">
+                    <Link :href="route('dashboard')">
                     <ApplicationLogo />
                     </Link>
 
@@ -64,14 +64,17 @@ const toggleSidebar = () => {
                         </NavLink>
                         <NavLink :href="route('admin.progress.index')"
                             :active="route().current('admin.progress.index')">
-                            <img src="/icons/progress-icon.gif" alt="" class="icons-sidebar" />
+                            <img src="/icons/progress-icon.gif" alt="Progreso del estudiante" class="icons-sidebar" />
                             <span class="hidden" style="--i:6">Progreso estudiantes</span>
                         </NavLink>
                     </template>
                     <template v-else>
-                        <NavLink :href="route('student.units.index')" :active="route().current('student.units.index')">
-                            <span class="hidden" style="--i:1"></span> Unidades
-                        </NavLink>
+                        <div class="elements-sidebar-user">
+                            <NavLink :href="route('student.units.index')" :active="route().current('student.units.index')">
+                                <img src="/icons/themes-icon.gif" alt="Temas de estudio" class="icons-sidebar">
+                                <span class="hidden" >Temas de estudio</span>
+                            </NavLink>
+                        </div>
                     </template>
                 </div>
             </div>
@@ -103,18 +106,20 @@ const toggleSidebar = () => {
                             </button>
                         </span>
                     </template>
-
                 </Dropdown>
             </div>
         </aside>
 
+        <!-- ? Menú Mobile -->
         <!-- Page Heading -->
         <div class="container-menu-mobile">
             <div class="menu-mobile">
                 <img src="/icons/hamburguer.png" alt="Menu" class="hamburguer-icon" @click="toggleSidebar" />
             </div>
 
-            <div class="nav-links-mobile" ref="sidebarCollapse">
+            <div class="items-mobile">
+                <template v-if="$page.props.auth.user.roles && $page.props.auth.user.roles.includes('admin')">
+                    <div class="nav-links-mobile" ref="sidebarCollapse">
                         <NavLink :href="route('units.index')" :active="route().current('units.index')">
                             <img src="/icons/themes-icon.gif" alt="Temas de estudio" class="icons-sidebar" />
                             <span class="hidden" style="--i:1">Temas de estudio</span>
@@ -140,6 +145,47 @@ const toggleSidebar = () => {
                             <img src="/icons/progress-icon.gif" alt="" class="icons-sidebar" />
                             <span class="hidden" style="--i:6">Progreso estudiantes</span>
                         </NavLink>
+                    </div>
+                </template>
+                <template v-else>
+                    <div class="nav-links-mobile-user">
+
+                        <NavLink :href="route('student.units.index')" :active="route().current('student.units.index')">
+                            <img src="/icons/themes-icon.gif" alt="Temas de estudio" class="icons-sidebar" />
+                            <span class="hidden" style="--i:1">Temas de estudio</span>
+                        </NavLink>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Menú profile -->
+            <div class="settings-dropdown-mobile">
+                <Dropdown align="right" width="28">
+                    <template #content>
+                        <span class="dropdown-content">
+                            <DropdownLink :href="route('profile.edit')">
+                                <img src="/icons/profile-icon.gif" alt="Perfil" title="Perfil" class="img-logout" />
+                                <span class="span-logout">Perfil</span>
+                            </DropdownLink>
+                            <DropdownLink :href="route('logout')" method="post" as="button">
+                                <img src="/icons/logout-icon.gif" alt="Cerrar sesión" title="Cerrar sesión"
+                                    class="img-logout">
+                                <span class="span-logout">Cerrar sesión</span>
+                            </DropdownLink>
+                        </span>
+                    </template>
+
+                    <template #trigger>
+                        <span class="dropdown-trigger">
+                            <img v-if="$page.props.auth.user.profile && $page.props.auth.user.profile.avatar_url"
+                                :src="$page.props.auth.user.profile.avatar_url" alt="Avatar" class="img-sidebar" />
+                            <button type="button" class="btn-profile" style="--i:7">
+                                {{ $page.props.auth.user.full_name }}
+                            </button>
+                        </span>
+                    </template>
+
+                </Dropdown>
             </div>
         </div>
 
