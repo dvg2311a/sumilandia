@@ -15,41 +15,38 @@ const props = defineProps({
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">Lecciones de {{ props.unit.name }}</h2>
         </template>
-        <div class="py-12">
-            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                    <div class="p-6">
-                        <div class="flex justify-between items-center mb-6">
-                            <h1 class="text-2xl font-bold text-gray-800">Listado de Lecciones</h1>
+        <div class="container-unit">
+            <div class="container-title">
+                <h1>Listado de Lecciones</h1>
+                <p>¡Selecciona una lección para comenzar!</p>
+            </div>
+
+            <div class="container-cards container-b">
+                <div v-for="lesson in lessons" :key="lesson.id" class="cards">
+                    <div class="card-content card-b">
+                        <h2>{{ lesson.name }}</h2>
+                        <p class="p">Progreso:
+                            <span
+                                :class="lesson.progress === 100 ? 'blue-card' : lesson.progress > 0 ? 'yellow' : 'gray'">
+                                {{ lesson.progress }}%
+                            </span>
+                        </p>
+                        <div>
+                            <span class="p">Estado: </span>
+                            <span
+                                :class="lesson.status === 'completado' ? 'blue-card' : lesson.status === 'en_progreso' ? 'yellow' : 'gray'">
+                                {{ lesson.status === 'completado' ? 'Completado' : lesson.status === 'en_progreso' ? 'En progreso' : 'No comenzado' }}
+                            </span>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <div v-for="lesson in lessons" :key="lesson.id"
-                                class="bg-white shadow rounded-lg p-6 flex flex-col justify-between">
-                                <div>
-                                    <h2 class="text-xl font-semibold mb-2">{{ lesson.name }}</h2>
-                                    <p class="mb-2 text-gray-600">{{ lesson.description }}</p>
-                                    <div class="mb-2">
-                                        <span class="font-semibold">Progreso:</span>
-                                        <span :class="lesson.progress === 100 ? 'text-green-600 font-bold' : lesson.progress > 0 ? 'text-yellow-600 font-bold' : 'text-gray-500'">
-                                            {{ lesson.progress }}%
-                                        </span>
-                                    </div>
-                                    <div class="mb-2">
-                                        <span class="font-semibold">Estado:</span>
-                                        <span :class="lesson.status === 'completado' ? 'text-green-600 font-bold' : lesson.status === 'en_progreso' ? 'text-yellow-600 font-bold' : 'text-gray-500'">
-                                            {{ lesson.status === 'completado' ? 'Completado' : lesson.status === 'en_progreso' ? 'En progreso' : 'No comenzado' }}
-                                        </span>
-                                    </div>
-                                </div>
-                                <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-                                    @click="$inertia.get(route('student.lessons.start', { id: lesson.id }))">
-                                    Iniciar lección
-                                </button>
-                            </div>
-                        </div>
+                        <p class="p">Descripción: <span class="font-semibold">{{ lesson.description }}</span></p>
                     </div>
+
+                    <button class="btn-card" @click="$inertia.get(route('student.lessons.start', { id: lesson.id }))">
+                        Iniciar lección
+                    </button>
                 </div>
             </div>
         </div>
+
     </AuthenticatedLayout>
 </template>
