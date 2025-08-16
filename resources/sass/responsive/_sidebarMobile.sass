@@ -50,6 +50,18 @@
                             .hidden
                                 font-size: $description-card - .5rem
 
+                        .nav-links-mobile-user
+                            display: none
+
+                            .hidden
+                                color: #000
+                                text-decoration: none
+
+                            img
+                                width: 4rem
+                                height: 4rem
+
+
                     .settings-dropdown-mobile
                         width: 15rem
                         height: 3rem
@@ -79,12 +91,28 @@
                         border-radius: 0 .8rem .8rem 0
 
                     .items-mobile
-
+                        
                         .nav-links-mobile
                             display: flex
                             cursor: pointer
                             pointer-events: auto
                             transition-delay: calc( .1s * var(--i))
+
+                        .nav-links-mobile-user
+                            display: flex
+                            translate: 0 5rem
+                            align-items: center
+                            justify-content: center
+
+                            a
+                                display: flex
+                                align-items: center
+                                height: fit-content
+                                text-decoration: none
+                                justify-content: space-around
+
+                            .hidden
+                                font-size: $description-card
 
                     .settings-dropdown-mobile
                             display: flex

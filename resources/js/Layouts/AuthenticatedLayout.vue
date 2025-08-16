@@ -149,7 +149,6 @@ const toggleSidebar = () => {
                 </template>
                 <template v-else>
                     <div class="nav-links-mobile-user">
-
                         <NavLink :href="route('student.units.index')" :active="route().current('student.units.index')">
                             <img src="/icons/themes-icon.gif" alt="Temas de estudio" class="icons-sidebar" />
                             <span class="hidden" style="--i:1">Temas de estudio</span>
