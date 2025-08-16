@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="submit" class="form-space">
+    <form @submit.prevent="submit" class="form-space" multipart="">
         <div class="container-items">
             <div class="items-form">
                 <label for="name" class="label">Nombre</label>
@@ -51,6 +51,7 @@ const form = useForm({
     name: props.unit?.name || '',
     description: props.unit?.description || '',
     expected_time: props.unit?.expected_time || '',
+    image: props.unit?.image || '',
     level_id: props.unit?.level_id || ''
 });
 

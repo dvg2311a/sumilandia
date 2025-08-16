@@ -32,6 +32,7 @@ const props = defineProps({
                                 <th>Nombre</th>
                                 <th>Descripción</th>
                                 <th>Tiempo esperado</th>
+                                <th>Imagen</th>
                                 <th>Nivel</th>
                                 <th>Acciones</th>
                             </tr>
@@ -42,6 +43,10 @@ const props = defineProps({
                                 <td>{{ unit.name }}</td>
                                 <td>{{ unit.description }}</td>
                                 <td>{{ unit.expected_time }} Minutos</td>
+
+                                <td class="image">
+                                    <img :src="`/storage/${unit.image}`" alt="Imagen de la unidad" class="table-image">
+                                </td>
                                 <td>{{ unit.level?.name }}</td>
                                 <td class="actions">
                                     <section>
