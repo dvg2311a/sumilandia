@@ -42,7 +42,7 @@ defineExpose({ focus: () => input.value.focus() });
 <template>
     <div>
         <img v-if="preview" :src="preview" alt="Preview" class="" />
-        <label for="image" class="label-image">Cambiar foto</label>
+        <label for="image" class="label-image" >Cambiar foto</label>
         <input type="file" accept="image/*" id="image"
             class="" @change="onFileChange" ref="input" />
         <div v-if="fileName" class="">{{ fileName }}</div>

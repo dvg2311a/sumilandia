@@ -25,54 +25,53 @@ function startUnit(id) {
 
     <Head title="Unidades" />
     <AuthenticatedLayout>
-        <template #header>
-            <h2 class="text-xl font-semibold leading-tight text-gray-800">Unidades</h2>
-        </template>
-        <div class="py-12">
-            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                    <div class="p-6">
-                        <div class="flex justify-between items-center mb-6">
-                            <h1 class="text-2xl font-bold text-gray-800">Listado de Unidades</h1>
+        <er-unit #header>
+            <h2 class="">Unidades</h2>
+        </er-unit>
+        <div class="container-unit">
+            <div class="container-title">
+                <h1>¡Bienvenido, Estimado estudiante!</h1>
+                <p>Esto es Sumilandia, una aplicación web donde aprenderás a:
+                    sumar, restar, multiplicar, dividir y más...</p>
+            </div>
+            <div class="container-filter">
+                <label class="">Filtrar por nivel: </label>
+                <select v-model="levelId" @change="handleLevelChange" class="">
+                    <option value="">Todos los niveles</option>
+                    <option v-for="level in levels" :key="level.id" :value="level.id">{{ level.name }}
+                    </option>
+                </select>
+            </div>
+            <div class="container-cards">
+                <div v-for="unit in units" :key="unit.id" class="cards">
+                    <div class="card-content">
+                        <div class="container-img">
+                            <img :src="`/storage/${unit.image}`" alt="Imagen de la unidad"
+                                class="card-image" />
                         </div>
-                        <div class="mb-6">
-                            <label class="block mb-2 font-semibold">Filtrar por nivel:</label>
-                            <select v-model="levelId" @change="handleLevelChange" class="border rounded px-3 py-2">
-                                <option value="">Todos los niveles</option>
-                                <option v-for="level in levels" :key="level.id" :value="level.id">{{ level.name }}
-                                </option>
-                            </select>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <div v-for="unit in units" :key="unit.id"
-                                class="bg-white shadow rounded-lg p-6 flex flex-col justify-between">
-                                <div>
-                                    <h2 class="text-xl font-semibold mb-2">{{ unit.name }}</h2>
-                                    <p class="mb-2 text-gray-600">{{ unit.description }}</p>
-                                    <p class="text-sm text-gray-500">Nivel: <span class="font-semibold">{{
-                                            unit.level?.name ||
-                                            'Sin nivel' }}</span></p>
-                                    <p class="text-sm text-gray-500">Tiempo estimado: <span class="font-semibold">{{ unit.expected_time ? unit.expected_time + ' min' : 'No definido' }}</span></p>
-                                    <div class="mt-2">
-                                        <span class="font-semibold">Progreso:</span>
-                                        <span :class="unit.progress === 100 ? 'text-green-600 font-bold' : unit.progress > 0 ? 'text-yellow-600 font-bold' : 'text-gray-500'">
-                                            {{ unit.progress }}%
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <span class="font-semibold">Estado:</span>
-                                        <span :class="unit.status === 'completado' ? 'text-green-600 font-bold' : unit.status === 'en_progreso' ? 'text-yellow-600 font-bold' : 'text-gray-500'">
-                                            {{ unit.status === 'completado' ? 'Completado' : unit.status === 'en_progreso' ? 'En progreso' : 'No comenzado' }}
-                                        </span>
-                                    </div>
-                                </div>
-                                <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-                                    @click="startUnit(unit.id)">
-                                    Comenzar
-                                </button>
+                        <h2 class="">{{ unit.name }}</h2>
+                        <p class="p">Nivel: <span class="font-semibold">{{
+                            unit.level?.name ||
+                                'Sin nivel' }}</span></p>
+                        <div class="">
+                            <span class="p">Progreso: </span>
+                            <span :class="unit.progress === 100 ? 'blue-card' : unit.progress > 0 ? 'yellow' : 'gray'">
+                                {{ unit.progress }}%
+                            </span>
+                            <div>
+                                <span class="p">Estado: </span>
+                                <span
+                                    :class="unit.status === 'completado' ? 'blue-card' : unit.status === 'en_progreso' ? 'yellow' : 'gray'"> {{ unit.status === 'completado' ? 'Completado' : unit.status === 'en_progreso' ? 'En progreso' : 'No comenzado' }}
+                                </span>
                             </div>
+                            <p class="p">Tiempo estimado: <span class="font-semibold">{{ unit.expected_time ?
+                                unit.expected_time + ' min' : 'No definido' }}</span></p>
+                            <p class="">{{ unit.description }}</p>
                         </div>
                     </div>
+                    <button class="btn-card" @click="startUnit(unit.id)">
+                        Comenzar
+                    </button>
                 </div>
             </div>
         </div>
