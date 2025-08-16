@@ -18,6 +18,12 @@
             </div>
 
             <div class="items-form">
+                <label for="image" class="label">Imagen</label>
+                <ImageInput v-model="form.image" id="image" class="input" />
+                <span v-if="form.errors.image" class="error-text">{{ form.errors.image }}</span>
+            </div>
+
+            <div class="items-form">
                 <label for="level_id" class="label">Nivel</label>
                 <select v-model="form.level_id" id="level_id" class="input" required>
                     <option value="" disabled>Selecciona un nivel</option>
@@ -33,6 +39,7 @@
 </template>
 
 <script setup>
+import ImageInput from '@/Components/ImageInput.vue';
 import { useForm } from '@inertiajs/vue3';
 
 const props = defineProps({
