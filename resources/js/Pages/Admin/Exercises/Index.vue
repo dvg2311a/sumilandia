@@ -14,6 +14,7 @@ function destroy(id) {
 </script>
 
 <template>
+
     <Head title="Ejercicios" />
     <AuthenticatedLayout>
         <template #header>
@@ -25,8 +26,8 @@ function destroy(id) {
                     <h1 class="titulo-listado">Listado de Ejercicios</h1>
                     <template v-if="permissions.create">
                         <Link href="/exercises/create" class="btn btn-crear">
-                            <img src="/icons/create-icon.gif" alt="Crear Ejercicio" />
-                            Crear Ejercicio
+                        <img src="/icons/create-icon.gif" alt="Crear Ejercicio" />
+                        Crear Ejercicio
                         </Link>
                     </template>
                 </div>
@@ -51,17 +52,17 @@ function destroy(id) {
                                     <section>
                                         <template v-if="permissions.view">
                                             <Link :href="`/exercises/${exercise.id}`">
-                                                <img src="/icons/show-icon.gif" alt="Ver" class="btn-action"/>
+                                            <img src="/icons/show-icon.gif" alt="Ver" class="btn-action" />
                                             </Link>
                                         </template>
                                         <template v-if="permissions.edit">
                                             <Link :href="`/exercises/${exercise.id}/edit`">
-                                                <img src="/icons/edit-icon.gif" alt="Editar" class="btn-action"/>
+                                            <img src="/icons/edit-icon.gif" alt="Editar" class="btn-action" />
                                             </Link>
                                         </template>
                                         <template v-if="permissions.delete">
                                             <button @click="destroy(exercise.id)">
-                                                <img src="/icons/delete-icon.gif" alt="Eliminar" class="btn-action"/>
+                                                <img src="/icons/delete-icon.gif" alt="Eliminar" class="btn-action" />
                                             </button>
                                         </template>
                                     </section>
@@ -69,9 +70,21 @@ function destroy(id) {
                             </tr>
                         </tbody>
                     </table>
+
                 </div>
             </div>
+            <!-- Agrega en la siguiente linea un paginador -->
+            <div class="pagination"
+                style="width: 100%; font-size: 2rem; text-align: center; margin-top: 2rem; z-index: 1000000;">
+                <Link v-if="exercises.prev_page_url" :href="exercises.prev_page_url" class="btn-pagination" style="text-decoration: none;">
+                Anterior
+                </Link>
+                <Link v-if="exercises.next_page_url" :href="exercises.next_page_url" class="btn-pagination" style="text-decoration: none;">
+                Siguiente
+                </Link>
+            </div>
         </div>
+
     </AuthenticatedLayout>
 </template>
 
