@@ -19,13 +19,13 @@ function selectAnswer(val) {
 }
 </script>
 <template>
-    <div class="mb-4">
-        <div class="flex gap-4 mb-2">
+    <div class="response-container">
+        <div class="choice-options">
             <button
-                class="flex-1 px-4 py-6 rounded border shadow text-lg font-bold hover:bg-blue-100"
+                class="option-button"
                 :class="{
-                    'bg-green-100': props.showFeedback && answer.value === 'True' && solutionArray.includes('True'),
-                    'bg-red-100': props.showFeedback && answer.value === 'True' && !solutionArray.includes('True'),
+                    'green': props.showFeedback && answer.value === 'True' && solutionArray.includes('True'),
+                    'red': props.showFeedback && answer.value === 'True' && !solutionArray.includes('True'),
                     'border-blue-600': answer.value === 'True'
                 }"
                 :disabled="props.showFeedback"
@@ -34,10 +34,10 @@ function selectAnswer(val) {
                 Verdadero
             </button>
             <button
-                class="flex-1 px-4 py-6 rounded border shadow text-lg font-bold hover:bg-blue-100"
+                class="option-button"
                 :class="{
-                    'bg-green-100': props.showFeedback && answer.value === 'False' && solutionArray.includes('False'),
-                    'bg-red-100': props.showFeedback && answer.value === 'False' && !solutionArray.includes('False'),
+                    'green': props.showFeedback && answer.value === 'False' && solutionArray.includes('False'),
+                    'red': props.showFeedback && answer.value === 'False' && !solutionArray.includes('False'),
                     'border-blue-600': answer.value === 'False'
                 }"
                 :disabled="props.showFeedback"
@@ -46,8 +46,8 @@ function selectAnswer(val) {
                 Falso
             </button>
         </div>
-        <div v-if="props.showFeedback">
-            <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" @click="props.nextExercise">Siguiente</button>
+        <div v-if="props.showFeedback" class="feedback-container">
+            <button class="option-button" @click="props.nextExercise">Siguiente</button>
         </div>
     </div>
 </template>
