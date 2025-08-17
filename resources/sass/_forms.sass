@@ -1,8 +1,8 @@
 @import '_mixins'
 
-@mixin inputs
+@mixin inputs($width)
     input, select, textarea
-                        width: 34rem
+                        width: $width
                         outline: none
                         padding: .5rem
                         font-family: 'Poppins', sans-serif
@@ -14,7 +14,7 @@
         .button-container
                 height: 4rem
                 width: 34rem
-                padding-left: 4rem
+                padding: 2rem
                 position: relative
 
                 button
@@ -89,7 +89,7 @@
                     label
                         font-size: $description-card
 
-                    @include inputs
+                    @include inputs($width: 34rem)
 
                     img
                         display: none
@@ -118,6 +118,7 @@
 
             @include btnContainer
 
+// ? EXERCISES FORM
 .formulario-exercises
     width: 100%
     display: flex
@@ -140,9 +141,14 @@
                 font-size: $description-card
 
             display: flex
-            @include inputs
+            @include inputs($width: 29rem)
+            padding: 1rem
             margin-top: 1rem
             flex-direction: column
+
+            .error-text
+                font-size: $description-card
+                color: $errors
 
             .draggable-item
                     display: flex
