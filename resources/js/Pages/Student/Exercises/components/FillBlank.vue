@@ -14,23 +14,18 @@ const solutionArray = Array.isArray(props.exercise.solution)
     : [props.exercise.solution];
 </script>
 <template>
-    <div class="mb-4">
-        <input
-            v-model="answer"
-            type="text"
-            class="border rounded px-3 py-2 w-full mb-2"
-            :disabled="props.showFeedback"
-            placeholder="Escribe tu respuesta aquí"
-        />
-        <button
-            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full"
-            @click="props.handleAnswer(solutionArray.includes(answer), answer)"
-            :disabled="answer === undefined || answer === '' || props.showFeedback"
-        >
-            Comprobar respuesta
-        </button>
-        <div v-if="props.showFeedback">
-            <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" @click="props.nextExercise">Siguiente</button>
+    <div class="response-container">
+        <div class="elements-container">
+            <input v-model="answer" type="text" class=""
+                :disabled="props.showFeedback" placeholder="Escribe tu respuesta aquí" />
+            <button class="b" @click="props.handleAnswer(solutionArray.includes(answer), answer)"
+                :disabled="answer === undefined || answer === '' || props.showFeedback">
+                Comprobar respuesta
+            </button>
+            <div v-if="props.showFeedback" >
+                <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                    @click="props.nextExercise">Siguiente</button>
+            </div>
         </div>
     </div>
 </template>

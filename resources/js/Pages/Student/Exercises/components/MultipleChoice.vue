@@ -35,7 +35,7 @@ const solutionArray = Array.isArray(props.exercise.solution)
             </div>
         </template>
         <template v-else>
-            <div class="text-red-600 font-bold">No hay opciones disponibles para este ejercicio.</div>
+            <div style="font-size: 1.5rem;">No hay opciones disponibles para este ejercicio.</div>
         </template>
     </div>
 </template>
