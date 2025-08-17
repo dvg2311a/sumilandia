@@ -7,20 +7,22 @@ const props = defineProps({
     nextExercise: Function
 });
 // Asegurarse que la solución sea array
+//
 const solutionArray = Array.isArray(props.exercise.solution)
     ? props.exercise.solution
     : [props.exercise.solution];
 </script>
 <template>
-    <div class="mb-4">
+    <div class="response-container">
         <template v-if="Array.isArray(props.exercise.options) && props.exercise.options.length">
-            <div class="grid grid-cols-1 gap-2">
+            <div class="choice-options">
                 <div v-for="option in props.exercise.options" :key="option">
                     <button
-                        class="px-4 py-2 rounded border w-full shadow hover:bg-blue-100"
+                        class="option-button"
                         :class="{
-                            'bg-green-100': props.showFeedback && solutionArray.includes(option),
-                            'bg-red-100': props.showFeedback && props.lastAnswer === option && !solutionArray.includes(props.lastAnswer)
+                            // Verde si es correcta y fue seleccionada, rojo si es incorrecta y fue seleccionada
+                            'green': props.showFeedback && solutionArray.includes(lastAnswer) && props.lastAnswer === option,
+                            'red': props.showFeedback && props.lastAnswer === option && !solutionArray.includes(props.lastAnswer)
                         }"
                         :disabled="props.showFeedback"
                         @click="props.handleAnswer(solutionArray.includes(option), option)">
@@ -28,8 +30,8 @@ const solutionArray = Array.isArray(props.exercise.solution)
                     </button>
                 </div>
             </div>
-            <div v-if="props.showFeedback">
-                <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" @click="props.nextExercise">Siguiente</button>
+            <div v-if="props.showFeedback" class="feedback-container">
+                <button class="option-button" @click="props.nextExercise">Siguiente</button>
             </div>
         </template>
         <template v-else>
