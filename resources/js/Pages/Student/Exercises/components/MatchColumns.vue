@@ -131,7 +131,7 @@ function isPairCorrect(pair) {
                 Comprobar respuesta
             </button>
             <div v-if="props.showFeedback || checked">
-                <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                <button class=""
                     @click="props.nextExercise">Siguiente</button>
             </div>
         </div>
