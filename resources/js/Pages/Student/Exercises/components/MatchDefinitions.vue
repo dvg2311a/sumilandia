@@ -131,8 +131,7 @@ function checkAnswer() {
         <div v-if="studentMatches.length" class="selected-pairs">
             <h3 class="">Pares seleccionados:</h3>
             <ul class="text-xs">
-                <li v-for="(pair, idx) in studentMatches" :key="idx"
-                    >
+                <li v-for="(pair, idx) in studentMatches" :key="idx">
                     {{ pair.concepto }} → {{ pair.definicion }}
                 </li>
             </ul>
