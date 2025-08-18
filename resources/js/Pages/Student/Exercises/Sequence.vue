@@ -89,6 +89,14 @@ function nextExercise() {
 function goToUnits() {
     router.get(route('student.units.index'));
 }
+
+// Convertir el texto en array u objeto en texto plano para la tabla
+function formatAnswer(answer) {
+    if (answer === null || answer === undefined) return 'Sin respuesta';
+    if (Array.isArray(answer)) return answer.join(', '); // convierte arrays a texto separado por coma
+    if (typeof answer === 'object') return Object.values(answer).join(', '); // convierte objetos a texto
+    return answer; // si ya es texto o número
+}
 </script>
 
 <template>
@@ -101,6 +109,7 @@ function goToUnits() {
         <div class="container-main">
             <template v-if="!finished && !showSummary">
                 <div class="content-box">
+
                     <h1 class="title-content-box">Ejercicio {{ current + 1 }} de {{
                         exercises.length }}</h1>
 
@@ -128,17 +137,19 @@ function goToUnits() {
                         :handleAnswer="handleAnswer" :nextExercise="nextExercise" />
                 </div>
             </template>
+
+
             <template v-else-if="showSummary">
-                <div class="text-center">
-                    <h2 class="text-2xl font-bold mb-4">Resumen de tus respuestas</h2>
-                    <div class="mb-6">
-                        <table class="mx-auto w-full max-w-xl text-left border">
+                <div class="summary-container">
+                    <h2 class="title">Resumen de tus respuestas</h2>
+                    <div class="container-table">
+                        <table class="">
                             <thead>
                                 <tr>
-                                    <th class="border px-2 py-1">#</th>
-                                    <th class="border px-2 py-1">Enunciado</th>
-                                    <th class="border px-2 py-1">Tu respuesta</th>
-                                    <th class="border px-2 py-1">Resultado</th>
+                                    <th>#</th>
+                                    <th>Enunciado</th>
+                                    <th>Tu respuesta</th>
+                                    <th>Resultado</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -146,22 +157,21 @@ function goToUnits() {
                                     <td class="border px-2 py-1">{{ idx + 1 }}</td>
                                     <td class="border px-2 py-1">{{ exercise.prompt }}</td>
                                     <td class="border px-2 py-1">
-                                        <span v-if="userAnswers[idx] !== undefined">{{ userAnswers[idx]
-                                            }}</span>
+                                        <span v-if="userAnswers[idx] !== undefined">{{ formatAnswer(userAnswers[idx]) }}</span>
                                         <span v-else class="text-gray-500">Sin respuesta</span>
                                     </td>
                                     <td class="border px-2 py-1">
                                         <span v-if="answered[idx] === true"
-                                            class="text-green-600 font-bold">Correcto</span>
+                                            class="green">Correcto</span>
                                         <span v-else-if="answered[idx] === false"
-                                            class="text-red-600 font-bold">Incorrecto</span>
+                                            class="red">Incorrecto</span>
                                         <span v-else class="text-gray-500">Sin respuesta</span>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                    <button class=""
                         @click="saveSummary">Finalizar</button>
                 </div>
             </template>
