@@ -98,7 +98,7 @@ function isPairCorrect(pair) {
                     <h2>Derecha</h2>
                 </div>
                 <div class="container-buttons">
-                    <button v-for="right in rightValues" :key="right" class="px-4 py-2 rounded border w-full shadow"
+                    <button v-for="right in rightValues" :key="right" class=""
                         :class="{
                             'selected': selectedRight === right,
                             'green': studentMatches.some(p => p.right === right),
@@ -117,7 +117,7 @@ function isPairCorrect(pair) {
         ? -->
 
         <div v-if="studentMatches.length" class="selected-pairs">
-            <h3 class="font-bold text-xs mb-1">Pares seleccionados:</h3>
+            <h3 class="">Pares seleccionados:</h3>
             <ul class="text-xs">
                 <li v-for="(pair, idx) in studentMatches" :key="idx"
                     :class="checked ? (isPairCorrect(pair) ? 'green' : 'red') : ''">
@@ -131,8 +131,7 @@ function isPairCorrect(pair) {
                 Comprobar respuesta
             </button>
             <div v-if="props.showFeedback || checked">
-                <button class=""
-                    @click="props.nextExercise">Siguiente</button>
+                <button class="" @click="props.nextExercise">Siguiente</button>
             </div>
         </div>
     </div>
