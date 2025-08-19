@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="submit" class="form-space" multipart="">
+    <form @submit.prevent="submit" class="form-space" enctype="multipart/form-data">
         <div class="container-items">
             <div class="items-form">
                 <label for="name" class="label">Nombre</label>
@@ -19,7 +19,7 @@
 
             <div class="items-form">
                 <label for="image" class="label">Imagen</label>
-                <ImageInput v-model="form.image" id="image" class="input" />
+                <input  id="image" class="input" required type="file" accept="image/*" @change="handleImageChange"/>
                 <span v-if="form.errors.image" class="error-text">{{ form.errors.image }}</span>
             </div>
 
@@ -39,8 +39,8 @@
 </template>
 
 <script setup>
-import ImageInput from '@/Components/ImageInput.vue';
 import { useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 const props = defineProps({
     unit: Object,
@@ -51,15 +51,58 @@ const form = useForm({
     name: props.unit?.name || '',
     description: props.unit?.description || '',
     expected_time: props.unit?.expected_time || '',
-    image: props.unit?.image || '',
+    image: props.unit?.image || null,
     level_id: props.unit?.level_id || ''
+}, {
+    forceFormData: true
 });
+
+// Variable para trackear si se seleccionó nueva imagen
+const hasNewImage = ref(false);
+
+function handleImageChange(event) {
+    const file = event.target.files[0];
+    if (file) {
+        form.image = file; // Asignar el archivo directamente
+        hasNewImage.value = true;
+    }
+}
 
 function submit() {
     if (props.unit) {
-        form.put(`/units/${props.unit.id}`);
+        // Para actualización
+        form.transform((data) => {
+            const formData = new FormData();
+
+            // Agregar todos los campos
+            formData.append('name', data.name);
+            formData.append('description', data.description);
+            formData.append('expected_time', data.expected_time);
+            formData.append('level_id', data.level_id);
+
+            // Solo agregar imagen si es un archivo nuevo
+            if (data.image instanceof File) {
+                formData.append('image', data.image);
+            }
+
+            // Para métodos PUT/PATCH en Laravel con FormData
+            formData.append('_method', 'put');
+
+            return formData;
+        }).post(`/units/${props.unit.id}`, {
+            preserveScroll: true,
+            onSuccess: () => {
+                // Limpiar después de éxito si es necesario
+            }
+        });
     } else {
-        form.post('/units');
+        // Para creación nueva
+        form.post('/units', {
+            preserveScroll: true,
+            onSuccess: () => {
+                form.reset();
+            }
+        });
     }
 }
 </script>
