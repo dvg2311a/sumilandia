@@ -81,51 +81,67 @@
                 .blue-card
                     color: $buttons
 
-            .card-b
-                    height: fit-content
-
-        .btn-card
-            height: 4rem
-            width: 20rem
-            left: 1.2rem
-            outline: none
-            color: #fff
-            cursor: pointer
-            position: relative
-            margin-bottom: 1rem
-            transition: $standar
-            pointer-events: auto
-            background: $buttons
-            border-radius: $br-rad
-            border: 2px solid $cards
-
-            &:hover
-                color: #000
+            .btn-card
+                height: 4rem
+                width: 20rem
+                left: 1.2rem
+                outline: none
+                color: #fff
+                cursor: pointer
+                position: relative
+                margin-bottom: 1rem
+                pointer-events: auto
+                background: $buttons
                 transition: $standar
-                background: #fff
-                border: 2px solid $buttons
+                border-radius: $br-rad
+                border: 2px solid $cards
 
-            &:active
-                scale: .9
-                transition: $standar
+                &:hover
+                    color: #000
+                    transition: $standar
+                    background: #fff
+                    border: 2px solid $buttons
+
+                &:active
+                    scale: .9
+                    transition: $standar
 
 @media screen and ( max-width: 599px) and (min-width: 320px)
 
     .container-unit
+            width: 43rem
+            margin-top: 3rem
+            position: absolute
 
-        .container-title
-            left: 2rem
-
-            h1
-                font-size: $title-card + .3rem
-
-            p
+            .container-title
                 width: 35rem
-                text-wrap: balance
-                font-size: $description-card
 
-        .container-filter
-            margin-left: 4rem
+                h1
+                    z-index: -9990009
+                    pointer-events: none
+                    font-size: $title-card + .3rem
 
-        .container-cards
-            margin-left: 3.5rem
+                p
+                    width: 35rem
+                    text-wrap: balance
+                    font-size: $description-card
+
+            .container-filter
+
+                select
+                    padding-right: 2rem
+                    cursor: pointer
+
+
+            .container-cards
+
+                .cards
+
+                    .btn-card
+                        border: none
+                        height: 4rem
+                        width: fit-content
+                        cursor: pointer
+                        pointer-events: auto
+                        -webkit-tap-highlight-color: transparent
+                        touch-action: manipulation
