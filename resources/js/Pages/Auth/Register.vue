@@ -95,7 +95,6 @@ const btnSelect = () => {
                     <InputError :message="form.errors.academic_level" />
                 </div>
 
-
                 <div>
                     <InputLabel for="birthdate" value="Fecha de Nacimiento" class="text-labels" />
                     <!-- ? Contenedor del input y el icono -->

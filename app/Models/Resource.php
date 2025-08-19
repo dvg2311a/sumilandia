@@ -21,4 +21,10 @@ class Resource extends Model
     {
         return $this->belongsTo(Unit::class);
     }
+
+    public function getImageUrlAttribute(): ?string
+    {
+        return $this->image ? asset('storage/' . $this->file_path) : null;
+    }
 }
+    

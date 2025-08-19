@@ -51,7 +51,9 @@ class ResourceController extends Controller
         $data = $request->validated();
         $resource = new Resource($data);
         if ($request->hasFile('file_path')) {
-            $fileService->storeLocal($resource, 'file_path', $request->file('file_path'), 'resources');
+            $path = $fileService->storeLocal($resource, 'file_path', $request->file('file_path'), 'resources');
+            $resource->file_path = $path;
+            $resource->save();
         } else {
             $resource->save();
         }
@@ -76,7 +78,7 @@ class ResourceController extends Controller
             $fileService->updateLocal($resource, 'file_path', $request->file('file_path'), 'resources');
         } else {
             // Si no hay archivo nuevo, actualiza los demás campos
-            $resource->update(array_filter($data, function($key) {
+            $resource->update(array_filter($data, function ($key) {
                 return $key !== 'file_path';
             }, ARRAY_FILTER_USE_KEY));
         }
