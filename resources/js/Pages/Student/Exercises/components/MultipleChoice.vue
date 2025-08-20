@@ -8,9 +8,12 @@ const props = defineProps({
 });
 // Asegurarse que la solución sea array
 //
-const solutionArray = Array.isArray(props.exercise.solution)
-    ? props.exercise.solution
-    : [props.exercise.solution];
+import { computed } from 'vue';
+const solutionArray = computed(() =>
+    Array.isArray(props.exercise.solution)
+        ? props.exercise.solution
+        : [props.exercise.solution]
+);
 </script>
 <template>
     <div class="response-container">
