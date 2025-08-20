@@ -90,12 +90,46 @@ function goToUnits() {
     router.get(route('student.units.index'));
 }
 
-// Convertir el texto en array u objeto en texto plano para la tabla
+// Formatear respuestas para mostrar en el resumen
 function formatAnswer(answer) {
-    if (answer === null || answer === undefined) return 'Sin respuesta';
-    if (Array.isArray(answer)) return answer.join(', '); // convierte arrays a texto separado por coma
-    if (typeof answer === 'object') return Object.values(answer).join(', '); // convierte objetos a texto
-    return answer; // si ya es texto o número
+    if (!answer && answer !== 0 && answer !== false) return '';
+
+    let parsed = answer;
+
+    // Intentar parsear si es string
+    if (typeof answer === 'string') {
+        try {
+            parsed = JSON.parse(answer);
+        } catch {
+            return answer; // Devolver string original si no es JSON válido
+        }
+    }
+
+    // Manejar arrays
+    if (Array.isArray(parsed)) {
+        return parsed.map(item => {
+            if (typeof item === 'object' && item !== null) {
+                return item.frase || JSON.stringify(item);
+            }
+            return String(item);
+        }).join(', ');
+    }
+
+    // Manejar objetos
+    if (typeof parsed === 'object' && parsed !== null) {
+        return Object.entries(parsed)
+            .map(([key, value]) => {
+                // Formatear valores anidados recursivamente
+                if (typeof value === 'object' && value !== null) {
+                    return `${key}: (${formatAnswer(value)})`;
+                }
+                return stringify`${key}: ${value}`;
+            })
+            .join(', ');
+    }
+
+    // Para primitivos (number, boolean, etc.)
+    return String(parsed);
 }
 </script>
 
