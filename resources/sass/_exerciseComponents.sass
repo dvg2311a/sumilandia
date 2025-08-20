@@ -78,7 +78,7 @@
                 align-items: center
                 justify-content: center
                 scrollbar-width: thin
-                scrollbar-color: $cards #fff
+                scrollbar-color: $cards $buttons
                 -webkit-overflow-scrolling: touch
                 scroll-behavior: smooth
                 touch-action: pan-x
@@ -91,15 +91,15 @@
                     border-radius: 0.5rem
                     scrollbar-color: $cards #fff
 
+
                 table
                     border-spacing: 0
-                    width: 70rem
+                    width: 60rem
                     min-width: max-content
                     box-shadow: .1rem .2rem 1rem #ffffff
                     border: .19rem solid $cards
 
                     thead th
-                        white-space: wrap
                         font-size: $description-card
                         border: .19rem solid $cards
 
@@ -110,7 +110,10 @@
 
 
                         tr td
-                            white-space: wrap
+                            padding: 1rem
+                            font-size: $description-card
+                            white-space: pre-wrap
+                            word-break: break-word
                             border: .19rem solid $cards
 
                             .green
