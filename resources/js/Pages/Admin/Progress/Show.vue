@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import { stringify } from 'postcss';
 import { ref } from 'vue';
 
 const props = defineProps({
@@ -15,21 +16,43 @@ const props = defineProps({
 const filter = ref('all');
 
 function formatAnswer(answer) {
-    if (!answer) return '';
+    if (!answer && answer !== 0 && answer !== false) return '';
+
     let parsed = answer;
+
+    // Intentar parsear si es string
     if (typeof answer === 'string') {
         try {
             parsed = JSON.parse(answer);
         } catch {
-            return answer;
+            return answer; // Devolver string original si no es JSON válido
         }
     }
+
+    // Manejar arrays
     if (Array.isArray(parsed)) {
-        return parsed.map(o => o.frase || o).join(', ');
+        return parsed.map(item => {
+            if (typeof item === 'object' && item !== null) {
+                return item.frase || JSON.stringify(item);
+            }
+            return String(item);
+        }).join(', ');
     }
-    if (typeof parsed === 'object') {
-        return Object.values(parsed).join(', ');
+
+    // Manejar objetos
+    if (typeof parsed === 'object' && parsed !== null) {
+        return Object.entries(parsed)
+            .map(([key, value]) => {
+                // Formatear valores anidados recursivamente
+                if (typeof value === 'object' && value !== null) {
+                    return `${key}: (${formatAnswer(value)})`;
+                }
+                return stringify`${key}: ${value}`;
+            })
+            .join(', ');
     }
+
+    // Para primitivos (number, boolean, etc.)
     return String(parsed);
 }
 
