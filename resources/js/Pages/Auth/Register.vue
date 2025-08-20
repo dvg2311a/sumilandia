@@ -86,7 +86,7 @@ const btnSelect = () => {
                     <InputLabel for="academic-level" value="Grado Académico" class="text-labels" />
                     <div class="input-icon-container">
                         <img src="icons/grade-icon.gif" alt="" class="gif-icons">
-                        <select id="academic-level" v-model="form.academic_level" required class="inputs">
+                        <select id="academic-level" v-model="form.academic_level" required class="inputs" style="font-size: 1.8rem; padding: 0;">
                             <option value="">Selecciona grado académico</option>
                             <option value="primary">Primaria</option>
                             <option value="secondary">Secundaria</option>
