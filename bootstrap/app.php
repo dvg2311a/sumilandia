@@ -24,6 +24,12 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (\Spatie\Permission\Exceptions\UnauthorizedException $e, $request) {
-            return response()->json(['message' => 'You do not have the required authorization to perform this action.'], 403);
+            // Si la petición espera JSON, responde con JSON, si no, redirige
+            if ($request->expectsJson()) {
+                return response()->json(['message' => 'You do not have the required authorization to perform this action.'], 403);
+            }
+            // Si hay página previa, vuelve atrás, si no, redirige a dashboard
+            return redirect()->back()->with('error', 'No tienes autorización para realizar esta acción.')
+                ?: redirect()->route('dashboard')->with('error', 'No tienes autorización para realizar esta acción.');
         });
     })->create();
