@@ -30,7 +30,7 @@
 .container-main
     margin: 0
     padding: 0
-    width: 100%
+    width: fit-content
     display: flex
 
     .content-box
@@ -220,7 +220,7 @@
                         background: green
 
         .selected-pairs
-            width: 100%
+            width: fit-content
             display: flex
             margin-top: 3rem
             box-shadow: $shadow
@@ -309,10 +309,11 @@
         @include buttonElement($width: fit-content)
 
 
-@media screen and ( max-width: 599px ) and (min-width: 320px)
-.container-main
+@media screen and (max-width: 599px) and (min-width: 320px)
+    .container-main
 
-    .content-box
-        width: 35rem
-        translate: -3rem 5rem
+        .content-box
+            width: 35rem
+            translate: 3rem 5rem
+
 
