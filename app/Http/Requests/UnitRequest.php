@@ -32,7 +32,7 @@ class UnitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'min:4', 'max:30', Rule::unique('units')->ignore($this->unit)],
+            'name' => ['required', 'string', 'min:4', 'max:50', Rule::unique('units')->ignore($this->unit)],
             'description' => ['nullable', 'string', 'max:255'],
             'expected_time' => ['required', 'integer', 'min:1'],
             'image' => [
