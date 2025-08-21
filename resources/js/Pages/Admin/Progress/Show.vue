@@ -31,6 +31,18 @@ function formatAnswer(answer) {
 
     // Manejar arrays
     if (Array.isArray(parsed)) {
+        // Detectar si es Relacionar columnas
+        if (parsed.length && typeof parsed[0] === 'object' && parsed[0] !== null) {
+            // Relacionar columnas: {left, right}
+            if ('left' in parsed[0] && 'right' in parsed[0]) {
+                return parsed.map(item => `${item.left} → ${item.right}`).join(', ');
+            }
+            // Emparejar definiciones: {concepto, definicion}
+            if ('concepto' in parsed[0] && 'definicion' in parsed[0]) {
+                return parsed.map(item => `${item.concepto}: ${item.definicion}`).join(', ');
+            }
+        }
+        // Otros arrays
         return parsed.map(item => {
             if (typeof item === 'object' && item !== null) {
                 return item.frase || JSON.stringify(item);
@@ -47,7 +59,7 @@ function formatAnswer(answer) {
                 if (typeof value === 'object' && value !== null) {
                     return `${key}: (${formatAnswer(value)})`;
                 }
-                return stringify`${key}: ${value}`;
+                return `${key}: ${value}`;
             })
             .join(', ');
     }
@@ -116,7 +128,6 @@ function horaLocal(dateString) {
                     </div>
                 </div>
             </section>
-
 
             <div class="table-responsive">
                 <div v-if="filter === 'all' || filter === 'units'" class="table-container">
