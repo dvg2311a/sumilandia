@@ -148,7 +148,7 @@ function formatAnswer(answer) {
                         exercises.length }}</h1>
 
                     <div class="info-exer-container">
-                            <p> <span class="text">Tipo:</span> {{ exercises[current].exercise_type?.name }} </p>
+                        <p> <span class="text">Tipo:</span> {{ exercises[current].exercise_type?.name }} </p>
                     </div>
 
                     <div class="info-exer-container">
@@ -191,22 +191,20 @@ function formatAnswer(answer) {
                                     <td class="border px-2 py-1">{{ idx + 1 }}</td>
                                     <td class="border px-2 py-1">{{ exercise.prompt }}</td>
                                     <td class="border px-2 py-1">
-                                        <span v-if="userAnswers[idx] !== undefined">{{ formatAnswer(userAnswers[idx]) }}</span>
+                                        <span v-if="userAnswers[idx] !== undefined">{{ formatAnswer(userAnswers[idx])
+                                            }}</span>
                                         <span v-else class="text-gray-500">Sin respuesta</span>
                                     </td>
                                     <td class="border px-2 py-1">
-                                        <span v-if="answered[idx] === true"
-                                            class="green">Correcto</span>
-                                        <span v-else-if="answered[idx] === false"
-                                            class="red">Incorrecto</span>
+                                        <span v-if="answered[idx] === true" class="green">Correcto</span>
+                                        <span v-else-if="answered[idx] === false" class="red">Incorrecto</span>
                                         <span v-else class="text-gray-500">Sin respuesta</span>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <button class=""
-                        @click="saveSummary">Finalizar</button>
+                    <button class="" @click="saveSummary">Finalizar</button>
                 </div>
             </template>
             <template v-else>
