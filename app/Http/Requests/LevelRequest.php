@@ -32,7 +32,7 @@ class LevelRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'min:4', 'max:20', Rule::unique('levels')->ignore($this->level)],
+            'name' => ['required', 'string', 'min:4', 'max:50', Rule::unique('levels')->ignore($this->level)],
             'description' => ['nullable', 'string', 'max:255'],
         ];
     }

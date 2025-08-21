@@ -1,14 +1,39 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link, router } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
+import { ref } from 'vue';
+import { router } from '@inertiajs/vue3';
+import { reactive, defineProps } from 'vue';
 
 const props = defineProps({
     exercises: Object,
-    permissions: Object
+    permissions: Object,
+    filters: Object,
+    lessons: Array,
+    types: Array,
 });
+
+const filters = reactive({
+  lesson: props.filters.lesson || '',
+  type: props.filters.type || '',
+})
+
+const applyFilters = () => {
+    router.get(route('exercises.index'), filters)
+}
+
+
 function destroy(id) {
     if (confirm('¿Seguro que deseas eliminar este ejercicio?')) {
-        router.delete(`/exercises/${id}`);
+        router.delete(route('exercises.destroy', id), {
+            preserveScroll: true,
+            onSuccess: () => {
+                router.reload({
+                    only: ['exercises'],
+                    preserveState: true
+                });
+            }
+        });
     }
 }
 </script>
@@ -24,8 +49,22 @@ function destroy(id) {
             <div class="table-responsive">
                 <div class="header">
                     <h1 class="titulo-listado">Listado de Ejercicios</h1>
+                    <div class="filtro">
+                        <label for="filter" class="label-filter">Filtrar por lección:</label>
+                        <select v-model="filters.lesson" @change="applyFilters" class="select-filter">
+                            <option value="">Todas las lecciones</option>
+                            <option v-for="lesson in lessons" :key="lesson.id" :value="lesson.id">{{ lesson.name }}</option>
+                        </select>
+                    </div>
+                    <div class="filtro">
+                        <label for="filter-type" class="label-filter">Filtrar por tipo de ejercicio?</label>
+                        <select v-model="filters.type" @change="applyFilters" id="filter-type" class="select-filter">
+                            <option value="">Todos los tipos</option>
+                            <option v-for="type in types" :key="type.id" :value="type.id">{{ type.name }}</option>
+                        </select>
+                    </div>
                     <template v-if="permissions.create">
-                        <Link href="/exercises/create" class="btn btn-crear">
+                        <Link :href="route('exercises.create')" class="btn btn-crear">
                         <img src="/icons/create-icon.gif" alt="Crear Ejercicio" />
                         Crear Ejercicio
                         </Link>
@@ -51,17 +90,17 @@ function destroy(id) {
                                 <td class="actions">
                                     <section>
                                         <template v-if="permissions.view">
-                                            <Link :href="`/exercises/${exercise.id}`">
+                                            <Link :href="route('exercises.show', exercise.id)">
                                             <img src="/icons/show-icon.gif" alt="Ver" class="btn-action" />
                                             </Link>
                                         </template>
                                         <template v-if="permissions.edit">
-                                            <Link :href="`/exercises/${exercise.id}/edit`">
+                                            <Link :href="route('exercises.edit', exercise.id)">
                                             <img src="/icons/edit-icon.gif" alt="Editar" class="btn-action" />
                                             </Link>
                                         </template>
                                         <template v-if="permissions.delete">
-                                            <button @click="destroy(exercise.id)">
+                                            <button @click="destroy(exercise.id)" type="button">
                                                 <img src="/icons/delete-icon.gif" alt="Eliminar" class="btn-action" />
                                             </button>
                                         </template>
@@ -70,24 +109,26 @@ function destroy(id) {
                             </tr>
                         </tbody>
                     </table>
-
                 </div>
             </div>
-            <!-- Agrega en la siguiente linea un paginador -->
-            <div class="pagination"
-                style="width: 100%; font-size: 2rem; text-align: center; margin-top: 2rem; z-index: 1000000;">
-                <Link v-if="exercises.prev_page_url" :href="exercises.prev_page_url" class="btn-pagination" style="text-decoration: none;">
+
+            <div class="pagination" v-if="exercises.data.length > 0">
+                <Link v-if="exercises.links.prev"
+                    :href="exercises.links.prev + (filter_exercises ? `&lesson_id=${filter_exercises}` : '')"
+                    class="btn-pagination">
                 Anterior
                 </Link>
-                <Link v-if="exercises.next_page_url" :href="exercises.next_page_url" class="btn-pagination" style="text-decoration: none;">
+
+                <span class="pagination-info">
+                    Página {{ exercises.current_page }} de {{ exercises.last_page }}
+                </span>
+
+                <Link v-if="exercises.links.next"
+                    :href="exercises.links.next + (filter_exercises ? `&lesson_id=${filter_exercises}` : '')"
+                    class="btn-pagination">
                 Siguiente
                 </Link>
             </div>
         </div>
-
     </AuthenticatedLayout>
 </template>
-
-<style scoped>
-/* Puedes agregar estilos personalizados aquí */
-</style>

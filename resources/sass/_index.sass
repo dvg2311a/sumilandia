@@ -85,8 +85,31 @@
         min-width: 0
 
         .header
+            display: flex
+            flex-wrap: wrap
+
             h1
+                width: 100%
                 font-size: $subtitle
+
+            .filtro
+                width: 50rem
+                display: flex
+                align-items: center
+                flex-direction: column
+
+                label
+                    font-weight: 600
+                    font-size: $description-card
+
+                select
+                    outline: none
+                    height: 4rem
+                    width: fit-content
+                    border-radius: $br-rad
+                    border: 2px solid $cards
+                    font-size: $description-card
+                    font-family: 'Poppins', sans-serif
 
             a
                 display: flex
@@ -109,6 +132,9 @@
                 &:active
                     transform: scale(.9)
                     transition: $standar
+
+
+
         .filters
             display: flex
             flex-wrap: wrap
@@ -264,7 +290,14 @@
                             border: none
                             cursor: pointer
                             background: transparent
+    .pagination
+        font-size: $description-card
 
+        a
+            color: #000
+
+            &:active
+                color: $buttons
 
 @media screen and (max-width: 1211px) and (min-width: 600px)
     .container-table

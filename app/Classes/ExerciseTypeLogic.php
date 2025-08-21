@@ -63,9 +63,8 @@ class ExerciseTypeLogic
                 }
                 break;
             case 'Completar diálogo':
-                // options: [{frase, hueco}], solution: [frase1, frase2, ...]
-                if (!is_array($data['options']) || count($data['options']) < 2) {
-                    $errors['options'] = 'Debes agregar al menos dos frases para el diálogo.';
+                if (!is_array($data['options']) || count($data['options']) < 1) {
+                    $errors['options'] = 'Debes agregar al menos una frase para el diálogo.';
                 }
                 if (!is_array($data['solution']) || count($data['solution']) < 1) {
                     $errors['solution'] = 'Debes ingresar la(s) frase(s) correcta(s) para completar el diálogo.';

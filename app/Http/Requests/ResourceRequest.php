@@ -31,7 +31,7 @@ class ResourceRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'name' => ['required', 'string', 'min:6', 'max:30'],
+            'name' => ['required', 'string', 'min:6', 'max:50'],
             'description' => ['nullable', 'string'],
             'unit_id' => ['required', 'exists:units,id'],
         ];
