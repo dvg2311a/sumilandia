@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed, watch } from 'vue';
 const props = defineProps({
     exercise: Object,
     showFeedback: Boolean,
@@ -8,10 +8,19 @@ const props = defineProps({
     nextExercise: Function
 });
 const answer = ref('');
-// Asegurarse que la solución sea array
-const solutionArray = Array.isArray(props.exercise.solution)
-    ? props.exercise.solution
-    : [props.exercise.solution];
+const solutionArray = computed(() =>
+    Array.isArray(props.exercise.solution)
+        ? props.exercise.solution
+        : [props.exercise.solution]
+);
+// Reiniciar answer cuando cambie el ejercicio
+watch(
+    () => props.exercise,
+    () => {
+        answer.value = '';
+    },
+    { immediate: true }
+);
 </script>
 <template>
     <div class="response-container">

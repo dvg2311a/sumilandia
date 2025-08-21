@@ -7,9 +7,19 @@ const props = defineProps({
     handleAnswer: Function,
     nextExercise: Function
 });
-const frases = Array.isArray(props.exercise.options) ? props.exercise.options : [];
-// Cada frase tiene un solo hueco (guion bajo), así que la cantidad de huecos es igual a frases.length
-const studentAnswers = ref(frases.map(() => ''));
+import { computed, watch } from 'vue';
+const frases = computed(() => Array.isArray(props.exercise.options) ? props.exercise.options : []);
+const studentAnswers = ref([]);
+
+// Inicializar y reiniciar studentAnswers cuando cambie el ejercicio
+watch(
+    () => props.exercise,
+    (newExercise) => {
+        studentAnswers.value = (Array.isArray(newExercise?.options) ? newExercise.options : []).map(() => '');
+    },
+    { immediate: true }
+);
+
 function setAnswer(idx, val) {
     studentAnswers.value[idx] = val;
 }
