@@ -68,7 +68,7 @@ class DatabaseSeeder extends Seeder
             'exercise_type_id' => $multipleChoiceType->id,
             'prompt' => '¿Cuál de los siguientes números viene después del 14?',
             'options' => [12, 13, 15, 16],
-            'solution' => '15'
+            'solution' => ['15']
         ]);
 
         Exercise::create([
@@ -76,7 +76,7 @@ class DatabaseSeeder extends Seeder
             'exercise_type_id' => $fillBlankType->id,
             'prompt' => 'Escribe el número que viene antes del 8.',
             'options' => [],
-            'solution' => '7'
+            'solution' => ['7']
         ]);
     }
 }
