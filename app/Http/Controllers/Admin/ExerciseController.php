@@ -21,10 +21,31 @@ class ExerciseController extends Controller
     {
         $this->authorize('viewAny', Exercise::class);
         $permissions = PermissionHelper::getPermissions('exercises');
-        $exercises = Exercise::with('exerciseType', 'lesson')->paginate(10);
+
+        $query = Exercise::query();
+        $type = request('type');
+        $lesson = request('lesson');
+
+        if ($type) {
+            $query->where('exercise_type_id', $type);
+        }
+        if ($lesson) {
+            $query->where('lesson_id', $lesson);
+        }
+
+        $exercises = $query->with('exerciseType', 'lesson')->paginate(10)->appends(request()->all());
+        $types = ExerciseType::all(['id', 'name']);
+        $lessons = Lesson::all(['id', 'name']);
+
         return Inertia::render('Admin/Exercises/Index', [
             'exercises' => $exercises,
-            'permissions' => $permissions
+            'permissions' => $permissions,
+            'filters' => [
+                'type' => $type,
+                'lesson' => $lesson
+            ],
+            'types' => $types,
+            'lessons' => $lessons
         ]);
     }
 
