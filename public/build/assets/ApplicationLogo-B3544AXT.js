@@ -1,0 +1,1 @@
+import{_ as e}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as s,o as n,b as r}from"./app-DOWPxuH0.js";const t={},a={class:"logo-container-register"};function i(c,o){return n(),s("div",a,o[0]||(o[0]=[r("img",{src:"/img/sumilandiaLogo.png",alt:"Logo de Sumilandia",class:"img-logo"},null,-1)]))}const g=e(t,[["render",i]]);export{g as A};
